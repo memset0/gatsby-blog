@@ -1,0 +1,30 @@
+name: Push to repository
+
+inputs:
+  source:
+    required: true
+  target-user:
+    required: true
+  target-repo:
+    required: true
+  target-branch:
+    required: true
+  commit-email:
+    default: ci@memset0.cn
+  access-token:
+    require: true
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: Push to Another Repository
+      uses: cpina/github-action-push-to-another-repository@main
+      env:
+        API_TOKEN_GITHUB: ${{ inputs.access-token }}
+      with:
+        source-directory: ${{ inputs.source }}
+        destination-github-username: ${{ inputs.target-user }}
+        destination-repository-name: ${{ inputs.target-repo }}
+        target-branch: ${{ inputs.target-branch }}
+        user-email: ${{ inputs.commit-email }}
