@@ -4,27 +4,18 @@
  * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
  */
 
+const siteMetadata = require("./src/data/metadata");
+
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
 module.exports = {
-  siteMetadata: {
-    title: `memset0's Blog`,
-    author: {
-      name: `memset0`,
-      summary: `who lives and works in San Francisco building useful things.`,
-    },
-    description: `memset0's Blog`,
-    siteUrl: `https://next.memset0.cn`,
-    social: {
-      twitter: `memset0`,
-    },
-  },
+  siteMetadata,
   plugins: [
     {
-      resolve: 'gatsby-plugin-static-folders',
+      resolve: "gatsby-plugin-static-folders",
       options: {
-        folders: ['./assets', './content/assets'],
+        folders: ["./assets", "./content/assets"],
       },
     },
     `gatsby-plugin-less`,
@@ -94,8 +85,8 @@ module.exports = {
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
                   custom_elements: [{ "content:encoded": node.html }],
-                })
-              })
+                });
+              });
             },
             query: `{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
@@ -133,4 +124,4 @@ module.exports = {
       },
     },
   ],
-}
+};

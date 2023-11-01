@@ -1,31 +1,60 @@
-import * as React from "react"
-import { Link, graphql } from "gatsby"
+import * as React from "react";
+import { Link, graphql } from "gatsby";
+import { StaticImage } from "gatsby-plugin-image";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
+import EventIcon from "@mui/icons-material/Event";
+import CategoryIcon from "@mui/icons-material/Category";
 
-import Layout from "../components/Layout"
-import Seo from "../components/Seo"
+import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownRemark: post },
   location,
 }) => {
-  const siteTitle = site.siteMetadata?.title || `Title`
-
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location} title={post.frontmatter.title || "Untitled"}>
       <article
         className="blog-post"
         itemScope
         itemType="http://schema.org/Article"
       >
-        <header>
-          <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <p>{post.frontmatter.date}</p>
-        </header>
-        <section
-          dangerouslySetInnerHTML={{ __html: post.html }}
-          itemProp="articleBody"
-        />
-        <hr />
+        <Card>
+          <CardContent>
+            <Typography variant="h5" component="div">
+              {post.frontmatter.title}
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                color: "grey.500",
+                mt: 1,
+                mb: 2,
+              }}
+            >
+              <EventIcon sx={{ mr: 1 }} />
+              <Typography variant="body2" color="inherit">
+                {post.frontmatter.date}
+              </Typography>
+              <CategoryIcon sx={{ mx: 1 }} />
+              <Typography variant="body2" color="inherit">
+                {"category"}
+              </Typography>
+            </Box>
+            <Typography variant="body1">
+              <section
+                dangerouslySetInnerHTML={{ __html: post.html }}
+                itemProp="articleBody"
+              />
+            </Typography>
+          </CardContent>
+        </Card>
       </article>
       <nav className="blog-post-nav">
         <ul
@@ -54,8 +83,8 @@ const BlogPostTemplate = ({
         </ul>
       </nav>
     </Layout>
-  )
-}
+  );
+};
 
 export const Head = ({ data: { markdownRemark: post } }) => {
   return (
@@ -63,10 +92,10 @@ export const Head = ({ data: { markdownRemark: post } }) => {
       title={post.frontmatter.title}
       description={post.frontmatter.description || post.excerpt}
     />
-  )
-}
+  );
+};
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug(
@@ -106,4 +135,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

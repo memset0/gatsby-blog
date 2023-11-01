@@ -16,8 +16,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import theme from "../theme";
+import siteMetadata from "../data/metadata";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open",
@@ -63,7 +64,7 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const Layout = ({ children }) => {
+const Layout = ({ children, title }) => {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -98,7 +99,7 @@ const Layout = ({ children }) => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              memset0's Blog
+              {title ? title : siteMetadata.title}
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
