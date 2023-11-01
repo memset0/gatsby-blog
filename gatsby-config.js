@@ -21,29 +21,39 @@ module.exports = {
     },
   },
   plugins: [
+    {
+      resolve: 'gatsby-plugin-static-folders',
+      options: {
+        folders: ['./assets', './content/assets'],
+      },
+    },
+    `gatsby-plugin-less`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/blog`,
-        name: `blog`,
+        path: `${__dirname}/content`,
+        name: `content`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
         path: `${__dirname}/src/images`,
+        name: `images`,
       },
     },
     {
       resolve: `gatsby-transformer-remark`,
       options: {
+        footnotes: true,
+        gfm: true,
+        excerpt_separator: "<!-- more -->",
         plugins: [
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 630,
+              maxWidth: 1000,
             },
           },
           {
@@ -52,6 +62,7 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
+          `gatsby-remark-katex`,
           `gatsby-remark-prismjs`,
         ],
       },
