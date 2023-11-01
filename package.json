@@ -12,6 +12,7 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource-variable/montserrat": "^5.0.4",
     "@fontsource/merriweather": "^5.0.3",
+    "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.16",
     "gatsby": "^5.12.4",
     "gatsby-plugin-feed": "^5.12.0",
