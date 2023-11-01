@@ -8,5 +8,7 @@
  * @type {import('gatsby').GatsbySSR['onRenderBody']}
  */
 exports.onRenderBody = ({ setHtmlAttributes }) => {
-  setHtmlAttributes({ lang: `en` })
+  setHtmlAttributes({ lang: `zh-CN` })
+
+  setHeadComponents([<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" crossOrigin="anonymous" key="katexStyle" />]);
 }
