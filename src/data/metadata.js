@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   title: `memset0's Blog`,
   author: {
     name: `memset0`,
