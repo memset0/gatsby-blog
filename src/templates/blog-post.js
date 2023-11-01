@@ -25,6 +25,14 @@ const BlogPostTemplate = ({
         itemType="http://schema.org/Article"
       >
         <Card>
+          {post.frontmatter.cover && (
+            <CardMedia
+              component="img"
+              height="320"
+              image={post.frontmatter.cover}
+              alt=""
+            />
+          )}
           <CardContent>
             <Typography variant="h5" component="div">
               {post.frontmatter.title}
@@ -114,6 +122,7 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
+        cover
         date(formatString: "MMMM DD, YYYY")
         description
       }
