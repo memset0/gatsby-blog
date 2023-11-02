@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import EventIcon from "@mui/icons-material/Event";
 import CategoryIcon from "@mui/icons-material/Category";
@@ -24,45 +25,52 @@ const BlogPostTemplate = ({
         itemScope
         itemType="http://schema.org/Article"
       >
-        <Card>
-          {post.frontmatter.cover && (
-            <CardMedia
-              component="img"
-              height="320"
-              image={post.frontmatter.cover}
-              alt=""
-            />
-          )}
-          <CardContent>
-            <Typography variant="h5" component="div">
-              {post.frontmatter.title}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                color: "grey.500",
-                mt: 1,
-                mb: 2,
-              }}
-            >
-              <EventIcon sx={{ mr: 1 }} />
-              <Typography variant="body2" color="inherit">
-                {post.frontmatter.date}
-              </Typography>
-              <CategoryIcon sx={{ mx: 1 }} />
-              <Typography variant="body2" color="inherit">
-                {"category"}
-              </Typography>
-            </Box>
-            <Typography variant="body1">
-              <section
-                dangerouslySetInnerHTML={{ __html: post.html }}
-                itemProp="articleBody"
-              />
-            </Typography>
-          </CardContent>
-        </Card>
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+            <Card>
+              {post.frontmatter.cover && (
+                <CardMedia
+                  component="img"
+                  // height="320"
+                  image={post.frontmatter.cover}
+                  alt=""
+                />
+              )}
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  {post.frontmatter.title}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    color: "grey.500",
+                    mt: 1,
+                    mb: 2,
+                  }}
+                >
+                  <EventIcon sx={{ mr: 1 }} />
+                  <Typography variant="body2" color="inherit">
+                    {post.frontmatter.date}
+                  </Typography>
+                  <CategoryIcon sx={{ mx: 1 }} />
+                  <Typography variant="body2" color="inherit">
+                    {"category"}
+                  </Typography>
+                </Box>
+                <Typography variant="body1">
+                  <section
+                    dangerouslySetInnerHTML={{ __html: post.html }}
+                    itemProp="articleBody"
+                  />
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={4}>
+            xs=4
+          </Grid>
+        </Grid>
       </article>
       <nav className="blog-post-nav">
         <ul
