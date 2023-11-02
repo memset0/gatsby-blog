@@ -1,4 +1,6 @@
 import React from "react";
+import { Link as GatsbyLink } from "gatsby";
+import { StaticImage } from "gatsby-plugin-image";
 import { styled, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,8 +10,15 @@ import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DrawerContent from "./Layout/DrawerContent";
 
@@ -62,6 +71,15 @@ const PermanentDrawer = styled(Drawer, {
 const Layout = ({ children, title }) => {
   const [open, setOpen] = React.useState(true);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleAnchorElClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleAnchorElClose = () => {
+    setAnchorEl(null);
+  };
 
   const isMobile = useMediaQuery(() => theme.breakpoints.down("sm"));
 
@@ -119,11 +137,44 @@ const Layout = ({ children, title }) => {
             </Typography>
 
             {/* Appbar 右侧 */}
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+
+            <IconButton onClick={handleAnchorElClick}>
+              <Avatar>
+                <StaticImage
+                  src="../images/avatar.png"
+                  alt={siteMetadata.author.name}
+                />
+              </Avatar>
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleAnchorElClose}
+            >
+              <MenuItem
+                onClick={handleAnchorElClose}
+                component={GatsbyLink}
+                href={siteMetadata.socialLink.github}
+                target="_blank"
+              >
+                <ListItemIcon>
+                  <GitHubIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Github</ListItemText>
+              </MenuItem>
+              <MenuItem
+                onClick={handleAnchorElClose}
+                component={GatsbyLink}
+                href={siteMetadata.socialLink.codeforces}
+                target="_blank"
+              >
+                <ListItemIcon>
+                  <LeaderboardIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Codeforces</ListItemText>
+              </MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
 

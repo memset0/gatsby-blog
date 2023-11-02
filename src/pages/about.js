@@ -24,7 +24,7 @@ const AboutPage = () => (
     <Card sx={{ display: "flex", alignItems: "center", m: 2, p: 2 }}>
       <Avatar>
         <StaticImage
-          src="../images/avatar.png"
+          src="../images/avatar-4x.png"
           alt={siteMetadata.author.name}
         />
       </Avatar>

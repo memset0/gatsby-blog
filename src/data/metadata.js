@@ -9,4 +9,8 @@ module.exports = {
   social: {
     twitter: `memset0c`,
   },
+  socialLink: {
+    github: `https://github.com/memset0`,
+    codeforces: `https://codeforces.com/profile/memset0c`,
+  },
 };
