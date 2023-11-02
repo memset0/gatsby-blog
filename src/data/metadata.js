@@ -4,9 +4,9 @@ module.exports = {
     name: `memset0`,
     summary: `在海月的虚空中，纵身飞过秋凉的时鸟。`,
   },
-  description: `memset0's Blog`,
+  description: `memset0 的博客`,
   siteUrl: `https://next.memset0.cn`,
   social: {
-    twitter: `memset0`,
+    twitter: `memset0c`,
   },
 };

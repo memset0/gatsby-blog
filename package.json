@@ -20,6 +20,7 @@
     "gatsby-plugin-less": "^7.12.0",
     "gatsby-plugin-manifest": "^5.12.0",
     "gatsby-plugin-react-helmet": "^6.12.0",
+    "gatsby-plugin-react-svg": "^3.3.0",
     "gatsby-plugin-sharp": "^5.12.0",
     "gatsby-plugin-static-folders": "^1.0.1",
     "gatsby-remark-images": "^7.12.0",

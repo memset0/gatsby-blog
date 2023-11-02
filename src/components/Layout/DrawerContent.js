@@ -8,7 +8,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 import InboxIcon from "@mui/icons-material/Inbox";
 import { Link as GatsbyLink } from "gatsby";
+import { StaticImage } from "gatsby-plugin-image";
 import Link from "../Link";
+// import LogoSvg from "../../images/logo.svg";
 
 const DrawerContent = () => {
   return (
@@ -28,7 +30,7 @@ const DrawerContent = () => {
             textAlign: "center",
           }}
         >
-          这里放一个 mem 的 Logo
+          <img height="52" src="/logo.svg" loading="eager" />
         </Link>
       </Toolbar>
       <Divider />

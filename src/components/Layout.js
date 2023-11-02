@@ -14,13 +14,13 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import DrawerContent from "./Layout/DrawerContent";
 
 import theme from "../theme";
-// import siteMetadata from "../data/metadata";
+import siteMetadata from "../data/metadata";
 
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open",
-})(({ theme, open, isMobile }) => ({
+})(({ theme, open, ismobile }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -28,7 +28,7 @@ const AppBar = styled(MuiAppBar, {
   }),
   ...(open && {
     marginLeft: drawerWidth,
-    width: isMobile ? "100%" : `calc(100% - ${drawerWidth}px)`,
+    width: ismobile ? "100%" : `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -79,7 +79,7 @@ const Layout = ({ children, title }) => {
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} isMobile={isMobile}>
+        <AppBar position="absolute" open={open} ismobile={isMobile}>
           <Toolbar
             sx={{
               pr: "24px", // keep right padding when drawer closed
@@ -115,7 +115,7 @@ const Layout = ({ children, title }) => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              {title ? title : ""}
+              {title ? title : siteMetadata.title}
             </Typography>
 
             {/* Appbar 右侧 */}
