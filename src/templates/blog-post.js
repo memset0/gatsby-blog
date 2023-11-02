@@ -33,7 +33,7 @@ const BlogPostTemplate = ({
                   component="img"
                   // height="320"
                   image={post.frontmatter.cover}
-                  alt=""
+                  alt={post.frontmatter.title}
                 />
               )}
               <CardContent>
