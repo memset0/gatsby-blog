@@ -25,6 +25,7 @@ const BlogPostTemplate = ({
         itemType="http://schema.org/Article"
       >
         <Grid container spacing={2}>
+          {/* 这里是博文 */}
           <Grid item xs={9}>
             <Card>
               {post.frontmatter.cover && (
@@ -65,7 +66,35 @@ const BlogPostTemplate = ({
                 </Typography>
               </CardContent>
             </Card>
+
+            {/* 这里放前后博文的导航链接 */}
+            <Grid container spacing={2} sx={{ mt: 1 }}>
+              {previous && (
+                <Grid item xs={12} lg={6}>
+                  <Card>
+                    <CardContent>
+                      <Link to={previous.fields.slug} rel="prev">
+                        ← {previous.frontmatter.title}
+                      </Link>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              )}
+              {next && (
+                <Grid item xs={12} lg={6}>
+                  <Card>
+                    <CardContent>
+                      <Link to={next.fields.slug} rel="next">
+                        {next.frontmatter.title} →
+                      </Link>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              )}
+            </Grid>
           </Grid>
+
+          {/* 这里是侧边栏 */}
           <Grid item xs={3}>
             <Card>
               <CardContent>
@@ -79,32 +108,6 @@ const BlogPostTemplate = ({
           </Grid>
         </Grid>
       </article>
-      <nav className="blog-post-nav">
-        <ul
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
-        >
-          <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
-      </nav>
     </Layout>
   );
 };
