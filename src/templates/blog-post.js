@@ -5,7 +5,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import EventIcon from "@mui/icons-material/Event";
@@ -26,7 +25,7 @@ const BlogPostTemplate = ({
         itemType="http://schema.org/Article"
       >
         <Grid container spacing={2}>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Card>
               {post.frontmatter.cover && (
                 <CardMedia
@@ -67,8 +66,16 @@ const BlogPostTemplate = ({
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={4}>
-            xs=4
+          <Grid item xs={3}>
+            <Card>
+              <CardContent>
+                <p>这里打算做 Sidebar</p>
+                <p>这里打算做 Sidebar</p>
+                <p>这里打算做 Sidebar</p>
+                <p>这里打算做 Sidebar</p>
+                <p>这里打算做 Sidebar</p>
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
       </article>
