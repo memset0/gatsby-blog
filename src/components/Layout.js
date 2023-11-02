@@ -25,27 +25,23 @@ import DrawerContent from "./Layout/DrawerContent";
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
 
-const drawerWidth = 240;
+export const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open",
 })(({ theme, open, isdesktop }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: isdesktop
-    ? theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      })
-    : {},
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
   ...(open && {
     marginLeft: drawerWidth,
     width: isdesktop ? `calc(100% - ${drawerWidth}px)` : "100%",
-    transition: isdesktop
-      ? theme.transitions.create(["width", "margin"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen,
-        })
-      : {},
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   }),
 }));
 
