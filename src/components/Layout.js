@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
-import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
@@ -14,11 +13,14 @@ import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import Link from "./Link";
+import DrawerItems from "./Layout/DrawerItems";
 
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
 
-const drawerWidth = 280;
+const drawerWidth = 240;
+const collapsedDrawerWidth = 100;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open",
@@ -80,6 +82,7 @@ const Layout = ({ children, title }) => {
               pr: "24px", // keep right padding when drawer closed
             }}
           >
+            {/* Appbar 菜单按钮 */}
             <IconButton
               edge="start"
               color="inherit"
@@ -87,11 +90,13 @@ const Layout = ({ children, title }) => {
               onClick={toggleDrawer}
               sx={{
                 marginRight: "36px",
-                ...(open && { display: "none" }),
               }}
             >
-              <MenuIcon />
+              <MenuIcon sx={{ ...(open && { display: "none" }) }} />
+              <ChevronLeftIcon sx={{ ...(!open && { display: "none" }) }} />
             </IconButton>
+
+            {/* Appbar 标题 */}
             <Typography
               component="h1"
               variant="h6"
@@ -101,6 +106,8 @@ const Layout = ({ children, title }) => {
             >
               {title ? title : siteMetadata.title}
             </Typography>
+
+            {/* Appbar 右侧 */}
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -108,7 +115,8 @@ const Layout = ({ children, title }) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+
+        <Drawer anchor="left" variant="permanent" open={open}>
           <Toolbar
             sx={{
               display: "flex",
@@ -117,15 +125,20 @@ const Layout = ({ children, title }) => {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
+            <Link
+              to="/"
+              sx={{
+                width: "100%",
+                textAlign: "center",
+              }}
+            >
+              这里放一个 mem 的 Logo
+            </Link>
           </Toolbar>
           <Divider />
-          <List component="nav">
-            <Divider sx={{ my: 1 }} />
-          </List>
+          <DrawerItems />
         </Drawer>
+
         <Box
           component="main"
           sx={{
@@ -139,7 +152,9 @@ const Layout = ({ children, title }) => {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+
+          {/* 这里进入页面主体 */}
+          <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
             {children}
           </Container>
         </Box>
