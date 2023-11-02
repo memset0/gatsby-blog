@@ -35,6 +35,20 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/assets`,
+        name: `content-assets`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/cover`,
+        name: `content-cover`,
+      },
+    },
+    {
       resolve: `gatsby-transformer-remark`,
       options: {
         footnotes: true,

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link, graphql } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -17,24 +17,26 @@ const BlogPostTemplate = ({
   data: { previous, next, site, markdownRemark: post },
   location,
 }) => {
+  let coverImage = null;
+  console.log(post);
+  if (post.fields.hasCover) {
+    coverImage = getImage(post.fields.cover);
+  }
+
   return (
     <Layout location={location} title={post.frontmatter.title || "Untitled"}>
-      <article
-        className="blog-post"
-        itemScope
-        itemType="http://schema.org/Article"
-      >
+      <article itemScope itemType="http://schema.org/Article">
         <Grid container spacing={2}>
           {/* 这里是博文 */}
           <Grid item xs={12} lg={9}>
             <Card>
-              {post.frontmatter.cover && (
-                <CardMedia
-                  component="img"
-                  // height="320"
-                  image={post.frontmatter.cover}
-                  alt={post.frontmatter.title}
-                />
+              {post.fields.hasCover && (
+                <CardMedia component="div">
+                  <GatsbyImage
+                    image={coverImage}
+                    alt={post.frontmatter.title}
+                  />
+                </CardMedia>
               )}
               <CardContent>
                 <Typography variant="h5" component="div">
@@ -140,9 +142,16 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        cover
         date(formatString: "MMMM DD, YYYY")
         description
+      }
+      fields {
+        cover {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
+        hasCover
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {
