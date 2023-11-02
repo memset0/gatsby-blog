@@ -26,7 +26,7 @@ const BlogPostTemplate = ({
       >
         <Grid container spacing={2}>
           {/* 这里是博文 */}
-          <Grid item xs={9}>
+          <Grid item xs={12} lg={9}>
             <Card>
               {post.frontmatter.cover && (
                 <CardMedia
@@ -95,7 +95,7 @@ const BlogPostTemplate = ({
           </Grid>
 
           {/* 这里是侧边栏 */}
-          <Grid item xs={3}>
+          <Grid item xs={12} lg={3}>
             <Card>
               <CardContent>
                 <p>这里打算做 Sidebar</p>
