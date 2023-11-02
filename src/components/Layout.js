@@ -31,17 +31,21 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open",
 })(({ theme, open, ismobile }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
+  transition: ismobile
+    ? {}
+    : theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
   ...(open && {
     marginLeft: drawerWidth,
     width: ismobile ? "100%" : `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+    transition: ismobile
+      ? {}
+      : theme.transitions.create(["width", "margin"], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
   }),
 }));
 
@@ -81,7 +85,7 @@ const Layout = ({ children, title }) => {
     setAnchorEl(null);
   };
 
-  const isMobile = useMediaQuery(() => theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(() => theme.breakpoints.down("md"));
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -137,7 +141,6 @@ const Layout = ({ children, title }) => {
             </Typography>
 
             {/* Appbar 右侧 */}
-
             <IconButton onClick={handleAnchorElClick}>
               <Avatar>
                 <StaticImage
@@ -187,7 +190,7 @@ const Layout = ({ children, title }) => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
@@ -202,7 +205,7 @@ const Layout = ({ children, title }) => {
           variant="permanent"
           open={open}
           sx={{
-            display: { xs: "none", sm: "block" },
+            display: { xs: "none", md: "block" },
           }}
         >
           <DrawerContent />
