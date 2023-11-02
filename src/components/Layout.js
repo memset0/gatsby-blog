@@ -29,23 +29,23 @@ const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open",
-})(({ theme, open, ismobile }) => ({
+})(({ theme, open, isdesktop }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: ismobile
-    ? {}
-    : theme.transitions.create(["width", "margin"], {
+  transition: isdesktop
+    ? theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
-      }),
+      })
+    : {},
   ...(open && {
     marginLeft: drawerWidth,
-    width: ismobile ? "100%" : `calc(100% - ${drawerWidth}px)`,
-    transition: ismobile
-      ? {}
-      : theme.transitions.create(["width", "margin"], {
+    width: isdesktop ? `calc(100% - ${drawerWidth}px)` : "100%",
+    transition: isdesktop
+      ? theme.transitions.create(["width", "margin"], {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.enteringScreen,
-        }),
+        })
+      : {},
   }),
 }));
 
@@ -85,7 +85,7 @@ const Layout = ({ children, title }) => {
     setAnchorEl(null);
   };
 
-  const isMobile = useMediaQuery(() => theme.breakpoints.down("md"));
+  const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -101,7 +101,7 @@ const Layout = ({ children, title }) => {
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} ismobile={isMobile}>
+        <AppBar position="absolute" open={open} isdesktop={isDesktop}>
           <Toolbar
             sx={{
               pr: "24px", // keep right padding when drawer closed
@@ -112,7 +112,7 @@ const Layout = ({ children, title }) => {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              onClick={isMobile ? toggleMobileDrawer : toggleDrawer}
+              onClick={isDesktop ? toggleDrawer : toggleMobileDrawer}
               sx={{
                 marginRight: "36px",
               }}
