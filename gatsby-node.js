@@ -23,7 +23,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Get all markdown blog posts sorted by date
   const result = await graphql(`
     {
-      allMarkdownRemark(sort: { frontmatter: { date: ASC } }) {
+      allMarkdownRemark(
+        filter: { frontmatter: { publish: { eq: true } } },
+        sort: { frontmatter: { date: DESC } }
+      ) {
         nodes {
           id
           fields {

@@ -27,7 +27,10 @@ export const Head = () => <Seo title="主页" />;
 
 export const query = graphql`
   query IndexQuery {
-    allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    allMarkdownRemark(
+      filter: { frontmatter: { publish: { eq: true } } },
+      sort: { frontmatter: { date: DESC } }
+    ) {
       edges {
         node {
           id
