@@ -8,7 +8,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 import InboxIcon from "@mui/icons-material/Inbox";
 import { Link as GatsbyLink } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
 import Link from "../Link";
 // import LogoSvg from "../../images/logo.svg";
 
