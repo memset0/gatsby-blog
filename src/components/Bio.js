@@ -20,20 +20,30 @@ const Bio = () => {
 
   return (
     <Card>
-      <CardContent
-        sx={{ ml: 1, mr: 1, paddingTop: "4px", paddingBottom: "4px" }}
-      >
-        <Grid container>
+      <CardContent sx={{ padding: 3 }}>
+        <Grid container alignItems="center">
           <Grid item xs={12} lg={7}>
-            <Typography variant="body1" class="typography">
+            <Typography
+              variant="body1"
+              sx={{ marginTop: -2, marginBottom: -2 }}
+            >
               <section
                 dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
                 itemProp="articleBody"
               />
             </Typography>
           </Grid>
-          <Grid item xs={12} lg={5}>
-            <StaticImage src="/assets/tagcloud.png" alt="tagcloud" />
+          <Grid
+            item
+            xs={12}
+            lg={5}
+            sx={{ textAlign: "right", display: { sm: "none", lg: "block" } }}
+          >
+            <StaticImage
+              src="../../content/assets/tagcloud-bgwhite.png"
+              alt="tagcloud"
+              height={240}
+            />
           </Grid>
         </Grid>
       </CardContent>

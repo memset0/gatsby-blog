@@ -70,6 +70,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 /**
  * @type {import('gatsby').GatsbyNode['onCreateNode']}
  */
+let cachedNodes = null;
 exports.onCreateNode = async ({
   node,
   actions,
@@ -84,16 +85,21 @@ exports.onCreateNode = async ({
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode });
 
-    const getNodeByPath = resolvePath => {
-      for (const node of getNodes()) {
+    const getNodeByPath = (resolvedPath, retried = false) => {
+      if (!cachedNodes) {
+        cachedNodes = getNodes();
+      }
+      for (const node of cachedNodes) {
         if (
           node.absolutePath &&
-          path.resolve(node.absolutePath) === resolvePath
+          path.resolve(node.absolutePath) === resolvedPath
         ) {
           return node;
-        } else {
-          // console.log(node.absolutePath, resolvePath);
         }
+      }
+      if (!retried) {
+        cachedNodes = null;
+        return getNodeByPath(resolvedPath, true);
       }
       return null;
     };

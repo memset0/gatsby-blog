@@ -38,7 +38,7 @@ const BlogPostTemplate = ({
                   />
                 </CardMedia>
               )}
-              <CardContent>
+              <CardContent sx={{ padding: { md: 3 } }}>
                 <Typography variant="h5" component="div">
                   {post.frontmatter.title}
                 </Typography>
