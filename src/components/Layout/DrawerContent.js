@@ -60,7 +60,7 @@ const DrawerContent = () => {
           <img height="52" src="/logo.svg" loading="eager" alt="" />
         </Link>
       </Toolbar>
-      <Divider />
+      <Divider sx={{ opacity: { xs: 0, md: 1 } }} />
       <List component="nav">
         {navigators.map(navigator => (
           <ListItem disablePadding>
