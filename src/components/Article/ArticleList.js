@@ -85,6 +85,7 @@ const ArticleList = ({ posts }) => {
                       component="div"
                       variant="h6"
                       sx={{
+                        lineHeight: 1.35,
                         textIndent: isNegativeIndentTitleRequired(
                           post.node.frontmatter.title
                         )
