@@ -7,11 +7,39 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 import InboxIcon from "@mui/icons-material/Inbox";
+import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import { Link as GatsbyLink } from "gatsby";
 import Link from "../Link";
 // import LogoSvg from "../../images/logo.svg";
 
 const DrawerContent = () => {
+  const isRouteMatched = route => {
+    return false;
+    // return route != "/" && location.pathname.startsWith(router);
+  };
+
+  const navigators = [
+    {
+      to: "/",
+      text: "主页",
+      icon: <HomeIcon />,
+    },
+    {
+      to: "/oi/",
+      text: "算法竞赛",
+      icon: <LeaderboardIcon />,
+    },
+    {
+      to: "/about/",
+      text: "关于我",
+      icon: <PersonIcon />,
+    },
+  ];
+
+  console.log(navigators);
+
   return (
     <>
       <Toolbar
@@ -29,27 +57,19 @@ const DrawerContent = () => {
             textAlign: "center",
           }}
         >
-          <img height="52" src="/logo.svg" loading="eager" />
+          <img height="52" src="/logo.svg" loading="eager" alt="" />
         </Link>
       </Toolbar>
       <Divider />
       <List component="nav">
-        <ListItem disablePadding>
-          <ListItemButton to="/" component={GatsbyLink}>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Inbox" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton to="/about" component={GatsbyLink}>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="About" />
-          </ListItemButton>
-        </ListItem>
+        {navigators.map(navigator => (
+          <ListItem disablePadding>
+            <ListItemButton to={navigator.to} component={GatsbyLink}>
+              <ListItemIcon>{navigator.icon}</ListItemIcon>
+              <ListItemText primary={navigator.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
         <Divider sx={{ my: 1 }} />
         <ListItem disablePadding>
           <ListItemButton>

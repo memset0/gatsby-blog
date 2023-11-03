@@ -25,7 +25,7 @@ import DrawerContent from "./Layout/DrawerContent";
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
 
-export const drawerWidth = 240;
+export const drawerWidth = 220;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open",
