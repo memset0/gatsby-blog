@@ -68,7 +68,7 @@ const PermanentDrawer = styled(Drawer, {
   },
 }));
 
-const Layout = ({ children, title }) => {
+const Layout = ({ children, title, maxWidth }) => {
   const [open, setOpen] = React.useState(true);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -222,7 +222,10 @@ const Layout = ({ children, title }) => {
           <Toolbar />
 
           {/* 这里进入页面主体 */}
-          <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
+          <Container
+            maxWidth={maxWidth ? maxWidth : "lg"}
+            sx={{ mt: 6, mb: 6 }}
+          >
             {children}
           </Container>
         </Box>

@@ -1,15 +1,12 @@
 // src/pages/index.tsx
 import React from "react";
 import { graphql, Link } from "gatsby";
-import Grid from "@mui/material/Grid";
 import Bio from "../components/Bio";
 import Seo from "../components/Seo";
 import Layout from "../components/Layout";
 
 const IndexPage = ({ data }) => (
-  <Layout>
-    <Grid container justifyContent="center">
-      <Grid item xs={12} md={11} lg={10}>
+  <Layout maxWidth="md">
         <Bio />
         {data.allMarkdownRemark.edges.map(post => (
           <div key={post.node.id}>
@@ -18,8 +15,6 @@ const IndexPage = ({ data }) => (
             <Link to={post.node.fields.slug}>Read More</Link>
           </div>
         ))}
-      </Grid>
-    </Grid>
   </Layout>
 );
 
