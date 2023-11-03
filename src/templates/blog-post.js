@@ -18,7 +18,6 @@ const BlogPostTemplate = ({
   location,
 }) => {
   let coverImage = null;
-  console.log(post);
   if (post.fields.hasCover) {
     coverImage = getImage(post.fields.cover);
   }
