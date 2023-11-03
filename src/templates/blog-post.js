@@ -22,6 +22,8 @@ const BlogPostTemplate = ({
     coverImage = getImage(post.fields.cover);
   }
 
+  const indented = post.frontmatter.title.startsWith("「");
+
   return (
     <Layout location={location} title={post.frontmatter.title || "Untitled"}>
       <article itemScope itemType="http://schema.org/Article">
@@ -32,13 +34,23 @@ const BlogPostTemplate = ({
               {post.fields.hasCover && (
                 <CardMedia component="div">
                   <GatsbyImage
+                    style={{ width: "100%" }}
                     image={coverImage}
                     alt={post.frontmatter.title}
                   />
                 </CardMedia>
               )}
               <CardContent sx={{ padding: { md: 3 } }}>
-                <Typography variant="h5" component="div">
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{
+                    mt: 0.5,
+                    mb: 1,
+                    ml: indented ? -0.75 : 0,
+                    fontSize: { lg: "1.7rem" },
+                  }}
+                >
                   {post.frontmatter.title}
                 </Typography>
                 <Box
@@ -47,7 +59,7 @@ const BlogPostTemplate = ({
                     alignItems: "center",
                     color: "grey.500",
                     mt: 1,
-                    mb: 2,
+                    mb: 4,
                   }}
                 >
                   <EventIcon sx={{ mr: 1 }} />

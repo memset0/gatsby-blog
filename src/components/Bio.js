@@ -24,7 +24,7 @@ const Bio = () => {
         <Grid container alignItems="center">
           <Grid item xs={12} lg={7}>
             <Typography
-              variant="body1"
+              variant="body2"
               sx={{ marginTop: -2, marginBottom: -2 }}
             >
               <section
