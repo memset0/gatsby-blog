@@ -80,8 +80,9 @@ const BlogPostTemplate = ({
                 </Box>
                 <Typography variant="body1">
                   <section
-                    dangerouslySetInnerHTML={{ __html: post.html }}
+                    className="typography"
                     itemProp="articleBody"
+                    dangerouslySetInnerHTML={{ __html: post.html }}
                   />
                 </Typography>
               </CardContent>

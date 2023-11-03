@@ -28,8 +28,9 @@ const Bio = () => {
               sx={{ marginTop: -2, marginBottom: -2 }}
             >
               <section
-                dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
+                className="typography"
                 itemProp="articleBody"
+                dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
               />
             </Typography>
           </Grid>

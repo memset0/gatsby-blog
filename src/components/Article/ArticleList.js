@@ -59,6 +59,8 @@ const ArticleList = ({ posts }) => {
                           image={getImage(post.node.fields.cover)}
                           style={{ height: "100%" }}
                           imgStyle={{
+                            width: "100%",
+                            height: "100%",
                             objectFit: "cover",
                             objectPosition: "center",
                           }}
@@ -78,7 +80,7 @@ const ArticleList = ({ posts }) => {
                     flexDirection: "column",
                   }}
                 >
-                  <CardContent style={{ flex: "1 0 auto" }}>
+                  <CardContent style={{ flex: "1 0 auto", padding: "20px" }}>
                     <Typography
                       component="div"
                       variant="h6"
@@ -86,7 +88,7 @@ const ArticleList = ({ posts }) => {
                         textIndent: isNegativeIndentTitleRequired(
                           post.node.frontmatter.title
                         )
-                          ? "-0.5em"
+                          ? "-0.3em"
                           : 0,
                       }}
                     >
@@ -109,12 +111,16 @@ const ArticleList = ({ posts }) => {
                     </Typography>
 
                     {/* 概要部分 */}
-                    <Typography variant="body2" component="div">
+                    <Typography
+                      variant="body2"
+                      sx={{ minHeight: "16px", marginBottom: "-16px" }}
+                    >
                       <section
+                        className="typography"
+                        itemProp="articleBody"
                         dangerouslySetInnerHTML={{
                           __html: toHtml(post.node.excerptAst),
                         }}
-                        itemProp="articleBody"
                       />
                     </Typography>
                   </CardContent>

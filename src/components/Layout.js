@@ -24,6 +24,7 @@ import DrawerContent from "./Layout/DrawerContent";
 
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
+import { isNegativeIndentTitleRequired } from "../utils/frontend";
 
 export const drawerWidth = 220;
 
@@ -98,20 +99,14 @@ const Layout = ({ children, title, maxWidth }) => {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open} isdesktop={isDesktop}>
-          <Toolbar
-            sx={{
-              pr: "24px", // keep right padding when drawer closed
-            }}
-          >
+          <Toolbar sx={{ pr: "24px" }}>
             {/* Appbar 菜单按钮 */}
             <IconButton
               edge="start"
               color="inherit"
               aria-label="open drawer"
               onClick={isDesktop ? toggleDrawer : toggleMobileDrawer}
-              sx={{
-                marginRight: { xs: "12px", md: "24px" },
-              }}
+              sx={{ marginRight: { xs: "12px", md: "24px" } }}
             >
               <MenuIcon
                 sx={{
@@ -131,7 +126,13 @@ const Layout = ({ children, title, maxWidth }) => {
               variant="h6"
               color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{
+                flexGrow: 1,
+                textIndent:
+                  title && isNegativeIndentTitleRequired(title)
+                    ? "-0.5em"
+                    : "0",
+              }}
             >
               {title ? title : siteMetadata.title}
             </Typography>
@@ -224,7 +225,7 @@ const Layout = ({ children, title, maxWidth }) => {
           {/* 这里进入页面主体 */}
           <Container
             maxWidth={maxWidth ? maxWidth : "lg"}
-            sx={{ mt: 6, mb: 6 }}
+            sx={{ mt: 4, mb: 4 }}
           >
             {children}
           </Container>
