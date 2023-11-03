@@ -9,9 +9,10 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import EventIcon from "@mui/icons-material/Event";
 import CategoryIcon from "@mui/icons-material/Category";
-
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
+
+import { isNegativeIndentTitleRequired } from "../utils/frontend";
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownRemark: post },
@@ -21,8 +22,6 @@ const BlogPostTemplate = ({
   if (post.fields.hasCover) {
     coverImage = getImage(post.fields.cover);
   }
-
-  const indented = post.frontmatter.title.startsWith("「");
 
   return (
     <Layout location={location} title={post.frontmatter.title || "Untitled"}>
@@ -47,7 +46,9 @@ const BlogPostTemplate = ({
                   sx={{
                     mt: 0.5,
                     mb: 1,
-                    ml: indented ? -0.75 : 0,
+                    ml: isNegativeIndentTitleRequired(post.frontmatter.title)
+                      ? -0.75
+                      : 0,
                     fontSize: { lg: "1.7rem" },
                   }}
                 >
