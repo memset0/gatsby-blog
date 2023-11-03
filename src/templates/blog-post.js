@@ -33,8 +33,12 @@ const BlogPostTemplate = ({
               {post.fields.hasCover && (
                 <CardMedia component="div">
                   <GatsbyImage
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", maxHeight: "32rem" }}
                     image={coverImage}
+                    imgStyle={{
+                      objectFit: "cover",
+                      objectPosition: "center",
+                    }}
                     alt={post.frontmatter.title}
                   />
                 </CardMedia>

@@ -1,20 +1,15 @@
 // src/pages/index.tsx
 import React from "react";
-import { graphql, Link } from "gatsby";
+import { graphql } from "gatsby";
 import Bio from "../components/Bio";
 import Seo from "../components/Seo";
 import Layout from "../components/Layout";
+import ArticleList from "../components/Article/ArticleList";
 
 const IndexPage = ({ data }) => (
   <Layout maxWidth="md">
-        <Bio />
-        {data.allMarkdownRemark.edges.map(post => (
-          <div key={post.node.id}>
-            <h2>{post.node.frontmatter.title}</h2>
-            <p>Posted on {post.node.frontmatter.date}</p>
-            <Link to={post.node.fields.slug}>Read More</Link>
-          </div>
-        ))}
+    <Bio />
+    <ArticleList posts={data.allMarkdownRemark.edges}></ArticleList>
   </Layout>
 );
 
@@ -23,18 +18,24 @@ export const Head = () => <Seo title="主页" />;
 export const query = graphql`
   query IndexQuery {
     allMarkdownRemark(
-      filter: { frontmatter: { publish: { eq: true } } },
+      filter: { frontmatter: { publish: { eq: true } } }
       sort: { frontmatter: { date: DESC } }
     ) {
       edges {
         node {
           id
+          excerptAst
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
           }
           fields {
             slug
+            cover {
+              childImageSharp {
+                gatsbyImageData
+              }
+            }
           }
         }
       }

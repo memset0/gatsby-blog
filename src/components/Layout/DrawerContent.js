@@ -38,8 +38,6 @@ const DrawerContent = () => {
     },
   ];
 
-  console.log(navigators);
-
   return (
     <>
       <Toolbar

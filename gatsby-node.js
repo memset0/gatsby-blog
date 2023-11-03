@@ -135,7 +135,6 @@ exports.onCreateNode = async ({
         );
         fileNode = getNodeByPath(resolvedCoverPath);
       }
-      console.log(fileNode);
 
       if (fileNode) {
         createNodeField({

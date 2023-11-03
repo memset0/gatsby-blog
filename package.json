@@ -2,7 +2,7 @@
   "name": "memset0-blog",
   "private": true,
   "description": "The next generation of memset0's Blog. Powered by Gatsby.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "memset0 <memset0@outlook.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -30,10 +30,13 @@
     "gatsby-source-filesystem": "^5.12.0",
     "gatsby-transformer-remark": "^6.12.0",
     "gatsby-transformer-sharp": "^5.12.0",
+    "hast-util-to-html": "^9.0.0",
+    "mdast-util-to-string": "^4.0.0",
     "prismjs": "^1.29.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "rehype-react": "^8.0.0"
   },
   "devDependencies": {
     "prettier": "^2.8.8"
