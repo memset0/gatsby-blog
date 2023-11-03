@@ -37,7 +37,7 @@ const Bio = () => {
             item
             xs={12}
             lg={5}
-            sx={{ textAlign: "right", display: { sm: "none", lg: "block" } }}
+            sx={{ textAlign: "right", display: { xs: "none", lg: "block" } }}
           >
             <StaticImage
               src="../../content/assets/tagcloud-bgwhite.png"
