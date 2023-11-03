@@ -110,7 +110,7 @@ const Layout = ({ children, title, maxWidth }) => {
               aria-label="open drawer"
               onClick={isDesktop ? toggleDrawer : toggleMobileDrawer}
               sx={{
-                marginRight: "36px",
+                marginRight: { xs: "12px", md: "24px" },
               }}
             >
               <MenuIcon

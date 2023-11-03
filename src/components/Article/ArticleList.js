@@ -11,6 +11,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
+import { isNegativeIndentTitleRequired } from "../../utils/frontend";
+
 const renderAst = new rehypeReact({
   createElement: React.createElement,
 }).Compiler;
@@ -41,7 +43,7 @@ const ArticleList = ({ posts }) => {
           <Card sx={{ mt: 2, display: "flex" }} key={post.node.id}>
             <Grid container direction="row-reverse">
               {/* 封面 */}
-              <Grid item sx={12} md={5}>
+              <Grid item xs={12} md={5}>
                 <GatsbyLink
                   to={post.node.fields.slug}
                   style={{ color: "inherit" }}
@@ -69,18 +71,31 @@ const ArticleList = ({ posts }) => {
               </Grid>
 
               {/* 内容 */}
-              <Grid item sx={12} md={hasCover ? 7 : 12}>
+              <Grid item xs={12} md={hasCover ? 7 : 12}>
                 <Box
-                  sx={{
+                  style={{
                     display: "flex",
                     flexDirection: "column",
                   }}
                 >
-                  <CardContent sx={{ flex: "1 0 auto" }}>
-                    <Typography component="div" variant="h6">
+                  <CardContent style={{ flex: "1 0 auto" }}>
+                    <Typography
+                      component="div"
+                      variant="h6"
+                      sx={{
+                        textIndent: isNegativeIndentTitleRequired(
+                          post.node.frontmatter.title
+                        )
+                          ? "-0.5em"
+                          : 0,
+                      }}
+                    >
                       <GatsbyLink
                         to={post.node.fields.slug}
-                        style={{ textDecoration: "none", color: "inherit" }}
+                        style={{
+                          textDecoration: "none",
+                          color: "inherit",
+                        }}
                       >
                         {post.node.frontmatter.title}
                       </GatsbyLink>

@@ -50,8 +50,10 @@ const BlogPostTemplate = ({
                   sx={{
                     mt: 0.5,
                     mb: 1,
-                    ml: isNegativeIndentTitleRequired(post.frontmatter.title)
-                      ? -0.75
+                    textIndent: isNegativeIndentTitleRequired(
+                      post.frontmatter.title
+                    )
+                      ? "-0.75rem"
                       : 0,
                     fontSize: { lg: "1.7rem" },
                   }}
