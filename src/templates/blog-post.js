@@ -120,11 +120,9 @@ const BlogPostTemplate = ({
           <Grid item xs={12} lg={3}>
             <Card>
               <CardContent>
-                <p>这里打算做 Sidebar</p>
-                <p>这里打算做 Sidebar</p>
-                <p>这里打算做 Sidebar</p>
-                <p>这里打算做 Sidebar</p>
-                <p>这里打算做 Sidebar</p>
+                <p>这里是还没做好的侧边栏</p>
+                <p>这里是还没做好的侧边栏</p>
+                <p>这里是还没做好的侧边栏</p>
               </CardContent>
             </Card>
           </Grid>
