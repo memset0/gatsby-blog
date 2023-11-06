@@ -71,6 +71,7 @@ module.exports = {
           },
           `gatsby-remark-katex`,
           `gatsby-remark-prismjs`,
+          `gatsby-remark-custom`,
         ],
       },
     },

@@ -90,7 +90,7 @@ const BlogPostTemplate = ({
             </Card>
 
             {/* 这里放前后博文的导航链接 */}
-            <Grid container spacing={2} sx={{ mt: 1 }}>
+            {/* <Grid container spacing={2} sx={{ mt: 1 }}>
               {previous && (
                 <Grid item xs={12} lg={6}>
                   <Card>
@@ -113,7 +113,7 @@ const BlogPostTemplate = ({
                   </Card>
                 </Grid>
               )}
-            </Grid>
+            </Grid> */}
           </Grid>
 
           {/* 这里是侧边栏 */}

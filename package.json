@@ -37,7 +37,7 @@
     "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
     "rehype-react": "^8.0.0",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
     "prettier": "^2.8.8"
