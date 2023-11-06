@@ -1,7 +1,6 @@
 import React from "react";
 import { Link as GatsbyLink } from "gatsby";
 import { toHtml } from "hast-util-to-html";
-import rehypeReact from "rehype-react";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -12,12 +11,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { isNegativeIndentTitleRequired } from "../../utils/frontend";
-
-const renderAst = new rehypeReact({
-  createElement: React.createElement,
-}).Compiler;
-
-console.log("renderAst", renderAst);
 
 const ArticleList = ({ posts }) => {
   return (
@@ -48,17 +41,26 @@ const ArticleList = ({ posts }) => {
                   to={post.node.fields.slug}
                   style={{ color: "inherit" }}
                 >
-                  <CardActionArea style={{ height: "100%" }}>
+                  <CardActionArea sx={{ height: "100%" }}>
                     {hasCover && (
                       <CardMedia
                         component="div"
-                        style={{ height: "100%", width: "100%" }}
-                        sx={{ width: "100%", maxHeight: { md: "20rem" } }}
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          maxHeight: { xs: "18rem", md: "100%" },
+                        }}
                       >
                         <GatsbyImage
                           image={getImage(post.node.fields.cover)}
-                          style={{ height: "100%" }}
+                          style={{
+                            position: "relative",
+                            height: "100%",
+                          }}
                           imgStyle={{
+                            position: "absolute",
+                            top: "0",
+                            left: "0",
                             width: "100%",
                             height: "100%",
                             objectFit: "cover",

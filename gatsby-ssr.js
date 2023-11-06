@@ -4,13 +4,13 @@
  * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-ssr/
  */
 
-const React = require("react")
+const React = require("react");
 
 /**
  * @type {import('gatsby').GatsbySSR['onRenderBody']}
  */
 exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
-  setHtmlAttributes({ lang: `zh-CN` })
+  setHtmlAttributes({ lang: `zh-CN` });
 
   setHeadComponents([
     <link
@@ -19,5 +19,5 @@ exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
       crossOrigin="anonymous"
       key="katexStyle"
     />,
-  ])
-}
+  ]);
+};
