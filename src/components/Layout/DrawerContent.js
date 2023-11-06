@@ -26,11 +26,11 @@ const DrawerContent = () => {
       text: "主页",
       icon: <HomeIcon />,
     },
-    {
-      to: "/oi/",
-      text: "算法竞赛",
-      icon: <LeaderboardIcon />,
-    },
+    // {
+    //   to: "/oi/",
+    //   text: "算法竞赛",
+    //   icon: <LeaderboardIcon />,
+    // },
     {
       to: "/about/",
       text: "关于我",
@@ -68,7 +68,7 @@ const DrawerContent = () => {
             </ListItemButton>
           </ListItem>
         ))}
-        <Divider sx={{ my: 1 }} />
+        {/* <Divider sx={{ my: 1 }} />
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -100,7 +100,7 @@ const DrawerContent = () => {
             </ListItemIcon>
             <ListItemText primary="Inbox" />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
       </List>
     </>
   );
