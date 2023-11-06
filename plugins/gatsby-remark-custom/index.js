@@ -36,6 +36,10 @@ module.exports = ({ markdownAST }) => {
     }
 
     html += ">";
+    if (alt) {
+      html += `<span class="image-alt">${alt}</span>`;
+    }
+
     node.type = "html";
     node.value = html;
   });
