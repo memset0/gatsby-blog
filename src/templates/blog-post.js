@@ -33,7 +33,7 @@ const BlogPostTemplate = ({
               {post.fields.hasCover && (
                 <CardMedia component="div">
                   <GatsbyImage
-                    style={{ width: "100%", maxHeight: "32rem" }}
+                    style={{ width: "100%", maxHeight: "24rem" }}
                     image={coverImage}
                     imgStyle={{
                       objectFit: "cover",
@@ -43,6 +43,7 @@ const BlogPostTemplate = ({
                   />
                 </CardMedia>
               )}
+
               <CardContent sx={{ padding: { md: 3 } }}>
                 <Typography
                   variant="h5"
