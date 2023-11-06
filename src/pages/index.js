@@ -1,14 +1,14 @@
 // src/pages/index.tsx
 import React from "react";
 import { graphql } from "gatsby";
-import Bio from "../components/Bio";
+// import Bio from "../components/Bio";
 import Seo from "../components/Seo";
 import Layout from "../components/Layout";
 import ArticleList from "../components/Article/ArticleList";
 
 const IndexPage = ({ data }) => (
   <Layout maxWidth="md">
-    <Bio />
+    {/* <Bio /> */}
     <ArticleList posts={data.allMarkdownRemark.edges}></ArticleList>
   </Layout>
 );
