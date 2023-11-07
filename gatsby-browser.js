@@ -1,4 +1,3 @@
-import "./src/fixed.css";
-import "./src/typography.less";
-
-import "prismjs/themes/prism.css";
+import "./src/style/fixed.css";
+import "./src/style/typography.less";
+import "./src/style/highlight.css";
