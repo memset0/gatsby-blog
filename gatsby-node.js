@@ -8,11 +8,11 @@ const path = require(`path`);
 const {
   createFilePath,
   createRemoteFileNode,
-  createFileNodeFromBuffer,
 } = require(`gatsby-source-filesystem`);
+const { paginate } = require("gatsby-awesome-pagination");
 
-// Define the template for blog post
-const blogPost = path.resolve(`./src/templates/blog-post.js`);
+const blogList = path.resolve("./src/templates/blog-list.js");
+const blogPost = path.resolve("./src/templates/blog-post.js");
 
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
@@ -47,9 +47,18 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const posts = result.data.allMarkdownRemark.nodes;
 
-  // Create blog posts pages
-  // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
-  // `context` is available in the template as a prop and as a variable in GraphQL
+  paginate({
+    createPage,
+    items: posts,
+    itemsPerPage: 10,
+    pathPrefix: "/",
+    component: blogList,
+    context: {
+      pathPrefix: "/",
+      prefixRegex: "^/",
+      format: "index",
+    },
+  });
 
   if (posts.length > 0) {
     posts.forEach((post, index) => {

@@ -16,7 +16,7 @@ const IndexPage = ({ data }) => (
 export const Head = () => <Seo title="主页" />;
 
 export const query = graphql`
-  query IndexQuery {
+  query AllQuery {
     allMarkdownRemark(
       filter: { frontmatter: { publish: { eq: true } } }
       sort: { frontmatter: { date: DESC } }
