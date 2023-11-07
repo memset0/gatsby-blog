@@ -14,6 +14,8 @@ const { paginate } = require("gatsby-awesome-pagination");
 const blogList = path.resolve("./src/templates/blog-list.js");
 const blogPost = path.resolve("./src/templates/blog-post.js");
 
+const POST_PER_PAGE = 20;
+
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
@@ -50,7 +52,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   paginate({
     createPage,
     items: posts,
-    itemsPerPage: 10,
+    itemsPerPage: POST_PER_PAGE,
     pathPrefix: "/",
     component: blogList,
     context: {
@@ -59,6 +61,38 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       format: "index",
     },
   });
+
+  const folders = {};
+  for (const post of posts) {
+    const { slug } = post.fields;
+    if (slug) {
+      const patterns = slug.split("/");
+      for (let i = 2; i + 1 < patterns.length; i++) {
+        const folder = patterns.slice(0, i).join("/");
+        if (folder in folders) {
+          folders[folder].push(post);
+        } else {
+          folders[folder] = [post];
+        }
+      }
+    }
+  }
+
+  for (const folder in folders) {
+    const currentPosts = folders[folder];
+    paginate({
+      createPage,
+      items: currentPosts,
+      itemsPerPage: POST_PER_PAGE,
+      pathPrefix: folder,
+      component: blogList,
+      context: {
+        pathPrefix: folder + "/",
+        prefixRegex: "^" + folder + "/",
+        format: "index",
+      },
+    });
+  }
 
   if (posts.length > 0) {
     posts.forEach((post, index) => {

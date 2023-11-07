@@ -6,7 +6,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
-import InboxIcon from "@mui/icons-material/Inbox";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
@@ -15,10 +14,9 @@ import Link from "../Link";
 // import LogoSvg from "../../images/logo.svg";
 
 const DrawerContent = () => {
-  const isRouteMatched = route => {
-    return false;
-    // return route != "/" && location.pathname.startsWith(router);
-  };
+  // const isRouteMatched = route => {
+  //   // return route != "/" && location.pathname.startsWith(router);
+  // };
 
   const navigators = [
     {
@@ -26,11 +24,11 @@ const DrawerContent = () => {
       text: "主页",
       icon: <HomeIcon />,
     },
-    // {
-    //   to: "/oi/",
-    //   text: "算法竞赛",
-    //   icon: <LeaderboardIcon />,
-    // },
+    {
+      to: "/oi/",
+      text: "算法竞赛",
+      icon: <LeaderboardIcon />,
+    },
     {
       to: "/about/",
       text: "关于我",
@@ -48,13 +46,7 @@ const DrawerContent = () => {
           px: [1],
         }}
       >
-        <Link
-          to="/"
-          sx={{
-            width: "100%",
-            textAlign: "center",
-          }}
-        >
+        <Link to="/" sx={{ width: "100%", textAlign: "center" }}>
           <img height="52" src="/logo.svg" loading="eager" alt="" />
         </Link>
       </Toolbar>
@@ -68,6 +60,7 @@ const DrawerContent = () => {
             </ListItemButton>
           </ListItem>
         ))}
+
         {/* <Divider sx={{ my: 1 }} />
         <ListItem disablePadding>
           <ListItemButton>
