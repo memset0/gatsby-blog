@@ -21,6 +21,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DrawerContent from "./Layout/DrawerContent";
+import Footer from "./Layout/Footer";
 
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
@@ -233,6 +234,9 @@ const Layout = ({ children, title, maxWidth }) => {
           >
             {children}
           </Container>
+
+          {/* 这里放页脚啦~ */}
+          <Footer />
         </Box>
       </Box>
     </ThemeProvider>
