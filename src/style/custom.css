@@ -1,0 +1,12 @@
+html {
+  overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+  .post-card {
+    margin-left: -16px;
+    margin-right: -16px;
+    margin-top: -32px;
+    border-radius: 0px !important;
+  }
+}

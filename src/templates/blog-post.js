@@ -28,7 +28,7 @@ const BlogPostTemplate = ({ data: { markdownRemark: post }, location }) => {
         <Grid container spacing={2}>
           {/* 这里是博文 */}
           <Grid item xs={12} lg={9}>
-            <Card>
+            <Card className="post-card">
               {post.fields.hasCover && (
                 <CardMedia component="div">
                   <GatsbyImage
