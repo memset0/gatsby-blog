@@ -11,6 +11,8 @@ const {
 } = require(`gatsby-source-filesystem`);
 const { paginate } = require("gatsby-awesome-pagination");
 
+const categories = require("./src/data/categories");
+
 const blogList = path.resolve("./src/templates/blog-list.js");
 const blogPost = path.resolve("./src/templates/blog-post.js");
 
@@ -192,6 +194,27 @@ exports.onCreateNode = async ({
       node,
       name: `hasCover`,
       value: !!coverPath,
+    });
+
+    const category = [];
+    let currentCategory = categories;
+    let categoryUri = "/";
+    for (const pattern of slug.split("/").slice(1, -1)) {
+      if (currentCategory && pattern in currentCategory) {
+        categoryUri += pattern + "/";
+        category.push({
+          name: currentCategory[pattern].name,
+          to: categoryUri,
+        });
+        currentCategory = currentCategory[pattern].children;
+      } else {
+        break;
+      }
+    }
+    createNodeField({
+      node,
+      name: "category",
+      value: JSON.stringify(category),
     });
   }
 };

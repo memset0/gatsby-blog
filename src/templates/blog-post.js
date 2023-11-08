@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -10,6 +11,7 @@ import Box from "@mui/material/Box";
 import EventIcon from "@mui/icons-material/Event";
 import CategoryIcon from "@mui/icons-material/Category";
 import Layout from "../components/Layout";
+import Link from "../components/Link";
 import Seo from "../components/Seo";
 
 import { isNegativeIndentTitleRequired } from "../utils/frontend";
@@ -50,7 +52,6 @@ const BlogPostTemplate = ({
                   component="div"
                   sx={{
                     mt: 0.5,
-                    mb: 1,
                     textIndent: isNegativeIndentTitleRequired(
                       post.frontmatter.title
                     )
@@ -66,19 +67,35 @@ const BlogPostTemplate = ({
                     display: "flex",
                     alignItems: "center",
                     color: "grey.500",
-                    mt: 1,
+                    mt: 2,
                     mb: 4,
                   }}
                 >
                   <EventIcon sx={{ mr: 1 }} />
-                  <Typography variant="body2" color="inherit">
+                  <Typography variant="body1" color="inherit">
                     {post.frontmatter.date}
                   </Typography>
-                  <CategoryIcon sx={{ mx: 1 }} />
-                  <Typography variant="body2" color="inherit">
-                    {"category"}
-                  </Typography>
+
+                  <CategoryIcon sx={{ ml: 2, mr: 1 }} />
+                  <Breadcrumbs
+                    aria-label="breadcrumb"
+                    sx={{ color: "grey.500" }}
+                  >
+                    {JSON.parse(post.fields.category).map(
+                      ({ name, to }, index) => (
+                        <Link
+                          underline="hover"
+                          color="inherit"
+                          href={to}
+                          key={index}
+                        >
+                          {name}
+                        </Link>
+                      )
+                    )}
+                  </Breadcrumbs>
                 </Box>
+
                 <Typography variant="body1">
                   <section
                     className="typography"
@@ -160,7 +177,7 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        date(formatString: "MM/DD/YYYY")
         description
       }
       fields {
@@ -170,6 +187,7 @@ export const pageQuery = graphql`
           }
         }
         hasCover
+        category
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {

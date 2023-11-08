@@ -39,7 +39,7 @@ const AppBar = styled(MuiAppBar, {
   }),
   ...(open && {
     marginLeft: drawerWidth,
-    width: isdesktop == "true" ? `calc(100% - ${drawerWidth}px)` : "100%",
+    width: isdesktop === "true" ? `calc(100% - ${drawerWidth}px)` : "100%",
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
