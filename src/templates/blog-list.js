@@ -1,21 +1,49 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { Link as GatsbyLink, graphql } from "gatsby";
+import Box from "@mui/material/Box";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
 import Seo from "../components/Seo";
-import Link from "../components/Link";
 import Layout from "../components/Layout";
 import ArticleList from "../components/Article/ArticleList";
 
 const BlogListTemplate = ({ data, pageContext }) => {
-  const { pathPrefix, previousPagePath, nextPagePath } = pageContext;
+  const { pathPrefix, pageNumber, numberOfPages } = pageContext;
+
+  const getTarget = page => (page == 1 ? pathPrefix : `${pathPrefix}${page}`);
 
   return (
     <Layout maxWidth="md">
-      <div>{JSON.stringify(pathPrefix)}</div>
-      <div>
-        {previousPagePath ? <Link to={previousPagePath}>Previous</Link> : null}
-        {nextPagePath ? <Link to={nextPagePath}>Next</Link> : null}
-      </div>
-      <ArticleList posts={data.posts.edges}></ArticleList>
+      <ArticleList
+        posts={data.posts.edges}
+        sx={{ marginLeft: "auto", marginRight: "auto" }}
+      ></ArticleList>
+
+      {numberOfPages > 1 && (
+        <Box
+          sx={{
+            mt: 3,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Pagination
+            page={pageNumber + 1}
+            count={numberOfPages}
+            color="primary"
+            variant="outlined"
+            shape="rounded"
+            renderItem={item => (
+              <PaginationItem
+                component={GatsbyLink}
+                to={getTarget(item.page)}
+                {...item}
+              />
+            )}
+          />
+        </Box>
+      )}
     </Layout>
   );
 };

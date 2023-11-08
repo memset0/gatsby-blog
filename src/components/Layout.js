@@ -38,7 +38,7 @@ const AppBar = styled(MuiAppBar, {
   }),
   ...(open && {
     marginLeft: drawerWidth,
-    width: isdesktop ? `calc(100% - ${drawerWidth}px)` : "100%",
+    width: isdesktop == "true" ? `calc(100% - ${drawerWidth}px)` : "100%",
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -98,7 +98,11 @@ const Layout = ({ children, title, maxWidth }) => {
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} isdesktop={isDesktop}>
+        <AppBar
+          position="absolute"
+          open={open}
+          isdesktop={(!!isDesktop).toString()}
+        >
           <Toolbar sx={{ pr: "24px" }}>
             {/* Appbar 菜单按钮 */}
             <IconButton

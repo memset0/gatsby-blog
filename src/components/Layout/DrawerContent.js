@@ -52,8 +52,8 @@ const DrawerContent = () => {
       </Toolbar>
       <Divider sx={{ opacity: { xs: 0, md: 1 } }} />
       <List component="nav">
-        {navigators.map(navigator => (
-          <ListItem disablePadding>
+        {navigators.map((navigator, index) => (
+          <ListItem disablePadding key={index}>
             <ListItemButton to={navigator.to} component={GatsbyLink}>
               <ListItemIcon>{navigator.icon}</ListItemIcon>
               <ListItemText primary={navigator.text} />
