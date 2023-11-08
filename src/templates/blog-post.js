@@ -16,10 +16,7 @@ import Seo from "../components/Seo";
 
 import { isNegativeIndentTitleRequired } from "../utils/frontend";
 
-const BlogPostTemplate = ({
-  data: { previous, next, site, markdownRemark: post },
-  location,
-}) => {
+const BlogPostTemplate = ({ data: { markdownRemark: post }, location }) => {
   let coverImage = null;
   if (post.fields.hasCover) {
     coverImage = getImage(post.fields.cover);
@@ -57,7 +54,7 @@ const BlogPostTemplate = ({
                     )
                       ? "-0.75rem"
                       : 0,
-                    fontSize: { lg: "1.7rem" },
+                    fontSize: { lg: "1.6rem" },
                   }}
                 >
                   {post.frontmatter.title}
@@ -67,7 +64,7 @@ const BlogPostTemplate = ({
                     display: "flex",
                     alignItems: "center",
                     color: "grey.500",
-                    mt: 2,
+                    mt: 1.5,
                     mb: 4,
                   }}
                 >
