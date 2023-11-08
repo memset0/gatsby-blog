@@ -16,7 +16,7 @@ const categories = require("./src/data/categories");
 const blogList = path.resolve("./src/templates/blog-list.js");
 const blogPost = path.resolve("./src/templates/blog-post.js");
 
-const POST_PER_PAGE = 20;
+const POSTS_PER_PAGE = 10;
 
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
@@ -54,7 +54,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   paginate({
     createPage,
     items: posts,
-    itemsPerPage: POST_PER_PAGE,
+    itemsPerPage: POSTS_PER_PAGE,
     pathPrefix: "/",
     component: blogList,
     context: {
@@ -85,7 +85,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     paginate({
       createPage,
       items: currentPosts,
-      itemsPerPage: POST_PER_PAGE,
+      itemsPerPage: POSTS_PER_PAGE,
       pathPrefix: folder,
       component: blogList,
       context: {
