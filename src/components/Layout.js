@@ -81,6 +81,26 @@ const Layout = ({ children }) => {
   const isSSR = typeof window === "undefined";
   const container = isSSR ? undefined : window.document.body;
 
+  // 用于挂载记录滚动进度钩子
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const unsafeWindow = typeof window === "undefined" ? {} : window;
+      if (typeof unsafeWindow.cachedScrollTop === "undefined") {
+        unsafeWindow.cachedScrollTop = {};
+      }
+      const $main = unsafeWindow.document.getElementById("main");
+      let lastScrollTop = 0;
+      $main.addEventListener("scroll", () => {
+        const scrollTop = $main.scrollTop;
+        if (Math.abs(scrollTop - lastScrollTop) > 100) {
+          const { location, cachedScrollTop } = unsafeWindow;
+          cachedScrollTop[location.pathname] = scrollTop;
+          lastScrollTop = scrollTop;
+        }
+      });
+    }
+  }, []);
+
   // 用于控制AppBar出现动画
   const [showAppBar, setShowAppBar] = React.useState(false);
   React.useEffect(() => {

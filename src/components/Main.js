@@ -13,11 +13,11 @@ const Main = ({ title, maxWidth, location, children }) => {
       unsafeWindow.cachedScrollTop = {};
     }
     const pathname = (location || {}).pathname || "#";
-    const { lastPathname, cachedScrollTop } = unsafeWindow;
+    const { document, lastPathname, cachedScrollTop } = unsafeWindow;
     if (lastPathname !== pathname) {
       const scrollTop = cachedScrollTop[pathname];
-      if (window.document && window.document.getElementById("main")) {
-        window.document.getElementById("main").scrollTop = scrollTop || 0;
+      if (document && document.getElementById("main")) {
+        document.getElementById("main").scrollTop = scrollTop || 0;
       }
     }
     unsafeWindow.lastPathname = pathname;
