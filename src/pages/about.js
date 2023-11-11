@@ -21,9 +21,9 @@ const awards = [
 
 const getTitle = () => "关于";
 
-const AboutPage = () => {
+const AboutPage = ({ location }) => {
   return (
-    <Main maxWidth="sm" title={getTitle()}>
+    <Main maxWidth="sm" title={getTitle()} location={location}>
       <Card sx={{ display: "flex", alignItems: "center", m: 2, p: 2 }}>
         <Avatar>
           <StaticImage

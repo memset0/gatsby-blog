@@ -5,11 +5,11 @@ import Seo from "../components/Seo";
 
 const getTitle = () => "404: Not Found";
 
-const NotFoundPage = ({ data }) => {
+const NotFoundPage = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title;
 
   return (
-    <Main maxWidth="sm" title={getTitle()}>
+    <Main maxWidth="sm" title={getTitle()} location={location}>
       <h1>404: Not Found</h1>
       <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
     </Main>

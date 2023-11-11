@@ -171,6 +171,7 @@ const Layout = ({ children }) => {
 
           <Box
             component="main"
+            id="main"
             sx={{
               backgroundColor: theme =>
                 theme.palette.mode === "light"

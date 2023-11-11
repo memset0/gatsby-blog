@@ -6,9 +6,25 @@ import LayoutContext from "../components/LayoutContext";
 import siteMetadata from "../data/metadata";
 
 const Main = ({ title, maxWidth, location, children }) => {
+  // 读取上次滚动位置
+  if (typeof window !== "undefined") {
+    const unsafeWindow = typeof window === "undefined" ? {} : window;
+    if (typeof unsafeWindow.cachedScrollTop === "undefined") {
+      unsafeWindow.cachedScrollTop = {};
+    }
+    const pathname = (location || {}).pathname || "#";
+    const { lastPathname, cachedScrollTop } = unsafeWindow;
+    if (lastPathname !== pathname) {
+      const scrollTop = cachedScrollTop[pathname];
+      if (window.document && window.document.getElementById("main")) {
+        window.document.getElementById("main").scrollTop = scrollTop || 0;
+      }
+    }
+    unsafeWindow.lastPathname = pathname;
+  }
+
   const { setTitle } = useContext(LayoutContext);
   setTitle(title || siteMetadata.title);
-  console.log(location);
 
   const [showMain, setShowMain] = React.useState(false);
   React.useEffect(() => {
