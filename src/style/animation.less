@@ -1,16 +1,19 @@
 .fade {
   &-enter {
-    opacity: 0;
+    opacity: 0 !important;
   }
   &-enter-active {
-    opacity: 1;
+    opacity: 1 !important;
     transition: opacity 500ms;
   }
+  &-enter-done {
+    opacity: 1 !important;
+  }
   &-exit {
-    opacity: 1;
+    opacity: 1 !important;
   }
   &-exit-active {
-    opacity: 0;
+    opacity: 0 !important;
     transition: opacity 500ms;
   }
 }
