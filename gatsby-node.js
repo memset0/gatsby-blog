@@ -50,20 +50,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   const posts = result.data.allMarkdownRemark.nodes;
-
-  paginate({
-    createPage,
-    items: posts,
-    itemsPerPage: POSTS_PER_PAGE,
-    pathPrefix: "/",
-    component: blogList,
-    context: {
-      pathPrefix: "/",
-      prefixRegex: "^/",
-      format: "index",
-    },
-  });
-
   const folders = {};
   for (const post of posts) {
     const { slug } = post.fields;
@@ -80,18 +66,48 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
   }
 
-  for (const folder in folders) {
-    const currentPosts = folders[folder];
+  // 创建主页
+  paginate({
+    createPage,
+    items: posts,
+    itemsPerPage: POSTS_PER_PAGE,
+    pathPrefix: "/",
+    component: blogList,
+    context: {
+      pathPrefix: "/",
+      prefixRegex: "^/",
+      format: "index",
+    },
+  });
+
+  // 创建每个分类的页面
+  const categoryPages = [];
+  const walkCategory = (node, uri, names) => {
+    if (names.length) {
+      categoryPages.push({ uri, names });
+    }
+    for (const key in node) {
+      names.push(node[key].name);
+      if (node[key].children) {
+        walkCategory(node[key].children, `${uri}/${key}`, names);
+      }
+      names.pop();
+    }
+  };
+  console.log(categoryPages);
+  walkCategory(categories, "", []);
+  for (const { uri, names } of categoryPages) {
     paginate({
       createPage,
-      items: currentPosts,
+      items: folders[uri],
       itemsPerPage: POSTS_PER_PAGE,
-      pathPrefix: folder,
+      pathPrefix: uri,
       component: blogList,
       context: {
-        pathPrefix: folder + "/",
-        prefixRegex: "^" + folder + "/",
+        pathPrefix: `${uri}/`,
+        prefixRegex: `^${uri}/`,
         format: "index",
+        names: JSON.stringify(names),
       },
     });
   }

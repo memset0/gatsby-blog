@@ -1,16 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { StaticImage } from "gatsby-plugin-image";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Main from "../components/Main";
 import Seo from "../components/Seo";
-import LayoutContext from "../components/LayoutContext";
 
 import siteMetadata from "../data/metadata";
 
@@ -23,11 +22,8 @@ const awards = [
 const getTitle = () => "关于";
 
 const AboutPage = () => {
-  const { title, setTitle } = useContext(LayoutContext);
-  setTitle(getTitle());
-
   return (
-    <Container maxWidth="sm">
+    <Main maxWidth="sm" title={getTitle()}>
       <Card sx={{ display: "flex", alignItems: "center", m: 2, p: 2 }}>
         <Avatar>
           <StaticImage
@@ -57,7 +53,7 @@ const AboutPage = () => {
           </Accordion>
         ))}
       </div>
-    </Container>
+    </Main>
   );
 };
 

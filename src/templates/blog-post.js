@@ -1,19 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import EventIcon from "@mui/icons-material/Event";
 import CategoryIcon from "@mui/icons-material/Category";
 import Link from "../components/Link";
+import Main from "../components/Main";
 import Seo from "../components/Seo";
-import LayoutContext from "../components/LayoutContext";
 
 import { isNegativeIndentTitleRequired } from "../utils/frontend";
 
@@ -23,8 +22,6 @@ const getTitle = ({ data }) => {
 
 const BlogPostTemplate = ({ data }) => {
   const { post } = data;
-  const { title, setTitle } = useContext(LayoutContext);
-  setTitle(getTitle({ data }));
 
   let coverImage = null;
   if (post.fields.hasCover) {
@@ -32,7 +29,7 @@ const BlogPostTemplate = ({ data }) => {
   }
 
   return (
-    <Container maxWidth="lg">
+    <Main maxWidth="lg" title={getTitle({ data })}>
       <article itemScope itemType="http://schema.org/Article">
         <Grid container spacing={2}>
           {/* 这里是博文 */}
@@ -151,7 +148,7 @@ const BlogPostTemplate = ({ data }) => {
           </Grid>
         </Grid>
       </article>
-    </Container>
+    </Main>
   );
 };
 

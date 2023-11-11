@@ -176,16 +176,7 @@ const Layout = ({ children }) => {
             <Toolbar />
 
             {/* 这里进入页面主体 */}
-
-            <CSSTransition in={showAppBar} timeout={500} classNames="fade">
-              <div
-                style={{
-                  opacity: "0",
-                }}
-              >
-                <Box sx={{ width: "100%", mt: 4, mb: 4 }}>{children}</Box>
-              </div>
-            </CSSTransition>
+            {children}
 
             {/* 这里放页脚啦~ */}
             <Footer />

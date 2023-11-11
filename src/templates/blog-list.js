@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link as GatsbyLink, graphql } from "gatsby";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArticleList from "../components/Article/ArticleList";
+import Main from "../components/Main";
 import Seo from "../components/Seo";
-import LayoutContext from "../components/LayoutContext";
 
 const getTitle = ({ data, pageContext }) => {
   return "文章列表";
@@ -14,13 +13,11 @@ const getTitle = ({ data, pageContext }) => {
 
 const BlogListTemplate = ({ data, pageContext }) => {
   const { pathPrefix, pageNumber, numberOfPages } = pageContext;
-  const { title, setTitle } = useContext(LayoutContext);
-  setTitle(getTitle({ data, pageContext }));
 
   const getTarget = page => (page === 1 ? pathPrefix : `${pathPrefix}${page}`);
 
   return (
-    <Container maxWidth="md">
+    <Main maxWidth="md" title={getTitle({ data, pageContext })}>
       <ArticleList
         posts={data.posts.edges}
         sx={{ marginLeft: "auto", marginRight: "auto" }}
@@ -51,7 +48,7 @@ const BlogListTemplate = ({ data, pageContext }) => {
           />
         </Box>
       )}
-    </Container>
+    </Main>
   );
 };
 
