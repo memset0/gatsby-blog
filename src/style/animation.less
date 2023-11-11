@@ -1,20 +1,3 @@
-.appear {
-  &-enter {
-    opacity: 0;
-  }
-  &-enter-active {
-    opacity: 1;
-    transition: opacity 0ms;
-  }
-  &-exit {
-    opacity: 1;
-  }
-  &-exit-active {
-    opacity: 0;
-    transition: opacity 0ms;
-  }
-}
-
 .fade {
   &-enter {
     opacity: 0;
@@ -33,25 +16,26 @@
 }
 
 .appbar-float {
-  .__basic {
-    position: fixed;
-    left: 0px;
-    width: 100%;
-    z-index: 20040214;
-  }
   &-enter {
-    .__basic();
-    top: -56px;
+    top: -68px !important;
   }
 
   &-enter-active {
-    .__basic();
-    top: 0px;
+    top: 0px !important;
     transition: top 500ms;
   }
 
   &-enter-done {
-    .__basic();
-    top: 0px;
+    top: 0px !important;
+  }
+}
+
+.appbar-animation {
+  &-basic {
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  &-fade-in {
+    opacity: 1;
   }
 }

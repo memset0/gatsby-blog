@@ -96,9 +96,10 @@ const Layout = ({ children, title, maxWidth }) => {
   const isSSR = typeof window === "undefined";
   const container = isSSR ? undefined : window.document.body;
 
-  const [showHeader, setShowHeader] = React.useState(isSSR ? false : true);
+  const [showHeader, setShowHeader] = React.useState(false);
   React.useEffect(() => {
     setShowHeader(true);
+    console.log("call use effect");
   }, []);
   console.log({ showHeader });
 
@@ -107,98 +108,102 @@ const Layout = ({ children, title, maxWidth }) => {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
-        <CSSTransition
-          in={showHeader}
-          timeout={500}
-          classNames="appbar-float"
-          // unmountOnExit
+        <div
+          // style={{
+          //   position: "fixed",
+          //   top: "-68px",
+          //   left: "0px",
+          //   width: "100%",
+          //   zIndex: "20040214",
+          // }}
+          className={`appbar-animation-basic ${
+            showHeader ? "appbar-animation-fade-in" : ""
+          }`}
         >
-          <div>
-            <AppBar
-              position="absolute"
-              open={open}
-              isdesktop={(!!isDesktop).toString()}
-            >
-              <Toolbar sx={{ pr: "24px" }}>
-                {/* Appbar 菜单按钮 */}
-                <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={isDesktop ? toggleDrawer : toggleMobileDrawer}
-                  sx={{ marginRight: { xs: "12px", md: "24px" } }}
-                >
-                  <MenuIcon
-                    sx={{
-                      display: { xs: "block", md: open ? "none" : "block" },
-                    }}
-                  />
-                  <ChevronLeftIcon
-                    sx={{
-                      display: { xs: "none", md: !open ? "none" : "block" },
-                    }}
-                  />
-                </IconButton>
-
-                {/* Appbar 标题 */}
-                <Typography
-                  component="h1"
-                  variant="h6"
-                  color="inherit"
-                  noWrap
+          <AppBar
+            position="absolute"
+            open={open}
+            isdesktop={(!!isDesktop).toString()}
+          >
+            <Toolbar sx={{ pr: "24px" }}>
+              {/* Appbar 菜单按钮 */}
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={isDesktop ? toggleDrawer : toggleMobileDrawer}
+                sx={{ marginRight: { xs: "12px", md: "24px" } }}
+              >
+                <MenuIcon
                   sx={{
-                    flexGrow: 1,
-                    textIndent:
-                      title && isNegativeIndentTitleRequired(title)
-                        ? "-0.5em"
-                        : "0",
+                    display: { xs: "block", md: open ? "none" : "block" },
                   }}
-                >
-                  {title ? title : siteMetadata.title}
-                </Typography>
+                />
+                <ChevronLeftIcon
+                  sx={{
+                    display: { xs: "none", md: !open ? "none" : "block" },
+                  }}
+                />
+              </IconButton>
 
-                {/* Appbar 右侧 */}
-                <IconButton onClick={handleAnchorElClick}>
-                  <Avatar>
-                    <StaticImage
-                      src="../images/avatar.png"
-                      alt={siteMetadata.author.name}
-                    />
-                  </Avatar>
-                </IconButton>
-                <Menu
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleAnchorElClose}
+              {/* Appbar 标题 */}
+              <Typography
+                component="h1"
+                variant="h6"
+                color="inherit"
+                noWrap
+                sx={{
+                  flexGrow: 1,
+                  textIndent:
+                    title && isNegativeIndentTitleRequired(title)
+                      ? "-0.5em"
+                      : "0",
+                }}
+              >
+                {title ? title : siteMetadata.title}
+              </Typography>
+
+              {/* Appbar 右侧 */}
+              <IconButton onClick={handleAnchorElClick}>
+                <Avatar>
+                  <StaticImage
+                    src="../images/avatar.png"
+                    alt={siteMetadata.author.name}
+                  />
+                </Avatar>
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleAnchorElClose}
+              >
+                <MenuItem
+                  onClick={handleAnchorElClose}
+                  component={GatsbyLink}
+                  href={siteMetadata.socialLink.github}
+                  target="_blank"
                 >
-                  <MenuItem
-                    onClick={handleAnchorElClose}
-                    component={GatsbyLink}
-                    href={siteMetadata.socialLink.github}
-                    target="_blank"
-                  >
-                    <ListItemIcon>
-                      <GitHubIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Github</ListItemText>
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleAnchorElClose}
-                    component={GatsbyLink}
-                    href={siteMetadata.socialLink.codeforces}
-                    target="_blank"
-                  >
-                    <ListItemIcon>
-                      <LeaderboardIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Codeforces</ListItemText>
-                  </MenuItem>
-                </Menu>
-              </Toolbar>
-            </AppBar>
-          </div>
-        </CSSTransition>
+                  <ListItemIcon>
+                    <GitHubIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Github</ListItemText>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleAnchorElClose}
+                  component={GatsbyLink}
+                  href={siteMetadata.socialLink.codeforces}
+                  target="_blank"
+                >
+                  <ListItemIcon>
+                    <LeaderboardIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Codeforces</ListItemText>
+                </MenuItem>
+              </Menu>
+            </Toolbar>
+          </AppBar>
+        </div>
 
         <Drawer
           container={container}
