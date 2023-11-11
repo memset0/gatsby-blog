@@ -1,29 +1,38 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import EventIcon from "@mui/icons-material/Event";
 import CategoryIcon from "@mui/icons-material/Category";
-import Layout from "../components/Layout";
 import Link from "../components/Link";
 import Seo from "../components/Seo";
+import LayoutContext from "../components/LayoutContext";
 
 import { isNegativeIndentTitleRequired } from "../utils/frontend";
 
-const BlogPostTemplate = ({ data: { markdownRemark: post }, location }) => {
+const getTitle = ({ data }) => {
+  return data.post.frontmatter.title || "Untitled!";
+};
+
+const BlogPostTemplate = ({ data }) => {
+  const { post } = data;
+  const { title, setTitle } = useContext(LayoutContext);
+  setTitle(getTitle({ data }));
+
   let coverImage = null;
   if (post.fields.hasCover) {
     coverImage = getImage(post.fields.cover);
   }
 
   return (
-    <Layout location={location} title={post.frontmatter.title || "Untitled"}>
+    <Container maxWidth="lg">
       <article itemScope itemType="http://schema.org/Article">
         <Grid container spacing={2}>
           {/* 这里是博文 */}
@@ -142,15 +151,15 @@ const BlogPostTemplate = ({ data: { markdownRemark: post }, location }) => {
           </Grid>
         </Grid>
       </article>
-    </Layout>
+    </Container>
   );
 };
 
-export const Head = ({ data: { markdownRemark: post } }) => {
+export const Head = ({ data }) => {
   return (
     <Seo
-      title={post.frontmatter.title}
-      description={post.frontmatter.description || post.excerpt}
+      title={getTitle({ data })}
+      description={data.post.frontmatter.description || data.post.excerpt}
     />
   );
 };
@@ -168,7 +177,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    markdownRemark(id: { eq: $id }) {
+    post: markdownRemark(id: { eq: $id }) {
       id
       excerpt(pruneLength: 160)
       html

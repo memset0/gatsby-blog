@@ -1,5 +1,5 @@
 module.exports = {
-  title: `memset0's Blog`,
+  title: `mem 的小站`,
   author: {
     name: `memset0`,
     summary: `在海月的虚空中，纵身飞过秋凉的时鸟。`,

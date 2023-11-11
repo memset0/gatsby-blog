@@ -1,23 +1,28 @@
-import * as React from "react"
-import { graphql } from "gatsby"
+import React, { useContext } from "react";
+import { graphql } from "gatsby";
+import Container from "@mui/material/Container";
+import Seo from "../components/Seo";
+import LayoutContext from "../components/LayoutContext";
 
-import Layout from "../components/Layout"
-import Seo from "../components/Seo"
+const getTitle = () => "404: Not Found";
 
-const NotFoundPage = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata.title
+const NotFoundPage = ({ data }) => {
+  const { title, setTitle } = useContext(LayoutContext);
+  const siteTitle = data.site.siteMetadata.title;
+
+  setTitle(getTitle());
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Container maxWidth="sm">
       <h1>404: Not Found</h1>
       <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-    </Layout>
-  )
-}
+    </Container>
+  );
+};
 
-export const Head = () => <Seo title="404: Not Found" />
+export const Head = () => <Seo title={getTitle()} />;
 
-export default NotFoundPage
+export default NotFoundPage;
 
 export const pageQuery = graphql`
   query {
@@ -27,4 +32,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

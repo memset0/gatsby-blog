@@ -10,7 +10,6 @@ import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -23,6 +22,7 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DrawerContent from "./Layout/DrawerContent";
 import Footer from "./Layout/Footer";
+import LayoutContext from "./LayoutContext";
 
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
@@ -71,197 +71,186 @@ const PermanentDrawer = styled(Drawer, {
   },
 }));
 
-const Layout = ({ children, title, maxWidth }) => {
+const Layout = ({ children }) => {
   const [open, setOpen] = React.useState(true);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleAnchorElClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleAnchorElClose = () => {
-    setAnchorEl(null);
-  };
+  const [title, setTitle] = React.useState(siteMetadata.title);
 
   const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
-
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-  const toggleMobileDrawer = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const handleAnchorElClick = event => setAnchorEl(event.currentTarget);
+  const handleAnchorElClose = () => setAnchorEl(null);
+  const toggleDrawer = () => setOpen(!open);
+  const toggleMobileDrawer = () => setMobileOpen(!mobileOpen);
 
   const isSSR = typeof window === "undefined";
   const container = isSSR ? undefined : window.document.body;
 
-  const [showHeader, setShowHeader] = React.useState(false);
+  // 用于控制AppBar出现动画
+  const [showAppBar, setShowAppBar] = React.useState(false);
   React.useEffect(() => {
-    setShowHeader(true);
-    console.log("call use effect");
+    setShowAppBar(true);
   }, []);
-  console.log({ showHeader });
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
+    <LayoutContext.Provider value={{ title, setTitle }}>
+      <ThemeProvider theme={theme}>
+        <Box sx={{ display: "flex" }}>
+          <CssBaseline />
 
-        <div
-          // style={{
-          //   position: "fixed",
-          //   top: "-68px",
-          //   left: "0px",
-          //   width: "100%",
-          //   zIndex: "20040214",
-          // }}
-          className={`appbar-animation-basic ${
-            showHeader ? "appbar-animation-fade-in" : ""
-          }`}
-        >
-          <AppBar
-            position="absolute"
+          <CSSTransition
+            in={showAppBar}
+            timeout={500}
+            classNames="appbar-float"
+          >
+            <div
+              style={{
+                position: "fixed",
+                top: "-68px",
+                left: "0px",
+                width: "100%",
+                zIndex: "20040214",
+              }}
+            >
+              <AppBar
+                position="absolute"
+                open={open}
+                isdesktop={(!!isDesktop).toString()}
+              >
+                <Toolbar sx={{ pr: "24px" }}>
+                  {/* Appbar 菜单按钮 */}
+                  <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={isDesktop ? toggleDrawer : toggleMobileDrawer}
+                    sx={{ marginRight: { xs: "12px", md: "24px" } }}
+                  >
+                    <MenuIcon
+                      sx={{
+                        display: { xs: "block", md: open ? "none" : "block" },
+                      }}
+                    />
+                    <ChevronLeftIcon
+                      sx={{
+                        display: { xs: "none", md: !open ? "none" : "block" },
+                      }}
+                    />
+                  </IconButton>
+
+                  {/* Appbar 标题 */}
+                  <Typography
+                    component="h1"
+                    variant="h6"
+                    color="inherit"
+                    noWrap
+                    sx={{
+                      flexGrow: 1,
+                      textIndent:
+                        title && isNegativeIndentTitleRequired(title)
+                          ? "-0.5em"
+                          : "0",
+                    }}
+                  >
+                    {title ? title : siteMetadata.title}
+                  </Typography>
+
+                  {/* Appbar 右侧 */}
+                  <IconButton onClick={handleAnchorElClick}>
+                    <Avatar>
+                      <StaticImage
+                        src="../images/avatar.png"
+                        alt={siteMetadata.author.name}
+                      />
+                    </Avatar>
+                  </IconButton>
+                  <Menu
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleAnchorElClose}
+                  >
+                    <MenuItem
+                      onClick={handleAnchorElClose}
+                      component={GatsbyLink}
+                      href={siteMetadata.socialLink.github}
+                      target="_blank"
+                    >
+                      <ListItemIcon>
+                        <GitHubIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Github</ListItemText>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleAnchorElClose}
+                      component={GatsbyLink}
+                      href={siteMetadata.socialLink.codeforces}
+                      target="_blank"
+                    >
+                      <ListItemIcon>
+                        <LeaderboardIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText>Codeforces</ListItemText>
+                    </MenuItem>
+                  </Menu>
+                </Toolbar>
+              </AppBar>
+            </div>
+          </CSSTransition>
+
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={toggleMobileDrawer}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: "block", md: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
+            }}
+          >
+            <DrawerContent />
+          </Drawer>
+
+          <PermanentDrawer
+            anchor="left"
+            variant="permanent"
             open={open}
-            isdesktop={(!!isDesktop).toString()}
+            sx={{
+              display: { xs: "none", md: "block" },
+            }}
           >
-            <Toolbar sx={{ pr: "24px" }}>
-              {/* Appbar 菜单按钮 */}
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                onClick={isDesktop ? toggleDrawer : toggleMobileDrawer}
-                sx={{ marginRight: { xs: "12px", md: "24px" } }}
-              >
-                <MenuIcon
-                  sx={{
-                    display: { xs: "block", md: open ? "none" : "block" },
-                  }}
-                />
-                <ChevronLeftIcon
-                  sx={{
-                    display: { xs: "none", md: !open ? "none" : "block" },
-                  }}
-                />
-              </IconButton>
+            <DrawerContent />
+          </PermanentDrawer>
 
-              {/* Appbar 标题 */}
-              <Typography
-                component="h1"
-                variant="h6"
-                color="inherit"
-                noWrap
-                sx={{
-                  flexGrow: 1,
-                  textIndent:
-                    title && isNegativeIndentTitleRequired(title)
-                      ? "-0.5em"
-                      : "0",
-                }}
-              >
-                {title ? title : siteMetadata.title}
-              </Typography>
-
-              {/* Appbar 右侧 */}
-              <IconButton onClick={handleAnchorElClick}>
-                <Avatar>
-                  <StaticImage
-                    src="../images/avatar.png"
-                    alt={siteMetadata.author.name}
-                  />
-                </Avatar>
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleAnchorElClose}
-              >
-                <MenuItem
-                  onClick={handleAnchorElClose}
-                  component={GatsbyLink}
-                  href={siteMetadata.socialLink.github}
-                  target="_blank"
-                >
-                  <ListItemIcon>
-                    <GitHubIcon fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Github</ListItemText>
-                </MenuItem>
-                <MenuItem
-                  onClick={handleAnchorElClose}
-                  component={GatsbyLink}
-                  href={siteMetadata.socialLink.codeforces}
-                  target="_blank"
-                >
-                  <ListItemIcon>
-                    <LeaderboardIcon fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Codeforces</ListItemText>
-                </MenuItem>
-              </Menu>
-            </Toolbar>
-          </AppBar>
-        </div>
-
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={toggleMobileDrawer}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", md: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          <DrawerContent />
-        </Drawer>
-
-        <PermanentDrawer
-          anchor="left"
-          variant="permanent"
-          open={open}
-          sx={{
-            display: { xs: "none", md: "block" },
-          }}
-        >
-          <DrawerContent />
-        </PermanentDrawer>
-
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: theme =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
-          }}
-        >
-          <Toolbar />
-
-          {/* 这里进入页面主体 */}
-          <Container
-            maxWidth={maxWidth ? maxWidth : "lg"}
-            sx={{ mt: 4, mb: 4 }}
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: theme =>
+                theme.palette.mode === "light"
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: "100vh",
+              overflow: "auto",
+            }}
           >
-            {children}
-          </Container>
+            <Toolbar />
 
-          {/* 这里放页脚啦~ */}
-          <Footer />
+            {/* 这里进入页面主体 */}
+            <Box sx={{ width: "100%", mt: 4, mb: 4 }}>{children}</Box>
+
+            {/* 这里放页脚啦~ */}
+            <Footer />
+          </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </LayoutContext.Provider>
   );
 };
 

@@ -1,19 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link as GatsbyLink, graphql } from "gatsby";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import Seo from "../components/Seo";
-import Layout from "../components/Layout";
 import ArticleList from "../components/Article/ArticleList";
+import Seo from "../components/Seo";
+import LayoutContext from "../components/LayoutContext";
+
+const getTitle = ({ data, pageContext }) => {
+  return "文章列表";
+};
 
 const BlogListTemplate = ({ data, pageContext }) => {
   const { pathPrefix, pageNumber, numberOfPages } = pageContext;
+  const { title, setTitle } = useContext(LayoutContext);
+  setTitle(getTitle({ data, pageContext }));
 
   const getTarget = page => (page === 1 ? pathPrefix : `${pathPrefix}${page}`);
 
   return (
-    <Layout maxWidth="md">
+    <Container maxWidth="md">
       <ArticleList
         posts={data.posts.edges}
         sx={{ marginLeft: "auto", marginRight: "auto" }}
@@ -44,13 +51,15 @@ const BlogListTemplate = ({ data, pageContext }) => {
           />
         </Box>
       )}
-    </Layout>
+    </Container>
   );
 };
 
 export default BlogListTemplate;
 
-export const Head = () => <Seo title="主页" />;
+export const Head = ({ data, pageContext }) => (
+  <Seo title={getTitle({ data, pageContext })} />
+);
 
 export const pageQuery = graphql`
   query IndexQuery($skip: Int!, $limit: Int!, $prefixRegex: String!) {
