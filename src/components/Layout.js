@@ -74,7 +74,6 @@ const Layout = ({ children }) => {
     setOpen(!open);
   };
   const toggleMobileDrawer = () => {
-    console.log("drawer#mobile-open", mobileOpen, setMobileOpen);
     setMobileOpen(!mobileOpen);
   };
 

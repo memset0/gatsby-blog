@@ -8,12 +8,7 @@ const Layout = require("./src/components/Layout").default;
 
 exports.onPreRouteUpdate = () => {
   const unsafeWindow = typeof window === "undefined" ? {} : window;
-  console.log(
-    "[Gatsby]",
-    "onPreRouteUpdate",
-    unsafeWindow.location?.pathname,
-    unsafeWindow.cachedScrollTop
-  );
+  console.log("[Gatsby]", "onPreRouteUpdate", unsafeWindow.location?.pathname);
 };
 
 exports.onRouteUpdate = () => {
@@ -23,12 +18,7 @@ exports.onRouteUpdate = () => {
     setMobileOpen(false); // 切换页面时自动关闭Mobile端打开的drawer
     console.log("[hack]", "close mobile drawer");
   }
-  console.log(
-    "[Gatsby]",
-    "onRouteUpdate",
-    unsafeWindow.location?.pathname,
-    unsafeWindow.cachedScrollTop
-  );
+  console.log("[Gatsby]", "onRouteUpdate", unsafeWindow.location?.pathname);
 };
 
 // 避免在页面内切换时重新挂载Layout组件
