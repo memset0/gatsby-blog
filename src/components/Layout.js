@@ -1,32 +1,22 @@
 import React from "react";
 import { CSSTransition } from "react-transition-group";
-import { Link as GatsbyLink } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
 import { styled, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import AppBarContent from "./Layout/AppBarContent";
 import DrawerContent from "./Layout/DrawerContent";
 import Footer from "./Layout/Footer";
 import LayoutContext from "./LayoutContext";
 
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
-import { isNegativeIndentTitleRequired } from "../utils/frontend";
 
 export const drawerWidth = 220;
 
@@ -74,12 +64,9 @@ const PermanentDrawer = styled(Drawer, {
 const Layout = ({ children }) => {
   const [open, setOpen] = React.useState(true);
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [title, setTitle] = React.useState(siteMetadata.title);
 
   const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
-  const handleAnchorElClick = event => setAnchorEl(event.currentTarget);
-  const handleAnchorElClose = () => setAnchorEl(null);
   const toggleDrawer = () => setOpen(!open);
   const toggleMobileDrawer = () => setMobileOpen(!mobileOpen);
 
@@ -138,61 +125,7 @@ const Layout = ({ children }) => {
                     />
                   </IconButton>
 
-                  {/* Appbar 标题 */}
-                  <Typography
-                    component="h1"
-                    variant="h6"
-                    color="inherit"
-                    noWrap
-                    sx={{
-                      flexGrow: 1,
-                      textIndent:
-                        title && isNegativeIndentTitleRequired(title)
-                          ? "-0.5em"
-                          : "0",
-                    }}
-                  >
-                    {title ? title : siteMetadata.title}
-                  </Typography>
-
-                  {/* Appbar 右侧 */}
-                  <IconButton onClick={handleAnchorElClick}>
-                    <Avatar>
-                      <StaticImage
-                        src="../images/avatar.png"
-                        alt={siteMetadata.author.name}
-                      />
-                    </Avatar>
-                  </IconButton>
-                  <Menu
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleAnchorElClose}
-                  >
-                    <MenuItem
-                      onClick={handleAnchorElClose}
-                      component={GatsbyLink}
-                      href={siteMetadata.socialLink.github}
-                      target="_blank"
-                    >
-                      <ListItemIcon>
-                        <GitHubIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText>Github</ListItemText>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleAnchorElClose}
-                      component={GatsbyLink}
-                      href={siteMetadata.socialLink.codeforces}
-                      target="_blank"
-                    >
-                      <ListItemIcon>
-                        <LeaderboardIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText>Codeforces</ListItemText>
-                    </MenuItem>
-                  </Menu>
+                  <AppBarContent title={title} />
                 </Toolbar>
               </AppBar>
             </div>
