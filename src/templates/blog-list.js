@@ -10,7 +10,7 @@ import ArticleList from "../components/Article/ArticleList";
 const BlogListTemplate = ({ data, pageContext }) => {
   const { pathPrefix, pageNumber, numberOfPages } = pageContext;
 
-  const getTarget = page => (page == 1 ? pathPrefix : `${pathPrefix}${page}`);
+  const getTarget = page => (page === 1 ? pathPrefix : `${pathPrefix}${page}`);
 
   return (
     <Layout maxWidth="md">
