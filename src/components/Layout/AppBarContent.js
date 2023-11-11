@@ -20,7 +20,7 @@ const AppBarContent = ({ title }) => {
   const handleAnchorElClose = () => setAnchorEl(null);
 
   return (
-    <div>
+    <>
       {/* Appbar 标题 */}
       <Typography
         component="h1"
@@ -40,7 +40,7 @@ const AppBarContent = ({ title }) => {
       <IconButton onClick={handleAnchorElClick}>
         <Avatar>
           <StaticImage
-            src="../images/avatar.png"
+            src="../../images/avatar.png"
             alt={siteMetadata.author.name}
           />
         </Avatar>
@@ -74,7 +74,7 @@ const AppBarContent = ({ title }) => {
           <ListItemText>Codeforces</ListItemText>
         </MenuItem>
       </Menu>
-    </div>
+    </>
   );
 };
 
