@@ -4,11 +4,50 @@
   }
   &-enter-active {
     opacity: 1;
+    transition: opacity 0ms;
   }
   &-exit {
     opacity: 1;
   }
   &-exit-active {
     opacity: 0;
+    transition: opacity 0ms;
+  }
+}
+
+.fade {
+  &-enter {
+    opacity: 0;
+  }
+  &-enter-active {
+    opacity: 1;
+    transition: opacity 500ms;
+  }
+  &-exit {
+    opacity: 1;
+  }
+  &-exit-active {
+    opacity: 0;
+    transition: opacity 500ms;
+  }
+}
+
+.float {
+  &-enter {
+    transform: translateY(-100%);
+  }
+
+  &-enter-active {
+    transform: translateY(0);
+    transition: transform 500ms;
+  }
+
+  &-exit {
+    transform: translateY(0);
+  }
+
+  &-exit-active {
+    transform: translateY(-100%);
+    transition: transform 500ms;
   }
 }
