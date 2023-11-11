@@ -64,11 +64,19 @@ const PermanentDrawer = styled(Drawer, {
 const Layout = ({ children }) => {
   const [open, setOpen] = React.useState(true);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const unsafeWindow = typeof window === "undefined" ? {} : window;
+  unsafeWindow.setMobileOpen = setMobileOpen;
+
   const [title, setTitle] = React.useState(siteMetadata.title);
 
   const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
-  const toggleDrawer = () => setOpen(!open);
-  const toggleMobileDrawer = () => setMobileOpen(!mobileOpen);
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+  const toggleMobileDrawer = () => {
+    console.log("drawer#mobile-open", mobileOpen, setMobileOpen);
+    setMobileOpen(!mobileOpen);
+  };
 
   const isSSR = typeof window === "undefined";
   const container = isSSR ? undefined : window.document.body;
@@ -80,7 +88,7 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <LayoutContext.Provider value={{ title, setTitle }}>
+    <LayoutContext.Provider value={{ setTitle }}>
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />

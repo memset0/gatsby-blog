@@ -11,13 +11,17 @@ const getTitle = ({ data, pageContext }) => {
   return "文章列表";
 };
 
-const BlogListTemplate = ({ data, pageContext }) => {
+const BlogListTemplate = ({ data, location, pageContext }) => {
   const { pathPrefix, pageNumber, numberOfPages } = pageContext;
 
   const getTarget = page => (page === 1 ? pathPrefix : `${pathPrefix}${page}`);
 
   return (
-    <Main maxWidth="md" title={getTitle({ data, pageContext })}>
+    <Main
+      maxWidth="md"
+      title={getTitle({ data, pageContext })}
+      location={location}
+    >
       <ArticleList
         posts={data.posts.edges}
         sx={{ marginLeft: "auto", marginRight: "auto" }}

@@ -5,9 +5,10 @@ import LayoutContext from "../components/LayoutContext";
 
 import siteMetadata from "../data/metadata";
 
-const Main = ({ title, maxWidth, children }) => {
+const Main = ({ title, maxWidth, location, children }) => {
   const { setTitle } = useContext(LayoutContext);
   setTitle(title || siteMetadata.title);
+  console.log(location);
 
   const [showMain, setShowMain] = React.useState(false);
   React.useEffect(() => {

@@ -37,7 +37,7 @@ const AppBarContent = ({ title }) => {
       </Typography>
 
       {/* Appbar 右侧 */}
-      <IconButton onClick={handleAnchorElClick}>
+      <IconButton onClick={handleAnchorElClick} sx={{ mr: { xs: -2, md: -1 } }}>
         <Avatar>
           <StaticImage
             src="../../images/avatar.png"

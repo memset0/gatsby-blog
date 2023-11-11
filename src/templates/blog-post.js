@@ -20,7 +20,7 @@ const getTitle = ({ data }) => {
   return data.post.frontmatter.title || "Untitled!";
 };
 
-const BlogPostTemplate = ({ data }) => {
+const BlogPostTemplate = ({ data, location }) => {
   const { post } = data;
 
   let coverImage = null;
@@ -29,7 +29,7 @@ const BlogPostTemplate = ({ data }) => {
   }
 
   return (
-    <Main maxWidth="lg" title={getTitle({ data })}>
+    <Main maxWidth="lg" title={getTitle({ data })} location={location}>
       <article itemScope itemType="http://schema.org/Article">
         <Grid container spacing={2}>
           {/* 这里是博文 */}
