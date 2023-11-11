@@ -93,13 +93,14 @@ const Layout = ({ children, title, maxWidth }) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const container =
-    typeof window !== "undefined" ? () => window.document.body : undefined;
+  const isSSR = typeof window === "undefined";
+  const container = isSSR ? undefined : window.document.body;
 
-  const [showHeader, setShowHeader] = React.useState(false);
+  const [showHeader, setShowHeader] = React.useState(isSSR ? false : true);
   React.useEffect(() => {
     setShowHeader(true);
   }, []);
+  console.log({ showHeader });
 
   return (
     <ThemeProvider theme={theme}>

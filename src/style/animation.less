@@ -32,27 +32,26 @@
   }
 }
 
-.appbar-float-basic {
-  position: fixed;
-  left: 0px;
-  width: 100%;
-  z-index: 20040214;
-}
-
 .appbar-float {
+  .__basic {
+    position: fixed;
+    left: 0px;
+    width: 100%;
+    z-index: 20040214;
+  }
   &-enter {
-    .appbar-float-basic();
+    .__basic();
     top: -56px;
   }
 
   &-enter-active {
-    .appbar-float-basic();
+    .__basic();
     top: 0px;
     transition: top 500ms;
   }
 
   &-enter-done {
-    .appbar-float-basic();
+    .__basic();
     top: 0px;
   }
 }
