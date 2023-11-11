@@ -108,8 +108,8 @@ const Layout = ({ children, title, maxWidth }) => {
 
         <CSSTransition
           in={showHeader}
-          timeout={0}
-          classNames="appear"
+          timeout={500}
+          classNames="appbar-float"
           // unmountOnExit
         >
           <div>

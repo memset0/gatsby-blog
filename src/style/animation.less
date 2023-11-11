@@ -32,22 +32,27 @@
   }
 }
 
-.float {
+.appbar-float-basic {
+  position: fixed;
+  left: 0px;
+  width: 100%;
+  z-index: 20040214;
+}
+
+.appbar-float {
   &-enter {
-    transform: translateY(-100%);
+    .appbar-float-basic();
+    top: -56px;
   }
 
   &-enter-active {
-    transform: translateY(0);
-    transition: transform 500ms;
+    .appbar-float-basic();
+    top: 0px;
+    transition: top 500ms;
   }
 
-  &-exit {
-    transform: translateY(0);
-  }
-
-  &-exit-active {
-    transform: translateY(-100%);
-    transition: transform 500ms;
+  &-enter-done {
+    .appbar-float-basic();
+    top: 0px;
   }
 }
