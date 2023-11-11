@@ -83,33 +83,35 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // 创建每个分类的页面
   const categoryPages = [];
   const walkCategory = (node, uri, names) => {
-    if (names.length) {
-      categoryPages.push({ uri, names });
-    }
+    console.log("#walk", node, uri, names);
     for (const key in node) {
       names.push(node[key].name);
+      categoryPages.push({ uri: `${uri}/${key}`, names });
       if (node[key].children) {
         walkCategory(node[key].children, `${uri}/${key}`, names);
       }
       names.pop();
     }
   };
-  console.log(categoryPages);
   walkCategory(categories, "", []);
+  console.log(categoryPages);
+
   for (const { uri, names } of categoryPages) {
-    paginate({
-      createPage,
-      items: folders[uri],
-      itemsPerPage: POSTS_PER_PAGE,
-      pathPrefix: uri,
-      component: blogList,
-      context: {
-        pathPrefix: `${uri}/`,
-        prefixRegex: `^${uri}/`,
-        format: "index",
-        names: JSON.stringify(names),
-      },
-    });
+    if (Object.keys(folders).includes(uri)) {
+      paginate({
+        createPage,
+        items: folders[uri],
+        itemsPerPage: POSTS_PER_PAGE,
+        pathPrefix: uri,
+        component: blogList,
+        context: {
+          pathPrefix: `${uri}/`,
+          prefixRegex: `^${uri}/`,
+          format: "index",
+          names: JSON.stringify(names),
+        },
+      });
+    }
   }
 
   if (posts.length > 0) {
