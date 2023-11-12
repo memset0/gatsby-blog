@@ -7,8 +7,15 @@ import ArticleList from "../components/Article/ArticleList";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
 
+import siteMetadata from "../data/metadata";
+
 const getTitle = ({ data, pageContext }) => {
-  return "文章列表";
+  const names = JSON.parse(pageContext.names);
+  if (names.length) {
+    return "文章列表: " + names.join(" > ");
+  } else {
+    return siteMetadata.title;
+  }
 };
 
 const BlogListTemplate = ({ data, location, pageContext }) => {

@@ -76,6 +76,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     context: {
       pathPrefix: "/",
       prefixRegex: "^/",
+      names: "[]",
       format: "index",
     },
   });
@@ -86,7 +87,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     console.log("#walk", node, uri, names);
     for (const key in node) {
       names.push(node[key].name);
-      categoryPages.push({ uri: `${uri}/${key}`, names });
+      categoryPages.push({
+        uri: `${uri}/${key}`,
+        names: JSON.stringify(names),
+      });
       if (node[key].children) {
         walkCategory(node[key].children, `${uri}/${key}`, names);
       }
@@ -107,8 +111,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         context: {
           pathPrefix: `${uri}/`,
           prefixRegex: `^${uri}/`,
+          names,
           format: "index",
-          names: JSON.stringify(names),
         },
       });
     }

@@ -19,7 +19,7 @@ const awards = [
   // Add more awards as needed
 ];
 
-const getTitle = () => "关于";
+const getTitle = () => "关于我";
 
 const AboutPage = ({ location }) => {
   return (
