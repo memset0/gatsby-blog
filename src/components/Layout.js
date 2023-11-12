@@ -23,7 +23,6 @@ export const drawerWidth = 220;
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open",
 })(({ theme, open, isdesktop }) => ({
-  zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -119,7 +118,7 @@ const Layout = ({ children }) => {
                 top: "-68px",
                 left: "0px",
                 width: "100%",
-                zIndex: "20040214",
+                zIndex: theme.zIndex.drawer + 1,
               }}
             >
               <AppBar position="absolute" open={open} isdesktop={(!!isDesktop).toString()}>
