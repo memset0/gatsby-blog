@@ -34,20 +34,13 @@ const Seo = ({ description, title, children }) => {
 
   return (
     <>
-      <title>
-        {title && title !== defaultTitle
-          ? `${title} - ${defaultTitle}`
-          : defaultTitle}
-      </title>
+      <title>{title && title !== defaultTitle ? `${title} - ${defaultTitle}` : defaultTitle}</title>
       <meta name="description" content={metaDescription} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary" />
-      <meta
-        name="twitter:creator"
-        content={site.siteMetadata?.social?.twitter || ``}
-      />
+      <meta name="twitter:creator" content={site.siteMetadata?.social?.twitter || ``} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={metaDescription} />
       <style>{importantStyles}</style>

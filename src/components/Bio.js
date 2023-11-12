@@ -23,10 +23,7 @@ const Bio = () => {
       <CardContent sx={{ padding: 3 }}>
         <Grid container alignItems="center">
           <Grid item xs={12} lg={7}>
-            <Typography
-              variant="body2"
-              sx={{ marginTop: -2, marginBottom: -2 }}
-            >
+            <Typography variant="body2" sx={{ marginTop: -2, marginBottom: -2 }}>
               <section
                 className="typography"
                 itemProp="articleBody"
@@ -34,17 +31,8 @@ const Bio = () => {
               />
             </Typography>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            lg={5}
-            sx={{ textAlign: "right", display: { xs: "none", lg: "block" } }}
-          >
-            <StaticImage
-              src="../../content/assets/tagcloud-bgwhite.png"
-              alt="tagcloud"
-              height={240}
-            />
+          <Grid item xs={12} lg={5} sx={{ textAlign: "right", display: { xs: "none", lg: "block" } }}>
+            <StaticImage src="../../content/assets/tagcloud-bgwhite.png" alt="tagcloud" height={240} />
           </Grid>
         </Grid>
       </CardContent>

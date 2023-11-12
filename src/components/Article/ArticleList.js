@@ -10,7 +10,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-import { isNegativeIndentTitleRequired } from "../../utils/frontend";
+import { checkNegIndent } from "../../utils/frontend";
 
 const ArticleList = ({ posts }) => {
   return (
@@ -37,10 +37,7 @@ const ArticleList = ({ posts }) => {
             <Grid container direction="row-reverse">
               {/* 封面 */}
               <Grid item xs={12} md={5}>
-                <GatsbyLink
-                  to={post.node.fields.slug}
-                  style={{ color: "inherit" }}
-                >
+                <GatsbyLink to={post.node.fields.slug} style={{ color: "inherit" }}>
                   <CardActionArea sx={{ height: "100%" }}>
                     {hasCover && (
                       <CardMedia
@@ -76,23 +73,14 @@ const ArticleList = ({ posts }) => {
 
               {/* 内容 */}
               <Grid item xs={12} md={hasCover ? 7 : 12}>
-                <Box
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
+                <Box style={{ display: "flex", flexDirection: "column" }}>
                   <CardContent style={{ flex: "1 0 auto", padding: "20px" }}>
                     <Typography
                       component="div"
                       variant="h6"
                       sx={{
                         lineHeight: 1.35,
-                        textIndent: isNegativeIndentTitleRequired(
-                          post.node.frontmatter.title
-                        )
-                          ? "-0.3em"
-                          : 0,
+                        textIndent: checkNegIndent(post.node.frontmatter.title) ? "-0.3em" : 0,
                       }}
                     >
                       <GatsbyLink
@@ -105,25 +93,16 @@ const ArticleList = ({ posts }) => {
                         {post.node.frontmatter.title}
                       </GatsbyLink>
                     </Typography>
-                    <Typography
-                      variant="subtitle1"
-                      color="text.secondary"
-                      component="div"
-                    >
+                    <Typography variant="subtitle1" color="text.secondary" component="div">
                       {post.node.frontmatter.date}
                     </Typography>
 
                     {/* 概要部分 */}
-                    <Typography
-                      variant="body2"
-                      sx={{ minHeight: "16px", marginBottom: "-16px" }}
-                    >
+                    <Typography variant="body2" sx={{ minHeight: "16px", marginBottom: "-16px" }}>
                       <section
                         className="typography"
                         itemProp="articleBody"
-                        dangerouslySetInnerHTML={{
-                          __html: toHtml(post.node.excerptAst),
-                        }}
+                        dangerouslySetInnerHTML={{ __html: toHtml(post.node.excerptAst) }}
                       />
                     </Typography>
                   </CardContent>

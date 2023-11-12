@@ -1,3 +1,3 @@
-export function isNegativeIndentTitleRequired(title) {
+export function checkNegIndent(title) {
   return title.startsWith("「");
 }

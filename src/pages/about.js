@@ -26,10 +26,7 @@ const AboutPage = ({ location }) => {
     <Main maxWidth="sm" title={getTitle()} location={location}>
       <Card sx={{ display: "flex", alignItems: "center", m: 2, p: 2 }}>
         <Avatar>
-          <StaticImage
-            src="../images/avatar-4x.png"
-            alt={siteMetadata.author.name}
-          />
+          <StaticImage src="../images/avatar-4x.png" alt={siteMetadata.author.name} />
         </Avatar>
         <CardContent>
           <Typography variant="h5">{siteMetadata.author.name}</Typography>

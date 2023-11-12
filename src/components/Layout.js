@@ -112,11 +112,7 @@ const Layout = ({ children }) => {
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
 
-          <CSSTransition
-            in={showAppBar}
-            timeout={500}
-            classNames="appbar-float"
-          >
+          <CSSTransition in={showAppBar} timeout={500} classNames="appbar-float">
             <div
               style={{
                 position: "fixed",
@@ -126,11 +122,7 @@ const Layout = ({ children }) => {
                 zIndex: "20040214",
               }}
             >
-              <AppBar
-                position="absolute"
-                open={open}
-                isdesktop={(!!isDesktop).toString()}
-              >
+              <AppBar position="absolute" open={open} isdesktop={(!!isDesktop).toString()}>
                 <Toolbar sx={{ pr: "24px" }}>
                   {/* Appbar 菜单按钮 */}
                   <IconButton
@@ -140,16 +132,8 @@ const Layout = ({ children }) => {
                     onClick={isDesktop ? toggleDrawer : toggleMobileDrawer}
                     sx={{ marginRight: { xs: "12px", md: "24px" } }}
                   >
-                    <MenuIcon
-                      sx={{
-                        display: { xs: "block", md: open ? "none" : "block" },
-                      }}
-                    />
-                    <ChevronLeftIcon
-                      sx={{
-                        display: { xs: "none", md: !open ? "none" : "block" },
-                      }}
-                    />
+                    <MenuIcon sx={{ display: { xs: "block", md: open ? "none" : "block" } }} />
+                    <ChevronLeftIcon sx={{ display: { xs: "none", md: !open ? "none" : "block" } }} />
                   </IconButton>
 
                   <AppBarContent title={title} />
@@ -181,9 +165,7 @@ const Layout = ({ children }) => {
             anchor="left"
             variant="permanent"
             open={open}
-            sx={{
-              display: { xs: "none", md: "block" },
-            }}
+            sx={{ display: { xs: "none", md: "block" } }}
           >
             <DrawerContent />
           </PermanentDrawer>
@@ -193,9 +175,7 @@ const Layout = ({ children }) => {
             id="main"
             sx={{
               backgroundColor: theme =>
-                theme.palette.mode === "light"
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
+                theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[900],
               flexGrow: 1,
               height: "100vh",
               overflow: "auto",

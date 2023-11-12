@@ -5,10 +5,7 @@
  */
 
 const path = require(`path`);
-const {
-  createFilePath,
-  createRemoteFileNode,
-} = require(`gatsby-source-filesystem`);
+const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`);
 const { paginate } = require("gatsby-awesome-pagination");
 
 const categories = require("./src/data/categories");
@@ -42,10 +39,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `);
 
   if (result.errors) {
-    reporter.panicOnBuild(
-      `There was an error loading your blog posts`,
-      result.errors
-    );
+    reporter.panicOnBuild(`There was an error loading your blog posts`, result.errors);
     return;
   }
 
@@ -121,8 +115,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (posts.length > 0) {
     posts.forEach((post, index) => {
       const previousPostId = index === 0 ? null : posts[index - 1].id;
-      const nextPostId =
-        index === posts.length - 1 ? null : posts[index + 1].id;
+      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id;
 
       createPage({
         path: post.fields.slug,
@@ -141,15 +134,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
  * @type {import('gatsby').GatsbyNode['onCreateNode']}
  */
 let cachedNodes = null;
-exports.onCreateNode = async ({
-  node,
-  actions,
-  getNode,
-  getNodes,
-  createNodeId,
-  cache,
-  store,
-}) => {
+exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, cache, store }) => {
   const { createNodeField } = actions;
 
   if (node.internal.type === `MarkdownRemark`) {
@@ -160,10 +145,7 @@ exports.onCreateNode = async ({
         cachedNodes = getNodes();
       }
       for (const node of cachedNodes) {
-        if (
-          node.absolutePath &&
-          path.resolve(node.absolutePath) === resolvedPath
-        ) {
+        if (node.absolutePath && path.resolve(node.absolutePath) === resolvedPath) {
           return node;
         }
       }
@@ -195,11 +177,7 @@ exports.onCreateNode = async ({
         });
       } else {
         // 说明cover在本地，使用getNode方法获得gatsby-source-filesystem插件创建好的节点
-        const resolvedCoverPath = path.resolve(
-          __dirname,
-          "./content/cover/",
-          coverPath
-        );
+        const resolvedCoverPath = path.resolve(__dirname, "./content/cover/", coverPath);
         fileNode = getNodeByPath(resolvedCoverPath);
       }
 

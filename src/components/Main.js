@@ -33,11 +33,7 @@ const Main = ({ title, maxWidth, location, children }) => {
 
   return (
     <CSSTransition in={showMain} timeout={200} classNames="fade">
-      <div
-        style={{
-          opacity: "0",
-        }}
-      >
+      <div style={{ opacity: "0" }}>
         <Container maxWidth={maxWidth || "lg"} sx={{ mt: 4, mb: 4 }}>
           {children}
         </Container>

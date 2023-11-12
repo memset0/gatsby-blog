@@ -14,7 +14,7 @@ import Link from "../components/Link";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
 
-import { isNegativeIndentTitleRequired } from "../utils/frontend";
+import { checkNegIndent } from "../utils/frontend";
 
 const getTitle = ({ data }) => {
   return data.post.frontmatter.title || "Untitled!";
@@ -40,10 +40,7 @@ const BlogPostTemplate = ({ data, location }) => {
                   <GatsbyImage
                     style={{ width: "100%", maxHeight: "24rem" }}
                     image={coverImage}
-                    imgStyle={{
-                      objectFit: "cover",
-                      objectPosition: "center",
-                    }}
+                    imgStyle={{ objectFit: "cover", objectPosition: "center" }}
                     alt={post.frontmatter.title}
                   />
                 </CardMedia>
@@ -55,11 +52,7 @@ const BlogPostTemplate = ({ data, location }) => {
                   component="div"
                   sx={{
                     mt: 0.5,
-                    textIndent: isNegativeIndentTitleRequired(
-                      post.frontmatter.title
-                    )
-                      ? "-0.75rem"
-                      : 0,
+                    textIndent: checkNegIndent(post.frontmatter.title) ? "-0.75rem" : 0,
                     fontSize: { lg: "1.6rem" },
                   }}
                 >
@@ -80,22 +73,12 @@ const BlogPostTemplate = ({ data, location }) => {
                   </Typography>
 
                   <CategoryIcon sx={{ ml: 2, mr: 1 }} />
-                  <Breadcrumbs
-                    aria-label="breadcrumb"
-                    sx={{ color: "grey.500" }}
-                  >
-                    {JSON.parse(post.fields.category).map(
-                      ({ name, to }, index) => (
-                        <Link
-                          underline="hover"
-                          color="inherit"
-                          href={to}
-                          key={index}
-                        >
-                          {name}
-                        </Link>
-                      )
-                    )}
+                  <Breadcrumbs aria-label="breadcrumb" sx={{ color: "grey.500" }}>
+                    {JSON.parse(post.fields.category).map(({ name, to }, index) => (
+                      <Link underline="hover" color="inherit" href={to} key={index}>
+                        {name}
+                      </Link>
+                    ))}
                   </Breadcrumbs>
                 </Box>
 
@@ -154,21 +137,14 @@ const BlogPostTemplate = ({ data, location }) => {
 
 export const Head = ({ data }) => {
   return (
-    <Seo
-      title={getTitle({ data })}
-      description={data.post.frontmatter.description || data.post.excerpt}
-    />
+    <Seo title={getTitle({ data })} description={data.post.frontmatter.description || data.post.excerpt} />
   );
 };
 
 export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug(
-    $id: String!
-    $previousPostId: String
-    $nextPostId: String
-  ) {
+  query BlogPostBySlug($id: String!, $previousPostId: String, $nextPostId: String) {
     site {
       siteMetadata {
         title

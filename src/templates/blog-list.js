@@ -24,15 +24,8 @@ const BlogListTemplate = ({ data, location, pageContext }) => {
   const getTarget = page => (page === 1 ? pathPrefix : `${pathPrefix}${page}`);
 
   return (
-    <Main
-      maxWidth="md"
-      title={getTitle({ data, pageContext })}
-      location={location}
-    >
-      <ArticleList
-        posts={data.posts.edges}
-        sx={{ marginLeft: "auto", marginRight: "auto" }}
-      ></ArticleList>
+    <Main maxWidth="md" title={getTitle({ data, pageContext })} location={location}>
+      <ArticleList posts={data.posts.edges} sx={{ marginLeft: "auto", marginRight: "auto" }}></ArticleList>
 
       {numberOfPages > 1 && (
         <Box
@@ -49,13 +42,7 @@ const BlogListTemplate = ({ data, location, pageContext }) => {
             color="primary"
             variant="outlined"
             shape="rounded"
-            renderItem={item => (
-              <PaginationItem
-                component={GatsbyLink}
-                to={getTarget(item.page)}
-                {...item}
-              />
-            )}
+            renderItem={item => <PaginationItem component={GatsbyLink} to={getTarget(item.page)} {...item} />}
           />
         </Box>
       )}
@@ -65,17 +52,12 @@ const BlogListTemplate = ({ data, location, pageContext }) => {
 
 export default BlogListTemplate;
 
-export const Head = ({ data, pageContext }) => (
-  <Seo title={getTitle({ data, pageContext })} />
-);
+export const Head = ({ data, pageContext }) => <Seo title={getTitle({ data, pageContext })} />;
 
 export const pageQuery = graphql`
   query IndexQuery($skip: Int!, $limit: Int!, $prefixRegex: String!) {
     posts: allMarkdownRemark(
-      filter: {
-        frontmatter: { publish: { eq: true } }
-        fields: { slug: { regex: $prefixRegex } }
-      }
+      filter: { frontmatter: { publish: { eq: true } }, fields: { slug: { regex: $prefixRegex } } }
       sort: { frontmatter: { date: DESC } }
       skip: $skip
       limit: $limit

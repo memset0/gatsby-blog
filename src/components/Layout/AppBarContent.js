@@ -12,7 +12,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 
 import siteMetadata from "../../data/metadata";
-import { isNegativeIndentTitleRequired } from "../../utils/frontend";
+import { checkNegIndent } from "../../utils/frontend";
 
 const AppBarContent = ({ title }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -29,8 +29,7 @@ const AppBarContent = ({ title }) => {
         noWrap
         sx={{
           flexGrow: 1,
-          textIndent:
-            title && isNegativeIndentTitleRequired(title) ? "-0.5em" : "0",
+          textIndent: title && checkNegIndent(title) ? "-0.5em" : "0",
         }}
       >
         {title ? title : siteMetadata.title}
@@ -39,18 +38,10 @@ const AppBarContent = ({ title }) => {
       {/* Appbar 右侧 */}
       <IconButton onClick={handleAnchorElClick} sx={{ mr: { xs: -2, md: -1 } }}>
         <Avatar>
-          <StaticImage
-            src="../../images/avatar.png"
-            alt={siteMetadata.author.name}
-          />
+          <StaticImage src="../../images/avatar.png" alt={siteMetadata.author.name} />
         </Avatar>
       </IconButton>
-      <Menu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleAnchorElClose}
-      >
+      <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleAnchorElClose}>
         <MenuItem
           onClick={handleAnchorElClose}
           component={GatsbyLink}
