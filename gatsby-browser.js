@@ -1,5 +1,5 @@
 require("./src/style/animation.less");
-require("./src/style/custom.css");
+require("./src/style/custom.less");
 require("./src/style/typography.less");
 require("./src/style/highlight.css");
 

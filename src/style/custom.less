@@ -2,8 +2,13 @@ html {
   overflow: hidden;
 }
 
-@media screen and (max-width: 600px) {
-  .post-card {
+::selection {
+  background: rgba(178, 143, 206, 0.2);
+  color: inherit;
+}
+
+.post-card {
+  @media screen and (max-width: 600px) {
     margin-left: -16px;
     margin-right: -16px;
     margin-top: -32px;
