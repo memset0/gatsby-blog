@@ -12,13 +12,13 @@ import siteMetadata from "../data/metadata";
 const getTitle = ({ data, pageContext }) => {
   const names = JSON.parse(pageContext.names);
   if (names.length) {
-    return "文章列表: " + names.join(" > ");
+    return "文章列表: " + names.join(" / ");
   } else {
     return siteMetadata.title;
   }
 };
 
-const BlogListTemplate = ({ data, location, pageContext }) => {
+const PostListTemplate = ({ data, location, pageContext }) => {
   const { pathPrefix, pageNumber, numberOfPages } = pageContext;
 
   const getTarget = page => (page === 1 ? pathPrefix : `${pathPrefix}${page}`);
@@ -50,12 +50,12 @@ const BlogListTemplate = ({ data, location, pageContext }) => {
   );
 };
 
-export default BlogListTemplate;
+export default PostListTemplate;
 
 export const Head = ({ data, pageContext }) => <Seo title={getTitle({ data, pageContext })} />;
 
 export const pageQuery = graphql`
-  query IndexQuery($skip: Int!, $limit: Int!, $prefixRegex: String!) {
+  query PostListTemplate($skip: Int!, $limit: Int!, $prefixRegex: String!) {
     posts: allMarkdownRemark(
       filter: { frontmatter: { publish: { eq: true } }, fields: { slug: { regex: $prefixRegex } } }
       sort: { frontmatter: { date: DESC } }

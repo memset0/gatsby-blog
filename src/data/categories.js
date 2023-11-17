@@ -19,4 +19,17 @@ module.exports = {
       training: { name: "训练" },
     },
   },
+  dev: {
+    name: "开发札记",
+  },
+  course: {
+    name: "课程笔记",
+    doc: true,
+    useHeader: true,
+    children: {
+      "gen-ed": {
+        name: "通识课程",
+      },
+    },
+  },
 };

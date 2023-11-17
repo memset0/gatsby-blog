@@ -20,11 +20,11 @@ const getTitle = ({ data }) => {
   return data.post.frontmatter.title || "Untitled!";
 };
 
-const BlogPostTemplate = ({ data, location }) => {
+const PostTemplate = ({ data, location }) => {
   const { post } = data;
 
   let coverImage = null;
-  if (post.fields.hasCover) {
+  if (post.fields.cover) {
     coverImage = getImage(post.fields.cover);
   }
 
@@ -34,8 +34,8 @@ const BlogPostTemplate = ({ data, location }) => {
         <Grid container spacing={2}>
           {/* 这里是博文 */}
           <Grid item xs={12} lg={9}>
-            <Card className="post-card">
-              {post.fields.hasCover && (
+            <Card className="article-card">
+              {coverImage && (
                 <CardMedia component="div">
                   <GatsbyImage
                     style={{ width: "100%", maxHeight: "24rem" }}
@@ -141,10 +141,10 @@ export const Head = ({ data }) => {
   );
 };
 
-export default BlogPostTemplate;
+export default PostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($id: String!, $previousPostId: String, $nextPostId: String) {
+  query PostTemplate($id: String!, $previousPostId: String, $nextPostId: String) {
     site {
       siteMetadata {
         title
@@ -165,7 +165,6 @@ export const pageQuery = graphql`
             gatsbyImageData
           }
         }
-        hasCover
         category
       }
     }

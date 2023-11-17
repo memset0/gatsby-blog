@@ -8,10 +8,13 @@ const path = require(`path`);
 const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`);
 const { paginate } = require("gatsby-awesome-pagination");
 
+const { flatCategories } = require("./src/utils/category");
 const categories = require("./src/data/categories");
+const flattedCategories = flatCategories(categories);
 
-const blogList = path.resolve("./src/templates/blog-list.js");
-const blogPost = path.resolve("./src/templates/blog-post.js");
+const postListTemplate = path.resolve("./src/templates/post-list.js");
+const postTemplate = path.resolve("./src/templates/post.js");
+const docTemplate = path.resolve("./src/templates/doc.js");
 
 const POSTS_PER_PAGE = 10;
 
@@ -24,14 +27,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Get all markdown blog posts sorted by date
   const result = await graphql(`
     {
-      allMarkdownRemark(
-        filter: { frontmatter: { publish: { eq: true } } }
-        sort: { frontmatter: { date: ASC } }
-      ) {
+      allMarkdownRemark(sort: { frontmatter: { date: ASC } }) {
         nodes {
           id
+          frontmatter {
+            title
+            menu
+            publish
+          }
           fields {
             slug
+            isDoc
           }
         }
       }
@@ -44,11 +50,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   const posts = result.data.allMarkdownRemark.nodes;
+  require("fs").writeFileSync(
+    require("path").join(__dirname, "./tmp/posts.json"),
+    JSON.stringify(posts, null, 2)
+  );
   const folders = {};
   for (const post of posts) {
-    const { slug } = post.fields;
-    if (slug) {
-      const patterns = slug.split("/");
+    if (post.frontmatter.publish && post.fields.slug) {
+      const patterns = post.fields.slug.split("/");
       for (let i = 2; i + 1 < patterns.length; i++) {
         const folder = patterns.slice(0, i).join("/");
         if (folder in folders) {
@@ -63,10 +72,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // 创建主页
   paginate({
     createPage,
-    items: posts,
+    items: posts.filter(post => post.frontmatter.publish),
     itemsPerPage: POSTS_PER_PAGE,
     pathPrefix: "/",
-    component: blogList,
+    component: postListTemplate,
     context: {
       pathPrefix: "/",
       prefixRegex: "^/",
@@ -91,9 +100,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       names.pop();
     }
   };
-  walkCategory(categories, "", []);
-  console.log(categoryPages);
-
   for (const { uri, names } of categoryPages) {
     if (Object.keys(folders).includes(uri)) {
       paginate({
@@ -101,7 +107,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         items: folders[uri],
         itemsPerPage: POSTS_PER_PAGE,
         pathPrefix: uri,
-        component: blogList,
+        component: postListTemplate,
         context: {
           pathPrefix: `${uri}/`,
           prefixRegex: `^${uri}/`,
@@ -112,6 +118,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
   }
 
+  // 创建每篇博文/文档的页面
   if (posts.length > 0) {
     posts.forEach((post, index) => {
       const previousPostId = index === 0 ? null : posts[index - 1].id;
@@ -119,7 +126,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
       createPage({
         path: post.fields.slug,
-        component: blogPost,
+        component: post.fields.isDoc ? docTemplate : postTemplate,
         context: {
           id: post.id,
           previousPostId,
@@ -162,6 +169,23 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       value: slug,
     });
 
+    // 判断当前文件是不是文档
+    let isDoc = false;
+    for (const category of flattedCategories) {
+      if (slug.startsWith(category.slug)) {
+        if (category.node.doc) {
+          isDoc = true;
+        }
+      }
+    }
+    if (isDoc) {
+      createNodeField({
+        node,
+        name: "isDoc",
+        value: isDoc,
+      });
+    }
+
     const coverPath = node.frontmatter.cover;
     if (coverPath) {
       let fileNode;
@@ -190,11 +214,6 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
         // node.frontmatter.cover___NODE = fileNode.id;
       }
     }
-    createNodeField({
-      node,
-      name: `hasCover`,
-      value: !!coverPath,
-    });
 
     const category = [];
     let currentCategory = categories;
