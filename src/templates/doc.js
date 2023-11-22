@@ -8,6 +8,7 @@ import Main from "../components/Main";
 import Seo from "../components/Seo";
 
 import { checkNegIndent } from "../utils/frontend";
+import * as styles from "../style/article.module.less";
 
 const getTitle = ({ data }) => {
   return data.post.frontmatter.title || "Untitled!";
@@ -22,16 +23,13 @@ const DocTemplate = ({ data, location }) => {
         <Grid container spacing={2}>
           {/* 这里是博文 */}
           <Grid item xs={12} lg={9}>
-            <Card className="article-card">
+            <Card className={styles.articleCard}>
               <CardContent sx={{ padding: { md: 3 } }}>
                 <Typography
                   variant="h5"
                   component="div"
-                  sx={{
-                    mt: 0.5,
-                    textIndent: checkNegIndent(post.frontmatter.title) ? "-0.75rem" : 0,
-                    fontSize: { lg: "1.6rem" },
-                  }}
+                  className={styles.articleTitle}
+                  sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.35em" : 0 }}
                 >
                   {post.frontmatter.title}
                 </Typography>

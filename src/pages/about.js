@@ -34,7 +34,7 @@ const AboutPage = ({ location }) => {
         </CardContent>
       </Card>
 
-      <div>
+      {/* <>
         {awards.map((award, index) => (
           <Accordion key={index}>
             <AccordionSummary
@@ -49,7 +49,7 @@ const AboutPage = ({ location }) => {
             </AccordionDetails>
           </Accordion>
         ))}
-      </div>
+      </> */}
     </Main>
   );
 };
