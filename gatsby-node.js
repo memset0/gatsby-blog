@@ -50,10 +50,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   const posts = result.data.allMarkdownRemark.nodes;
-  require("fs").writeFileSync(
-    require("path").join(__dirname, "./tmp/posts.json"),
-    JSON.stringify(posts, null, 2)
-  );
+  // require("fs").writeFileSync(
+  //   require("path").join(__dirname, "./tmp/posts.json"),
+  //   JSON.stringify(posts, null, 2)
+  // );
   const folders = {};
   for (const post of posts) {
     if (post.frontmatter.publish && post.fields.slug) {
@@ -100,6 +100,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       names.pop();
     }
   };
+  walkCategory(categories, "", []);
   for (const { uri, names } of categoryPages) {
     if (Object.keys(folders).includes(uri)) {
       paginate({
