@@ -1,5 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -17,9 +18,12 @@ const getTitle = ({ data }) => {
 const DocTemplate = ({ data, location, pageContext }) => {
   const { post } = data;
   const { navJson } = pageContext;
+  const { propsJson } = post.fields;
+  const props = propsJson && JSON.parse(propsJson);
 
   console.log({ data, pageContext });
   console.log("[nav]", JSON.parse(navJson));
+  console.log("[props]", props);
 
   return (
     <Main maxWidth="lg" title={getTitle({ data })} location={location} navJson={navJson}>
@@ -35,13 +39,28 @@ const DocTemplate = ({ data, location, pageContext }) => {
                   sx={{
                     textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0,
                     mt: 2,
-                    mb: 4,
                   }}
                 >
                   {post.frontmatter.title}
                 </Typography>
 
-                <Typography variant="body1" sx={{}}>
+                {props && (
+                  <Box sx={{ mt: 2, ml: 4 }}>
+                    {props.map((el, index) => (
+                      <Typography
+                        variant="body1"
+                        component="div"
+                        key={index}
+                        sx={{ lineHeight: "1.8", color: "grey" }}
+                      >
+                        <div style={{ width: "9.8em", display: "inline-block" }}>{el.key}</div>
+                        {el.value}
+                      </Typography>
+                    ))}
+                  </Box>
+                )}
+
+                <Typography variant="body1" sx={{ mt: 4 }}>
                   <section
                     className="typography typography-doc"
                     itemProp="articleBody"
@@ -94,6 +113,7 @@ export const pageQuery = graphql`
       }
       fields {
         category
+        propsJson
       }
     }
   }

@@ -271,6 +271,23 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       });
     }
 
+    const props = [];
+    if (node.frontmatter.props) {
+      for (const el of Object.entries(node.frontmatter.props)) {
+        props.push({
+          key: el[0],
+          value: el[1],
+        });
+      }
+    }
+    if (props.length > 0) {
+      createNodeField({
+        node,
+        name: "propsJson",
+        value: JSON.stringify(props),
+      });
+    }
+
     const category = [];
     let currentCategory = categories;
     let categoryUri = "/";
