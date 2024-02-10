@@ -21,14 +21,15 @@ const getTitle = ({ data }) => {
   return data.post.frontmatter.title || "Untitled!";
 };
 
-const PostTemplate = ({ data, location }) => {
+const PostTemplate = ({ data, pageContext, location }) => {
   const { post } = data;
+  const { navJson } = pageContext;
+  const { isDoc, cover, propsJson } = post.fields;
 
-  const { cover } = post.fields;
-  let coverImage = null;
-  if (cover) {
-    coverImage = getImage(cover);
-  }
+  const coverImage = cover && getImage(cover);
+  const props = propsJson && JSON.parse(propsJson);
+  console.log("[nav]", navJson && JSON.parse(navJson));
+  console.log("[props]", props);
 
   return (
     <Main maxWidth="lg" title={getTitle({ data })} location={location}>
@@ -49,36 +50,69 @@ const PostTemplate = ({ data, location }) => {
               )}
 
               <CardContent sx={{ padding: { md: 3 } }}>
-                <Typography
-                  component="div"
-                  className={styles.articleTitle + " " + styles.articleTitlePost}
-                  sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0 }}
-                >
-                  {post.frontmatter.title}
-                </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "grey.500",
-                    mt: 1.5,
-                    mb: 4,
-                  }}
-                >
-                  <EventIcon sx={{ mr: 1 }} />
-                  <Typography variant="body1" color="inherit">
-                    {post.frontmatter.date}
-                  </Typography>
+                {isDoc ? (
+                  <>
+                    <Typography
+                      component="div"
+                      className={styles.articleTitle + " " + styles.articleTitleDoc}
+                      sx={{
+                        textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0,
+                        mt: 2,
+                      }}
+                    >
+                      {post.frontmatter.title}
+                    </Typography>
 
-                  <CategoryIcon sx={{ ml: 2, mr: 1 }} />
-                  <Breadcrumbs aria-label="breadcrumb" sx={{ color: "grey.500" }}>
-                    {JSON.parse(post.fields.category).map(({ name, to }, index) => (
-                      <Link underline="hover" color="inherit" href={to} key={index}>
-                        {name}
-                      </Link>
-                    ))}
-                  </Breadcrumbs>
-                </Box>
+                    {props && (
+                      <Box sx={{ mt: 2, ml: 4 }}>
+                        {props.map((el, index) => (
+                          <Typography
+                            variant="body1"
+                            component="div"
+                            key={index}
+                            sx={{ lineHeight: "1.8", color: "grey" }}
+                          >
+                            <div style={{ width: "9.8em", display: "inline-block" }}>{el.key}</div>
+                            {el.value}
+                          </Typography>
+                        ))}
+                      </Box>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Typography
+                      component="div"
+                      className={styles.articleTitle + " " + styles.articleTitlePost}
+                      sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0 }}
+                    >
+                      {post.frontmatter.title}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        color: "grey.500",
+                        mt: 1.5,
+                        mb: 4,
+                      }}
+                    >
+                      <EventIcon sx={{ mr: 1 }} />
+                      <Typography variant="body1" color="inherit">
+                        {post.frontmatter.date}
+                      </Typography>
+
+                      <CategoryIcon sx={{ ml: 2, mr: 1 }} />
+                      <Breadcrumbs aria-label="breadcrumb" sx={{ color: "grey.500" }}>
+                        {JSON.parse(post.fields.category).map(({ name, to }, index) => (
+                          <Link underline="hover" color="inherit" href={to} key={index}>
+                            {name}
+                          </Link>
+                        ))}
+                      </Breadcrumbs>
+                    </Box>
+                  </>
+                )}
 
                 <Typography variant="body1">
                   <section
@@ -163,7 +197,9 @@ export const pageQuery = graphql`
             gatsbyImageData
           }
         }
+        isDoc
         category
+        propsJson
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {

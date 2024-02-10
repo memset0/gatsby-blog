@@ -16,7 +16,6 @@ const flattedCategories = flatCategories(categories);
 
 const postListTemplate = path.resolve("./src/templates/post-list.js");
 const postTemplate = path.resolve("./src/templates/post.js");
-const docTemplate = path.resolve("./src/templates/doc.js");
 
 const POSTS_PER_PAGE = 10;
 
@@ -172,7 +171,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
       createPage({
         path: post.fields.slug,
-        component: post.fields.isDoc ? docTemplate : postTemplate,
+        component: postTemplate,
         context: {
           id: post.id,
           previousPostId,

@@ -12,7 +12,7 @@ import siteMetadata from "../data/metadata";
 const getTitle = ({ data, pageContext }) => {
   const names = JSON.parse(pageContext.names);
   if (names.length) {
-    return "文章列表: " + names.join(" / ");
+    return "文章列表：" + names.join(" / ");
   } else {
     return siteMetadata.title;
   }
