@@ -23,9 +23,10 @@ const Main = ({ title, maxWidth, location, children, navJson }) => {
     unsafeWindow.lastPathname = pathname;
   }
 
-  const { setTitle, setNavJson } = useContext(LayoutContext);
+  const { setTitle, setNavJson, setPathname } = useContext(LayoutContext);
   setTitle(title || siteMetadata.title);
   setNavJson(navJson || "");
+  setPathname(location.pathname);
 
   const [showMain, setShowMain] = React.useState(false);
   React.useEffect(() => {

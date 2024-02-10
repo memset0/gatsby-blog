@@ -69,6 +69,7 @@ const Layout = ({ children }) => {
 
   const [title, setTitle] = React.useState(siteMetadata.title);
   const [navJson, setNavJson] = React.useState("");
+  const [pathname, setPathname] = React.useState("");
 
   const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
   const toggleDrawer = () => {
@@ -108,7 +109,7 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <LayoutContext.Provider value={{ setTitle, setNavJson }}>
+    <LayoutContext.Provider value={{ setTitle, setNavJson, setPathname }}>
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
@@ -160,7 +161,7 @@ const Layout = ({ children }) => {
             }}
           >
             <DrawerContent />
-            {navJson && <DrawerNav navJson={navJson} />}
+            {navJson && <DrawerNav navJson={navJson} pathname={pathname} />}
           </Drawer>
 
           <PermanentDrawer
@@ -170,7 +171,7 @@ const Layout = ({ children }) => {
             sx={{ display: { xs: "none", md: "block" } }}
           >
             <DrawerContent />
-            {navJson && <DrawerNav navJson={navJson} />}
+            {navJson && <DrawerNav navJson={navJson} pathname={pathname} />}
           </PermanentDrawer>
 
           <Box
