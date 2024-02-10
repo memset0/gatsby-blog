@@ -8,12 +8,25 @@
 }
 
 .article-title {
-  font-weight: bold;
   color: #404040;
-  margin-top: 0.5em;
 
-  font-size: 1.2em;
-  @media screen and (min-width: 1200px) {
-    font-size: 1.8em;
+  &-post {
+    font-size: 1.5em !important;
+    @media screen and (min-width: 900px) {
+      font-size: 1.6em !important;
+    }
+    @media screen and (min-width: 1200px) {
+      font-size: 1.8em !important;
+    }
+  }
+
+  &-doc {
+    font-size: 1.5em !important;
+    @media screen and (min-width: 900px) {
+      font-size: 1.7em !important;
+    }
+    @media screen and (min-width: 1200px) {
+      font-size: 2em !important;
+    }
   }
 }

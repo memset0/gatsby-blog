@@ -50,10 +50,9 @@ const PostTemplate = ({ data, location }) => {
 
               <CardContent sx={{ padding: { md: 3 } }}>
                 <Typography
-                  variant="h5"
                   component="div"
-                  className={styles.articleTitle}
-                  sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.35em" : 0 }}
+                  className={styles.articleTitle + " " + styles.articleTitlePost}
+                  sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0 }}
                 >
                   {post.frontmatter.title}
                 </Typography>

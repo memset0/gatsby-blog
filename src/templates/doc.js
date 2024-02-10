@@ -30,15 +30,19 @@ const DocTemplate = ({ data, location, pageContext }) => {
             <Card className={styles.articleCard}>
               <CardContent sx={{ padding: { md: 3 } }}>
                 <Typography
-                  variant="h5"
                   component="div"
-                  className={styles.articleTitle}
-                  sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.35em" : 0 }}
+                  className={styles.articleTitle + " " + styles.articleTitleDoc}
+                  sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0 }}
                 >
                   {post.frontmatter.title}
                 </Typography>
 
-                <Typography variant="body1">
+                <Typography
+                  variant="body1"
+                  sx={{
+                    mt: 2,
+                  }}
+                >
                   <section
                     className="typography"
                     itemProp="articleBody"
@@ -74,7 +78,7 @@ export const Head = ({ data }) => {
 export default DocTemplate;
 
 export const pageQuery = graphql`
-  query DocTemplate($id: String!, $previousPostId: String, $nextPostId: String) {
+  query DocTemplate($id: String!) {
     site {
       siteMetadata {
         title
@@ -91,22 +95,6 @@ export const pageQuery = graphql`
       }
       fields {
         category
-      }
-    }
-    previous: markdownRemark(id: { eq: $previousPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
-      }
-    }
-    next: markdownRemark(id: { eq: $nextPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
       }
     }
   }
