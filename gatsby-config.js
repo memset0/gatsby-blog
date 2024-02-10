@@ -49,6 +49,7 @@ module.exports = {
       },
     },
     {
+      // 渲染markdown文件
       resolve: `gatsby-transformer-remark`,
       options: {
         footnotes: true,

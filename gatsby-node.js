@@ -136,12 +136,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
     console.log(allNavJson);
     function findNavJson(slug) {
+      let result = null;
+      let matchLength = 0;
       for (const navJson of allNavJson) {
-        if (slug.startsWith(navJson.slug)) {
-          return navJson.navJson;
+        if (slug.startsWith(navJson.slug) && navJson.slug.length > matchLength) {
+          result= navJson.navJson;
+          matchLength = navJson.slug.length;
         }
       }
-      return null;
+      return result;
     }
 
     for (let i = 0; i < posts.length; i++) {
