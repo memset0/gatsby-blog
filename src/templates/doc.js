@@ -32,19 +32,18 @@ const DocTemplate = ({ data, location, pageContext }) => {
                 <Typography
                   component="div"
                   className={styles.articleTitle + " " + styles.articleTitleDoc}
-                  sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0 }}
+                  sx={{
+                    textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0,
+                    mt: 2,
+                    mb: 4,
+                  }}
                 >
                   {post.frontmatter.title}
                 </Typography>
 
-                <Typography
-                  variant="body1"
-                  sx={{
-                    mt: 2,
-                  }}
-                >
+                <Typography variant="body1" sx={{}}>
                   <section
-                    className="typography"
+                    className="typography typography-doc"
                     itemProp="articleBody"
                     dangerouslySetInnerHTML={{ __html: post.html }}
                   />
