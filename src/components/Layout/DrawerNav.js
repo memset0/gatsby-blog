@@ -13,6 +13,12 @@ function generateNav(nav, level, pathname) {
   return (
     <List component="div" dense={true}>
       {nav.map((el, index) => {
+        let externalFlag = false;
+        if (el.title.startsWith("!")) {
+          el.title = el.title.slice(1);
+          externalFlag = true;
+        }
+
         const correct = pathname === el.slug;
         const Text = (
           <ListItemText
@@ -40,9 +46,15 @@ function generateNav(nav, level, pathname) {
         } else {
           return (
             <div key={index}>
-              <ListItemButton key={index} component={GatsbyLink} to={el.slug}>
-                {Text}
-              </ListItemButton>
+              {externalFlag ? (
+                <ListItemButton key={index} component="a" href={el.slug}>
+                  {Text}
+                </ListItemButton>
+              ) : (
+                <ListItemButton key={index} component={GatsbyLink} to={el.slug}>
+                  {Text}
+                </ListItemButton>
+              )}
             </div>
           );
         }
