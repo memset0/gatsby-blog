@@ -15,7 +15,10 @@ function generateNav(nav, level, pathname) {
       {nav.map((el, index) => {
         const correct = pathname === el.slug;
         const Text = (
-          <ListItemText disableTypography={true} sx={{ ml: level * 4, fontWeight: correct ? "bold" : "inherit" }}>
+          <ListItemText
+            disableTypography={true}
+            sx={{ ml: level * 4, fontWeight: correct ? "bold" : "inherit" }}
+          >
             {el.title}
           </ListItemText>
         );
@@ -24,21 +27,23 @@ function generateNav(nav, level, pathname) {
           const [open, setOpen] = React.useState(true);
           const handleClick = () => setOpen(!open);
           return (
-            <>
-              <ListItemButton key={index} onClick={handleClick}>
+            <div key={index}>
+              <ListItemButton onClick={handleClick}>
                 {Text}
                 {open ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 {generateNav(el.children, level + 1, pathname)}
               </Collapse>
-            </>
+            </div>
           );
         } else {
           return (
-            <ListItemButton key={index} component={GatsbyLink} to={el.slug}>
-              {Text}
-            </ListItemButton>
+            <div key={index}>
+              <ListItemButton key={index} component={GatsbyLink} to={el.slug}>
+                {Text}
+              </ListItemButton>
+            </div>
           );
         }
       })}
