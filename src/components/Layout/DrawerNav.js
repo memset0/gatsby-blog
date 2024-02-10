@@ -26,9 +26,7 @@ function generateNav(nav, level, pathname) {
         if (el.children) {
           return (
             <div key={index}>
-              <ListItemButton>
-                {Text}
-              </ListItemButton>
+              <ListItemButton>{Text}</ListItemButton>
               <Collapse in={true} timeout="auto" unmountOnExit>
                 {generateNav(el.children, level + 1, pathname)}
               </Collapse>
@@ -59,7 +57,7 @@ const DrawerNav = ({ navJson, pathname }) => {
 
   return (
     <>
-      <Divider sx={{ opacity: { xs: 0, md: 1 } }} />
+      <Divider />
       {generateNav(nav, 0, pathname)}
     </>
   );
