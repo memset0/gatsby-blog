@@ -34,7 +34,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id
           frontmatter {
             title
-            menu
             publish
           }
           fields {
@@ -126,7 +125,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (posts.length > 0) {
     const allNavJson = [];
     for (const post of posts) {
-      console.log(">>>", post.fields.slug, post.fields.navJson);
       if (post.fields.navJson) {
         allNavJson.push({
           slug: post.fields.slug,
@@ -134,13 +132,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         });
       }
     }
-    console.log(allNavJson);
+
     function findNavJson(slug) {
       let result = null;
       let matchLength = 0;
       for (const navJson of allNavJson) {
         if (slug.startsWith(navJson.slug) && navJson.slug.length > matchLength) {
-          result= navJson.navJson;
+          result = navJson.navJson;
           matchLength = navJson.slug.length;
         }
       }

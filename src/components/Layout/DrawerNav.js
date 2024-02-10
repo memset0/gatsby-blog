@@ -13,12 +13,6 @@ function generateNav(nav, level, pathname) {
   return (
     <List component="div" dense={true}>
       {nav.map((el, index) => {
-        let externalFlag = false;
-        if (el.title.startsWith("!")) {
-          el.title = el.title.slice(1);
-          externalFlag = true;
-        }
-
         const correct = pathname === el.slug;
         const Text = (
           <ListItemText
@@ -30,15 +24,12 @@ function generateNav(nav, level, pathname) {
         );
 
         if (el.children) {
-          const [open, setOpen] = React.useState(true);
-          const handleClick = () => setOpen(!open);
           return (
             <div key={index}>
-              <ListItemButton onClick={handleClick}>
+              <ListItemButton>
                 {Text}
-                {open ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
-              <Collapse in={open} timeout="auto" unmountOnExit>
+              <Collapse in={true} timeout="auto" unmountOnExit>
                 {generateNav(el.children, level + 1, pathname)}
               </Collapse>
             </div>
@@ -46,15 +37,11 @@ function generateNav(nav, level, pathname) {
         } else {
           return (
             <div key={index}>
-              {externalFlag ? (
-                <ListItemButton key={index} component="a" href={el.slug}>
-                  {Text}
-                </ListItemButton>
-              ) : (
+              {
                 <ListItemButton key={index} component={GatsbyLink} to={el.slug}>
                   {Text}
                 </ListItemButton>
-              )}
+              }
             </div>
           );
         }
