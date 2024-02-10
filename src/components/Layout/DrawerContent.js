@@ -7,6 +7,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 import HomeIcon from "@mui/icons-material/Home";
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import PersonIcon from "@mui/icons-material/Person";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import { Link as GatsbyLink } from "gatsby";
@@ -28,6 +29,11 @@ const DrawerContent = () => {
       to: "/oi/",
       text: "算法竞赛",
       icon: <LeaderboardIcon />,
+    },
+    {
+      to: "/course/",
+      text: "课程笔记",
+      icon: <LocalLibraryIcon />,
     },
     {
       to: "/about/",

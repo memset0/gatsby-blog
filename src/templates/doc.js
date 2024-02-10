@@ -14,10 +14,11 @@ const getTitle = ({ data }) => {
   return data.post.frontmatter.title || "Untitled!";
 };
 
-const DocTemplate = ({ data, location }) => {
+const DocTemplate = ({ data, location, pageContext }) => {
   const { post } = data;
-  const { navJson } = post.fields;
+  const { navJson } = pageContext;
 
+  console.log({ data, pageContext });
   console.log("[nav]", JSON.parse(navJson));
 
   return (
@@ -89,7 +90,6 @@ export const pageQuery = graphql`
         description
       }
       fields {
-        navJson
         category
       }
     }

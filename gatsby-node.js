@@ -40,6 +40,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           fields {
             slug
             isDoc
+            navJson
           }
         }
       }
@@ -123,9 +124,50 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // 创建每篇博文/文档的页面
   if (posts.length > 0) {
-    posts.forEach((post, index) => {
-      const previousPostId = index === 0 ? null : posts[index - 1].id;
-      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id;
+    const allNavJson = [];
+    for (const post of posts) {
+      console.log(">>>", post.fields.slug, post.fields.navJson);
+      if (post.fields.navJson) {
+        allNavJson.push({
+          slug: post.fields.slug,
+          navJson: post.fields.navJson,
+        });
+      }
+    }
+    console.log(allNavJson);
+    function findNavJson(slug) {
+      for (const navJson of allNavJson) {
+        if (slug.startsWith(navJson.slug)) {
+          return navJson.navJson;
+        }
+      }
+      return null;
+    }
+
+    for (let i = 0; i < posts.length; i++) {
+      const post = posts[i];
+
+      let previousPostId = null;
+      let nextPostId = null;
+      if (!post.fields.isDoc) {
+        for (let j = i - 1; j >= 0; j--) {
+          if (!posts[j].fields.isDoc) {
+            previousPostId = posts[j].id;
+            break;
+          }
+        }
+        for (let j = i + 1; j < posts.length; j++) {
+          if (!posts[j].fields.isDoc) {
+            nextPostId = posts[j].id;
+            break;
+          }
+        }
+      }
+
+      let navJson = "";
+      if (post.fields.isDoc) {
+        navJson = findNavJson(post.fields.slug);
+      }
 
       createPage({
         path: post.fields.slug,
@@ -134,9 +176,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id: post.id,
           previousPostId,
           nextPostId,
+          navJson,
         },
       });
-    });
+    }
   }
 };
 
@@ -219,13 +262,11 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
     }
 
     if (node.frontmatter.nav) {
-      console.log(node.frontmatter.nav);
       const parsedNav = parseNav(path.dirname(node.fileAbsolutePath), slug, node.frontmatter.nav);
-      console.log(parsedNav);
       createNodeField({
         node,
         name: "navJson",
-        value: JSON.stringify(parsedNav),
+        value: JSON.stringify(parsedNav), // 在创建时处理并转化成字符串，否则无论是模板还是创建页面时都无法用GraphQL查询到
       });
     }
 
