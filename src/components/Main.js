@@ -5,7 +5,7 @@ import LayoutContext from "../components/LayoutContext";
 
 import siteMetadata from "../data/metadata";
 
-const Main = ({ title, maxWidth, location, children }) => {
+const Main = ({ title, maxWidth, location, children, navJson }) => {
   // 读取上次滚动位置
   if (typeof window !== "undefined") {
     const unsafeWindow = typeof window === "undefined" ? {} : window;
@@ -23,8 +23,9 @@ const Main = ({ title, maxWidth, location, children }) => {
     unsafeWindow.lastPathname = pathname;
   }
 
-  const { setTitle } = useContext(LayoutContext);
+  const { setTitle, setNavJson } = useContext(LayoutContext);
   setTitle(title || siteMetadata.title);
+  setNavJson(navJson || "");
 
   const [showMain, setShowMain] = React.useState(false);
   React.useEffect(() => {

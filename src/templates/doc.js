@@ -16,9 +16,12 @@ const getTitle = ({ data }) => {
 
 const DocTemplate = ({ data, location }) => {
   const { post } = data;
+  const { navJson } = post.fields;
+
+  console.log("[nav]", JSON.parse(navJson));
 
   return (
-    <Main maxWidth="lg" title={getTitle({ data })} location={location}>
+    <Main maxWidth="lg" title={getTitle({ data })} location={location} navJson={navJson}>
       <article itemScope itemType="http://schema.org/Article">
         <Grid container spacing={2}>
           {/* 这里是博文 */}
@@ -86,6 +89,7 @@ export const pageQuery = graphql`
         description
       }
       fields {
+        navJson
         category
       }
     }

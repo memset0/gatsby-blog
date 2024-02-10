@@ -12,6 +12,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import AppBarContent from "./Layout/AppBarContent";
 import DrawerContent from "./Layout/DrawerContent";
+import DrawerNav from "./Layout/DrawerNav";
 import Footer from "./Layout/Footer";
 import LayoutContext from "./LayoutContext";
 
@@ -67,6 +68,7 @@ const Layout = ({ children }) => {
   unsafeWindow.setMobileOpen = setMobileOpen;
 
   const [title, setTitle] = React.useState(siteMetadata.title);
+  const [navJson, setNavJson] = React.useState("");
 
   const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
   const toggleDrawer = () => {
@@ -106,7 +108,7 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <LayoutContext.Provider value={{ setTitle }}>
+    <LayoutContext.Provider value={{ setTitle, setNavJson }}>
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
@@ -158,6 +160,7 @@ const Layout = ({ children }) => {
             }}
           >
             <DrawerContent />
+            {navJson && <DrawerNav navJson={navJson} />}
           </Drawer>
 
           <PermanentDrawer
@@ -167,6 +170,7 @@ const Layout = ({ children }) => {
             sx={{ display: { xs: "none", md: "block" } }}
           >
             <DrawerContent />
+            {navJson && <DrawerNav navJson={navJson} />}
           </PermanentDrawer>
 
           <Box

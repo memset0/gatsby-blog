@@ -8,6 +8,8 @@ const path = require(`path`);
 const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`);
 const { paginate } = require("gatsby-awesome-pagination");
 
+const { parseNav } = require("./src/utils/nav");
+
 const { flatCategories } = require("./src/utils/category");
 const categories = require("./src/data/categories");
 const flattedCategories = flatCategories(categories);
@@ -87,7 +89,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // 创建每个分类的页面
   const categoryPages = [];
   const walkCategory = (node, uri, names) => {
-    console.log("#walk", node, uri, names);
+    // console.log("#walk", node, uri, names);
     for (const key in node) {
       names.push(node[key].name);
       categoryPages.push({
@@ -214,6 +216,17 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
         });
         // node.frontmatter.cover___NODE = fileNode.id;
       }
+    }
+
+    if (node.frontmatter.nav) {
+      console.log(node.frontmatter.nav);
+      const parsedNav = parseNav(path.dirname(node.fileAbsolutePath), slug, node.frontmatter.nav);
+      console.log(parsedNav);
+      createNodeField({
+        node,
+        name: "navJson",
+        value: JSON.stringify(parsedNav),
+      });
     }
 
     const category = [];

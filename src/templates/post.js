@@ -24,9 +24,10 @@ const getTitle = ({ data }) => {
 const PostTemplate = ({ data, location }) => {
   const { post } = data;
 
+  const { cover } = post.fields;
   let coverImage = null;
-  if (post.fields.cover) {
-    coverImage = getImage(post.fields.cover);
+  if (cover) {
+    coverImage = getImage(cover);
   }
 
   return (

@@ -3,21 +3,26 @@ const path = require("path");
 const YAML = require("yaml");
 const matter = require("gray-matter");
 
-module.exports = {
-  parseNav,
-  loadPostTitle,
-};
-
 function loadPostTitle(filePath) {
   const basename = path.basename(filePath);
   if (fs.existsSync(filePath)) {
     const content = fs.readFileSync(filePath).toString();
-    const frontMatter = matter(content);
+    const frontMatter = matter(content).data;
     if (frontMatter.title) {
       return frontMatter.title;
     }
   }
   return basename;
+}
+
+function transferToSlug(mixed) {
+  if (mixed.endsWith("index.md")) {
+    mixed = mixed.slice(0, -9);
+  }
+  if (mixed.endsWith(".md")) {
+    mixed = mixed.slice(0, -3);
+  }
+  return mixed.replace(/\\/g, "/");
 }
 
 function parseNav(fileRoot, slugRoot, source) {
@@ -29,7 +34,7 @@ function parseNav(fileRoot, slugRoot, source) {
         filePath = filePath.slice(0, -3);
       }
       result.push({
-        slug: path.join(slugRoot, filePath.slice(0, -3)).replace(/\\/g, "/"),
+        slug: transferToSlug(path.join(slugRoot, filePath)),
         file: path.join(fileRoot, filePath),
         title: loadPostTitle(path.join(fileRoot, filePath)),
       });
@@ -42,7 +47,7 @@ function parseNav(fileRoot, slugRoot, source) {
           filePath = filePath.slice(0, -3);
         }
         result.push({
-          slug: path.join(slugRoot, filePath.slice(0, -3)).replace(/\\/g, "/"),
+          slug: transferToSlug(path.join(slugRoot, filePath)),
           file: path.join(fileRoot, filePath),
           title: loadPostTitle(path.join(fileRoot, key)),
         });
@@ -57,23 +62,31 @@ function parseNav(fileRoot, slugRoot, source) {
   return result;
 }
 
-if (!module.parent) {
-  console.log(
-    JSON.stringify(
-      parseNav(
-        "",
-        "/",
-        YAML.parse(`- 课程简介: index.md
-- test.md
-- 笔记:
-  - 'note/1.md'
-  - 'note/2.md'
-  - 'note/3.md'
-  - 'note/4.md'
-  - 'note/5.md'`)
-      ),
-      null,
-      2
-    )
-  );
+class NavManager {
+  constructor() {
+    this._navPool = {};
+  }
+  registerNav(slug, nav) {
+    console.log("[nav] register", slug, nav);
+    this._navPool[slug] = this.parseNav(nav);
+    console.log("[nav] parsed", this._navPool[slug]);
+  }
+  queryNav(slug) {
+    console.log("[nav] query", slug, this._navPool);
+    let res = null;
+    let len = -1;
+    for (const [prefix, nav] of this._navPool.entries())
+      if (slug.startsWith(prefix) && prefix.length > len) {
+        len = prefix.length;
+        res = nav;
+      }
+    console.log("[nav] query", slug, res);
+    return res;
+  }
 }
+
+module.exports = {
+  loadPostTitle,
+  parseNav,
+  NavManager,
+};
