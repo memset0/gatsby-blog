@@ -32,7 +32,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
   console.log("[props]", props);
 
   return (
-    <Main maxWidth="lg" title={getTitle({ data })} location={location}>
+    <Main maxWidth="lg" title={getTitle({ data })} location={location} navJson={navJson}>
       <article itemScope itemType="http://schema.org/Article">
         <Grid container spacing={2}>
           {/* 这里是博文 */}
