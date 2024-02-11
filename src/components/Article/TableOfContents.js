@@ -14,7 +14,7 @@ function gen(toc) {
       {toc.map((el, index) => (
         <div key={index}>
           <ListItemButton component="a" href={el.href}>
-            <ListItemText sx={{ textIndent: `${el.level}em` }}>
+            <ListItemText sx={{ pl: `${el.level}em` }}>
               <span dangerouslySetInnerHTML={{ __html: el.text }}></span>
             </ListItemText>
           </ListItemButton>
