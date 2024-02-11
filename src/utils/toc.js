@@ -64,7 +64,7 @@ export function parseTableOfContents(html) {
       // console.log("[toc] find match", i, j, html.slice(i, j + 1));
       assert(j !== -1);
       let cur;
-      if (html[j - 1] === ">" && html[j - 2] != "a") {
+      if (html[j - 1] === ">" && html[j - 2] !== "a") {
         const k = findMatchL(j - 1);
         cur = parse(html.slice(i + 1, k));
         cur.children = build(k, j - 1, level + 1);
