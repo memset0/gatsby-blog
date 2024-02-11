@@ -4,7 +4,9 @@
  * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/
  */
 
-const path = require(`path`);
+const fs = require("fs");
+const path = require("path");
+const yaml = require("yaml");
 const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`);
 const { paginate } = require("gatsby-awesome-pagination");
 
@@ -311,6 +313,36 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
 };
 
 /**
+ * @type {import('gatsby').GatsbyNode['createResolvers']}
+ */
+exports.createResolvers = ({ createResolvers, cache, store, actions, createNodeId }) => {
+  createResolvers({
+    Site: {
+      friends: {
+        type: ["Friend"],
+        resolve: async ({ node }) => {
+          const filePath = path.resolve(__dirname, "./content/friends.yml");
+          const friends = yaml.parse(fs.readFileSync(filePath, "utf-8").toString());
+          // console.log(friends);
+          for (const friend of friends) {
+            friend.avatar = await createRemoteFileNode({
+              url: friend.avatarUrl,
+              // parentNodeId: node.id,
+              createNode: actions.createNode,
+              createNodeId,
+              cache,
+              store,
+            });
+          }
+          // console.log(friends);
+          return friends;
+        },
+      },
+    },
+  });
+};
+
+/**
  * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
  */
 exports.createSchemaCustomization = ({ actions }) => {
@@ -351,6 +383,14 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     type Fields {
       slug: String
+    }
+    
+    type Friend implements Node {
+      link: String
+      name: String
+      bio: String
+      avatar: File
+      avatarUrl: String
     }
   `);
 };

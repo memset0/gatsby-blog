@@ -42,7 +42,8 @@
     "react-helmet": "^6.1.0",
     "react-transition-group": "^4.4.5",
     "rehype-react": "^8.0.0",
-    "unist-util-visit": "^2.0.3"
+    "unist-util-visit": "^2.0.3",
+    "yaml": "^2.3.4"
   },
   "devDependencies": {
     "prettier": "^2.8.8"

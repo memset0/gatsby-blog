@@ -7,9 +7,10 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 import HomeIcon from "@mui/icons-material/Home";
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import PersonIcon from "@mui/icons-material/Person";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import LinkIcon from "@mui/icons-material/Link";
 import { Link as GatsbyLink } from "gatsby";
 import Link from "../Link";
 // import LogoSvg from "../../images/logo.svg";
@@ -34,6 +35,11 @@ const DrawerContent = () => {
       to: "/course/",
       text: "课程笔记",
       icon: <LocalLibraryIcon />,
+    },
+    {
+      to: "/friends/",
+      text: "友情链接",
+      icon: <LinkIcon />,
     },
     {
       to: "/about/",
