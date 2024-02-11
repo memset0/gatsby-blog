@@ -1,6 +1,8 @@
 import React from "react";
 import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -17,31 +19,35 @@ const FriendsPage = ({ data, location }) => {
 
   return (
     <Main maxWidth="md" title={getTitle()} location={location}>
-      <Card sx={{ mt: 2 }}>
-        <CardContent sx={{ pl: 2, pr: 2 }}>
-          <Typography variant="h5" sx={{ mt: 2, mb: 3 }}>
-            友情链接
-          </Typography>
-
-          <Grid container spacing={2}>
-            {friends.map((friend, index) => (
-              <Grid item xs={12} md={6} key={index}>
-                <Card component="div" href={friend.link} sx={{ height: 150, display: "flex" }}>
+      <Box sx={{ mt: 2 }}>
+        <Grid container spacing={2}>
+          {friends.map((friend, index) => (
+            <Grid item xs={12} lg={6} key={index}>
+              <Card component="div" sx={{ height: 150 }}>
+                <Button
+                  variant="text"
+                  component="a"
+                  href={friend.link}
+                  target="_blank"
+                  sx={{ p: 0, display: "flex", width: "100%" }}
+                >
                   <CardContent sx={{ width: "calc(100% - 150px)" }}>
-                    <Typography variant="h6" sx={{ fontWeight: "strong" }}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold", mb: 0.5 }}>
                       {friend.name}
                     </Typography>
-                    <Typography variant="body1">{friend.bio}</Typography>
+                    <Typography variant="body1" sx={{ color: "hsla(0,0%,0%,0.72)" }}>
+                      {friend.bio}
+                    </Typography>
                   </CardContent>
                   <CardMedia component="div" sx={{ width: 150 }}>
                     <GatsbyImage image={getImage(friend.avatar)} alt />
                   </CardMedia>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </CardContent>
-      </Card>
+                </Button>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Main>
   );
 };
