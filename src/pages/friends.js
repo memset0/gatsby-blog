@@ -11,11 +11,21 @@ import Typography from "@mui/material/Typography";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
 
+import { shuffle } from "../utils/random";
+
 const getTitle = () => "友情链接";
 
 const FriendsPage = ({ data, location }) => {
   const { friends } = data.site;
   console.log("[friends]", friends);
+
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const dateNum = year * 10000 + month * 100 + day;
+
+  shuffle(friends, dateNum);
 
   return (
     <Main maxWidth="md" title={getTitle()} location={location}>
