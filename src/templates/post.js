@@ -13,6 +13,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import Link from "../components/Link";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
+import TableOfContents from "../components/Article/TableOfContents";
 
 import { checkNegIndent } from "../utils/frontend";
 import * as styles from "../style/article.module.less";
@@ -28,6 +29,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
 
   const coverImage = cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
+
   console.log("[nav]", navJson && JSON.parse(navJson));
   console.log("[props]", props);
 
@@ -153,12 +155,13 @@ const PostTemplate = ({ data, pageContext, location }) => {
 
           {/* 这里是侧边栏 */}
           <Grid item xs={12} lg={3}>
-            <Card>
-              <CardContent>
-                <p>这里是还没做好的侧边栏</p>
-                <p>这里是还没做好的侧边栏</p>
-                <p>这里是还没做好的侧边栏</p>
-              </CardContent>
+            <Card
+              sx={{
+                position: "sticky",
+                top: "98px",
+              }}
+            >
+              <TableOfContents toc={post.tableOfContents} />
             </Card>
           </Grid>
         </Grid>
@@ -186,6 +189,7 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       html
+      tableOfContents(maxDepth: 4)
       frontmatter {
         title
         date(formatString: "MM/DD/YYYY")

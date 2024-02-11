@@ -24,6 +24,7 @@
     "gatsby-plugin-react-svg": "^3.3.0",
     "gatsby-plugin-sharp": "^5.13.1",
     "gatsby-plugin-static-folders": "^1.0.1",
+    "gatsby-remark-autolink-headers": "^6.13.1",
     "gatsby-remark-images": "^7.13.1",
     "gatsby-remark-katex": "^7.13.1",
     "gatsby-remark-prismjs": "^7.13.1",
