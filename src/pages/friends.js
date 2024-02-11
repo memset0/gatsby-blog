@@ -35,7 +35,7 @@ const FriendsPage = ({ data, location }) => {
                     <Typography variant="h6" sx={{ fontWeight: "bold", mb: 0.5 }}>
                       {friend.name}
                     </Typography>
-                    <Typography variant="body1" sx={{ color: "hsla(0,0%,0%,0.72)" }}>
+                    <Typography variant="body1" sx={{ color: "hsla(0,0%,0%,0.72)", textTransform: "none" }}>
                       {friend.bio}
                     </Typography>
                   </CardContent>
