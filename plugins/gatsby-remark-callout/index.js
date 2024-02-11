@@ -35,14 +35,14 @@ module.exports = ({ markdownAST }) => {
     node.children.unshift({
       type: "html",
       value: `<details ${
-        collapse ? "" : "open"
+        collapse ? "" : "open disabled"
       } class="callout callout-type-${type}"><summary>${title}</summary><div>`,
     });
     node.children.push({
       type: "html",
       value: "</div></details>",
     });
-    console.log(node.children);
-    console.log(">note", "!!!", heading, type, title);
+    // console.log(node.children);
+    // console.log(">note", "!!!", heading, type, title);
   });
 };
