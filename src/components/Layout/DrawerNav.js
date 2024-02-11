@@ -4,14 +4,14 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+// import ExpandLess from "@mui/icons-material/ExpandLess";
+// import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link as GatsbyLink } from "gatsby";
 
 function generateNav(nav, level, pathname) {
   // console.log("[nav] generate", { nav, level, pathname });
   return (
-    <List component="div" dense={true}>
+    <List component="div" dense={true} sx={{ pt: 0, pb: 0 }}>
       {nav.map((el, index) => {
         const correct = pathname === el.slug;
         const Text = (
@@ -57,7 +57,7 @@ const DrawerNav = ({ navJson, pathname }) => {
 
   return (
     <>
-      <Divider />
+      <Divider sx={{ mb: 1 }} />
       {generateNav(nav, 0, pathname)}
     </>
   );
