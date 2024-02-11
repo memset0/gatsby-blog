@@ -36,11 +36,11 @@ module.exports = ({ markdownAST }) => {
       type: "html",
       value: `<details ${
         collapse ? "" : "open"
-      } class="callout callout-type-${type}"><summary>${title}</summary>`,
+      } class="callout callout-type-${type}"><summary>${title}</summary><div>`,
     });
     node.children.push({
       type: "html",
-      value: "</details>",
+      value: "</div></details>",
     });
     console.log(node.children);
     console.log(">note", "!!!", heading, type, title);
