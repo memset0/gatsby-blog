@@ -17,11 +17,16 @@ const Footer = () => {
     >
       <Typography variant="body2" color="textSecondary">
         Proudly powered by{" "}
-        <a href="https://gatsbyjs.org/" class={styles.footerLink} target="_blank">
+        <a href="https://gatsbyjs.org/" class={styles.footerLink} target="_blank" rel="noreferrer">
           Gatsby.js
         </a>{" "}
         and themed by{" "}
-        <a href="https://github.com/memset0/gatsby-blog" class={styles.footerLink} target="_blank">
+        <a
+          href="https://github.com/memset0/gatsby-blog"
+          class={styles.footerLink}
+          target="_blank"
+          rel="noreferrer"
+        >
           myself
         </a>
         . <br />
