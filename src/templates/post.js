@@ -117,7 +117,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
                   </>
                 )}
 
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ mt: 2 }}>
                   <section
                     className="typography"
                     itemProp="articleBody"
