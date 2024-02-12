@@ -153,14 +153,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
               )}
             </Grid> */}
 
-            <Card sx={{ mt: 2 }}>
-              <CardContent sx={{ paddingBottom: "8px !important" }}>
-                <Typography variant="h6" gutterBottom>
-                  评论
-                </Typography>
-                <Comments slug={slug} />
-              </CardContent>
-            </Card>
+            <Comments slug={slug} sx={{ mt: 2 }} />
           </Grid>
 
           {/* 这里是侧边栏 */}

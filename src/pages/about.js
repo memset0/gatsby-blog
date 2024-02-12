@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
+import Comments from "../components/Comments";
 
 import siteMetadata from "../data/metadata";
 
@@ -24,7 +25,7 @@ const getTitle = () => "关于我";
 const AboutPage = ({ location }) => {
   return (
     <Main maxWidth="md" title={getTitle()} location={location}>
-      <Card sx={{ display: "flex", alignItems: "center", m: 2, p: 2 }}>
+      <Card sx={{ display: "flex", alignItems: "center", p: 2 }}>
         <Avatar>
           <StaticImage src="../images/avatar-4x.png" alt={siteMetadata.author.name} />
         </Avatar>
@@ -33,6 +34,8 @@ const AboutPage = ({ location }) => {
           <Typography variant="body1">{siteMetadata.author.summary}</Typography>
         </CardContent>
       </Card>
+
+      <Comments slug="/about" sx={{ mt: 2 }} />
 
       {/* <>
         {awards.map((award, index) => (
