@@ -22,15 +22,15 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
-import Awards from "../components/Awards";
+import MyTimeline from "../components/MyTimeline";
 import Comments from "../components/Comments";
 
 import siteMetadata from "../data/metadata";
 
-// const awards = [
+// const timeline = [
 //   { title: "Award 1", description: "Description for Award 1" },
 //   { title: "Award 2", description: "Description for Award 2" },
-//   // Add more awards as needed
+//   // Add more timeline as needed
 // ];
 
 const getTitle = () => "关于我";
@@ -129,26 +129,9 @@ const AboutPage = ({ data, location }) => {
         </Grid>
       </Grid>
 
-      <Awards awards={props.awards} sx={{ mt: 2 }} />
+      <MyTimeline timeline={props.timeline} sx={{ mt: 2 }} />
 
       <Comments slug="/about" sx={{ mt: 2 }} />
-
-      {/* <>
-        {awards.map((award, index) => (
-          <Accordion key={index}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls={`panel${index + 1}a-content`}
-              id={`panel${index + 1}a-header`}
-            >
-              <Typography>{award.title}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>{award.description}</Typography>
-            </AccordionDetails>
-          </Accordion>
-        ))}
-      </> */}
     </Main>
   );
 };
