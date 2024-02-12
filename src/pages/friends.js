@@ -28,13 +28,15 @@ const FriendsPage = ({ data, location }) => {
 
   shuffle(friends, dateNum);
 
+  const cardHeight = 120;
+
   return (
     <Main maxWidth="md" title={getTitle()} location={location}>
       <Box sx={{ mt: 2 }}>
         <Grid container spacing={2}>
           {friends.map((friend, index) => (
             <Grid item xs={12} lg={6} key={index}>
-              <Card component="div" sx={{ height: 150 }}>
+              <Card component="div" sx={{ height: cardHeight }}>
                 <Button
                   variant="text"
                   component="a"
@@ -42,7 +44,7 @@ const FriendsPage = ({ data, location }) => {
                   target="_blank"
                   sx={{ p: 0, display: "flex", width: "100%" }}
                 >
-                  <CardContent sx={{ width: "calc(100% - 150px)" }}>
+                  <CardContent sx={{ width: `calc(100% - ${cardHeight}px)` }}>
                     <Typography variant="h6" sx={{ fontWeight: "bold", mb: 0.5 }}>
                       {friend.name}
                     </Typography>
@@ -50,7 +52,7 @@ const FriendsPage = ({ data, location }) => {
                       {friend.bio}
                     </Typography>
                   </CardContent>
-                  <CardMedia component="div" sx={{ width: 150 }}>
+                  <CardMedia component="div" sx={{ width: cardHeight }}>
                     <GatsbyImage image={getImage(friend.avatar)} alt />
                   </CardMedia>
                 </Button>
