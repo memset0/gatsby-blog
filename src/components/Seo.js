@@ -9,25 +9,11 @@ import * as React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 // import { drawerWidth } from './Layout';
 
-const Seo = ({ description, title, children }) => {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            social {
-              twitter
-            }
-          }
-        }
-      }
-    `
-  );
+import siteMetadata from "../data/metadata";
 
-  const metaDescription = description || site.siteMetadata.description;
-  const defaultTitle = site.siteMetadata?.title;
+const Seo = ({ description, title, children }) => {
+  const metaDescription = description || siteMetadata.description;
+  const defaultTitle = siteMetadata?.title;
 
   const importantStyles = `
   `;
@@ -40,7 +26,7 @@ const Seo = ({ description, title, children }) => {
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary" />
-      <meta name="twitter:creator" content={site.siteMetadata?.social?.twitter || ``} />
+      <meta name="twitter:creator" content={siteMetadata?.social?.twitter || ``} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={metaDescription} />
       <style>{importantStyles}</style>
