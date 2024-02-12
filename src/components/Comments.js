@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 const Commments = props => {
-  const { slug, ...other } = props;
+  let { slug, ...other } = props;
   if (slug.endsWith("/")) {
     slug = slug.slice(0, -1);
   }
