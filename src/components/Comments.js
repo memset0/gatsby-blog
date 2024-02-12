@@ -4,16 +4,14 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-const Commments = ({ sx, slug }) => {
+const Commments = props => {
+  const { slug, ...other } = props;
   if (slug.endsWith("/")) {
     slug = slug.slice(0, -1);
   }
-  if (!sx) {
-    sx = {};
-  }
 
   return (
-    <Card sx={sx}>
+    <Card {...other}>
       <CardContent sx={{ paddingBottom: "8px !important" }}>
         <Typography variant="h6" gutterBottom>
           评论
