@@ -22,6 +22,7 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
+import Awards from "../components/Awards";
 import Comments from "../components/Comments";
 
 import siteMetadata from "../data/metadata";
@@ -62,12 +63,18 @@ function TabPanel(props) {
 
 const AboutPage = ({ data, location }) => {
   const [value, setValue] = React.useState(0);
+  const propsJson = data.pageData.fields.propsJson;
+  const props = {};
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  console.log("[about] page data", data);
+  for (const prop of JSON.parse(propsJson)) {
+    props[prop.key] = prop.value;
+  }
+
+  console.log("[about] page data", data, props);
 
   return (
     <Main maxWidth="md" title={getTitle()} location={location}>
@@ -105,7 +112,7 @@ const AboutPage = ({ data, location }) => {
         </Grid>
         <Grid item xs={12} lg={8} sx={{ display: "flex", flexDirection: "column" }}>
           <Card>
-            <CardContent sx={{ padding: "16px 32px !important" }}>
+            <CardContent sx={{ padding: { sm: "12px !important", md: "20px !important" } }}>
               <StaticImage src="../images/tagcloud.png" alt={"关于 " + siteMetadata.author.name} />
             </CardContent>
           </Card>
@@ -121,6 +128,8 @@ const AboutPage = ({ data, location }) => {
           </Card>
         </Grid>
       </Grid>
+
+      <Awards awards={props.awards} sx={{ mt: 2 }} />
 
       <Comments slug="/about" sx={{ mt: 2 }} />
 
@@ -155,6 +164,11 @@ export const pageQuery = graphql`
     }
     cn: markdownRemark(fileAbsolutePath: {regex: "/about\\.cn\\.md$/"}) {
       html
+    }
+    pageData: markdownRemark(fileAbsolutePath: {regex: "/about\\.data\\.md$/"}) {
+      fields {
+        propsJson
+      }
     }
   }
 `;
