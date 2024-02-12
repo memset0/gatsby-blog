@@ -52,7 +52,12 @@ const PostTemplate = ({ data, pageContext, location }) => {
                 </CardMedia>
               )}
 
-              <CardContent sx={{ padding: { md: 3 } }}>
+              <CardContent
+                sx={{
+                  p: { sm: 2, md: 3 },
+                  paddingBottom: { sm: "8px !important", md: "16px !important" },
+                }}
+              >
                 {isDoc ? (
                   <>
                     <Typography

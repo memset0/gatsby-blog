@@ -1,6 +1,6 @@
 import React from "react";
-import { graphql, useStaticQuery } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
+// import { graphql, useStaticQuery } from "gatsby";
+// import { StaticImage } from "gatsby-plugin-image";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";

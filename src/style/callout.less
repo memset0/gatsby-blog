@@ -27,9 +27,9 @@ details.callout {
   page-break-inside: avoid;
 
   & > summary {
-    @height: 2.5em;
-    @paddingY: 0.2em;
-    @iconSize: 1.1em;
+    @height: 2.24em;
+    @paddingY: 0.3em;
+    @iconSize: 1em;
 
     display: block;
     list-style-type: none; // 这可以禁用::marker伪类
@@ -39,14 +39,15 @@ details.callout {
     font-size: 1.04em;
     line-height: @height - @paddingY * 2;
     margin: 0 -1em;
-    padding: @paddingY 1em @paddingY (1.6em + @iconSize);
+    letter-spacing: -0.1667px;
+    padding: @paddingY 1em @paddingY (1.4em + @iconSize);
     position: relative;
     // border-bottom: @borderWidth solid @default-color;
 
     &:before {
       content: "";
       top: (@height - @iconSize) / 2;
-      left: 0.9em;
+      left: 0.8em;
       height: @iconSize;
       width: @iconSize;
       position: absolute;
