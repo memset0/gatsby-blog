@@ -107,7 +107,7 @@ for (const type in calloutTypes) {
       "@callout-" +
         type +
         "-image: url('data:image/svg+xml;charset=utf-8," +
-        svg.replace(/class=\"lucide\-.+?\"/, "") +
+        svg.replace(/class=\".+?\"/, "") +
         "');"
     );
   }
