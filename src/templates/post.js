@@ -10,9 +10,10 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import EventIcon from "@mui/icons-material/Event";
 import CategoryIcon from "@mui/icons-material/Category";
-import Link from "../components/Link";
-import Main from "../components/Main";
 import Seo from "../components/Seo";
+import Main from "../components/Main";
+import Link from "../components/Link";
+import Comments from "../components/Comments";
 import TableOfContents from "../components/Article/TableOfContents";
 
 import { checkNegIndent } from "../utils/frontend";
@@ -25,7 +26,7 @@ const getTitle = ({ data }) => {
 const PostTemplate = ({ data, pageContext, location }) => {
   const { post } = data;
   const { navJson } = pageContext;
-  const { isDoc, cover, propsJson } = post.fields;
+  const { slug, isDoc, cover, propsJson } = post.fields;
 
   const coverImage = cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
@@ -151,6 +152,15 @@ const PostTemplate = ({ data, pageContext, location }) => {
                 </Grid>
               )}
             </Grid> */}
+
+            <Card sx={{ mt: 2 }}>
+              <CardContent sx={{ paddingBottom: "8px !important" }}>
+                <Typography variant="h6" gutterBottom>
+                  评论
+                </Typography>
+                <Comments slug={slug} />
+              </CardContent>
+            </Card>
           </Grid>
 
           {/* 这里是侧边栏 */}
@@ -201,6 +211,7 @@ export const pageQuery = graphql`
             gatsbyImageData
           }
         }
+        slug
         isDoc
         category
         propsJson

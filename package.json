@@ -2,7 +2,7 @@
   "name": "memset0-blog",
   "private": true,
   "description": "The next generation of memset0's Blog. Powered by Gatsby.js",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "memset0 <memset0@outlook.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -12,6 +12,7 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource-variable/montserrat": "^5.0.17",
     "@fontsource/merriweather": "^5.0.8",
+    "@giscus/react": "^2.4.0",
     "@mui/icons-material": "^5.15.9",
     "@mui/material": "^5.15.9",
     "gatsby": "^5.13.3",

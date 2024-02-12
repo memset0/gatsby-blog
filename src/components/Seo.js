@@ -6,17 +6,12 @@
  */
 
 import * as React from "react";
-import { useStaticQuery, graphql } from "gatsby";
-// import { drawerWidth } from './Layout';
 
 import siteMetadata from "../data/metadata";
 
 const Seo = ({ description, title, children }) => {
   const metaDescription = description || siteMetadata.description;
   const defaultTitle = siteMetadata?.title;
-
-  const importantStyles = `
-  `;
 
   return (
     <>
@@ -29,7 +24,7 @@ const Seo = ({ description, title, children }) => {
       <meta name="twitter:creator" content={siteMetadata?.social?.twitter || ``} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={metaDescription} />
-      <style>{importantStyles}</style>
+      {/* <style>{importantStyles}</style> */}
       {children}
     </>
   );
