@@ -46,17 +46,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   `);
-
   if (result.errors) {
     reporter.panicOnBuild(`There was an error loading your blog posts`, result.errors);
     return;
   }
-
-  const posts = result.data.allMarkdownRemark.nodes;
+  let posts = result.data.allMarkdownRemark.nodes;
   // require("fs").writeFileSync(
   //   require("path").join(__dirname, "./tmp/posts.json"),
   //   JSON.stringify(posts, null, 2)
   // );
+
   const folders = {};
   for (const post of posts) {
     if (post.frontmatter.publish && post.fields.slug) {
@@ -123,6 +122,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   // 创建每篇博文/文档的页面
+  posts = posts.filter(post => post.frontmatter.publish || post.fields.isDoc);
   if (posts.length > 0) {
     const allNavJson = [];
     for (const post of posts) {

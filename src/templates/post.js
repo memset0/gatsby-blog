@@ -31,7 +31,9 @@ const PostTemplate = ({ data, pageContext, location }) => {
 
   const coverImage = cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
-  const category = !isDoc && JSON.parse(post.fields.category);
+  console.log(post.fields);
+  const category = !isDoc && post.fields.category && JSON.parse(post.fields.category);
+  console.log(category);
 
   // console.log("[nav]", navJson && JSON.parse(navJson));
   // console.log("[props]", props);
@@ -88,27 +90,42 @@ const PostTemplate = ({ data, pageContext, location }) => {
                       alignItems: "center",
                       color: "grey.500",
                       mt: 1,
+                      ml: 0.25,
                       mb: 4,
-                      "& svg": { ml: 2.25, mr: 1.25 },
+                      "& svg": { ml: 3, mr: 1 },
                       "& :first-child": { ml: 0 },
                     }}
                   >
-                    <LayerGroupIcon fontSize="small" />
-                    <Breadcrumbs
-                      aria-label="breadcrumb"
-                      sx={{ color: "inherit", "& .MuiBreadcrumbs-separator": { mx: 0.75 } }}
-                    >
-                      {category.map(({ name, to }, index) => (
-                        <Link component={GatsbyLink} underline="hover" color="inherit" to={to} key={index}>
-                          {name}
-                        </Link>
-                      ))}
-                    </Breadcrumbs>
+                    {date && (
+                      <>
+                        <CalendarAltIcon fontSize="small" />
+                        <Typography variant="body1" color="inherit" sx={{ wordSpacing: "-3px" }}>
+                          {date}
+                        </Typography>
+                      </>
+                    )}
 
-                    <CalendarAltIcon fontSize="small" />
-                    <Typography variant="body1" color="inherit" sx={{ wordSpacing: "-2.5px" }}>
-                      {date}
-                    </Typography>
+                    {category && (
+                      <>
+                        <LayerGroupIcon fontSize="small" />
+                        <Breadcrumbs
+                          aria-label="breadcrumb"
+                          sx={{ color: "inherit", "& .MuiBreadcrumbs-separator": { mx: 0.625 } }}
+                        >
+                          {category.map(({ name, to }, index) => (
+                            <Link
+                              component={GatsbyLink}
+                              underline="hover"
+                              color="inherit"
+                              to={to}
+                              key={index}
+                            >
+                              {name}
+                            </Link>
+                          ))}
+                        </Breadcrumbs>
+                      </>
+                    )}
                   </Box>
                 )}
 
