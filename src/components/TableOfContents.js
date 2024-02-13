@@ -42,7 +42,7 @@ const TableOfContents = ({ toc }) => {
       <Typography
         variant="body2"
         fontWeight="bold"
-        color="text.secondary"
+        color="grey.600"
         sx={{ mt: 2, px: 2, py: 0.5, letterSpacing: "-0.2px" }}
       >
         TABLE OF CONTENTS
