@@ -7,7 +7,7 @@ const React = require("react");
 const Layout = require("./src/components/Layout").default;
 
 exports.onPreRouteUpdate = () => {
-  const unsafeWindow = typeof window === "undefined" ? {} : window;
+  // const unsafeWindow = typeof window === "undefined" ? {} : window;
   // console.log("[Gatsby]", "onPreRouteUpdate", unsafeWindow.location?.pathname);
 };
 

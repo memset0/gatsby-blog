@@ -1,7 +1,7 @@
 import React from "react";
-import { StaticImage } from "gatsby-plugin-image";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import GitIcon from "../Icon/GitIcon";
 
 import siteMetadata from "../../data/metadata";
 import { checkNegIndent } from "../../utils/frontend";
@@ -24,7 +24,9 @@ const AppBarContent = ({ title }) => {
       </Typography>
 
       {/* Appbar 右侧 */}
-
+      <IconButton href="https://github.com/memset0/gatsby-blog" target="_blank">
+        <GitIcon sx={{ fill: "white" }} />
+      </IconButton>
     </>
   );
 };

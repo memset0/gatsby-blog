@@ -58,8 +58,8 @@ const MyTimeline = props => {
               sx={{
                 color: "inherit",
                 textDecoration: "none",
-                ["& .MuiTypography-root"]: { transition: "opacity 0.2s" },
-                ["&:hover .MuiTypography-root"]: { opacity: 0.65 },
+                "& .MuiTypography-root": { transition: "opacity 0.2s" },
+                "&:hover .MuiTypography-root": { opacity: 0.65 },
               }}
             >
               <TimelineItem key={index}>
