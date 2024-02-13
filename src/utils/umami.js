@@ -3,12 +3,35 @@ export const umamiConfig = {
   srcUrl: "https://umami.memset0.cn/script.js",
 };
 
-export function track(props) {
+export function getUmami() {
   const unsafeWindow = typeof window === "undefined" ? {} : window;
   const umami = unsafeWindow.umami;
-  console.log("umami", unsafeWindow, unsafeWindow.umami);
   if (umami) {
-    console.log("[umami]", "track", props);
-    umami.track(props);
+    return umami;
   }
+  const logUninitialized = () => console.log("[umami]", "uninitialized");
+  return { track: logUninitialized, identity: logUninitialized, unload: true };
+}
+
+export function track(props) {
+  const umami = getUmami();
+  if (umami.unload) {
+    return;
+  }
+  console.log("[umami]", "track", props);
+  umami.track(props);
+}
+
+export function trackPathname(pathname, title) {
+  const umami = getUmami();
+  if (umami.unload) {
+    return;
+  }
+  if (umami.lastPathname && umami.lastPathname === pathname) {
+    console.log("[umami]", "skipped:", pathname);
+    return;
+  }
+  console.log("[umami]", "tracking...", { pathname, title });
+  umami.lastPathname = pathname;
+  umami.track(props => ({ ...props, url: pathname, title }));
 }
