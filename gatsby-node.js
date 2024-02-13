@@ -394,3 +394,14 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
   `);
 };
+
+/**
+ * @type {import('gatsby').GatsbyNode['onCreateWebpackConfig']}
+ */
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
+  if (stage === `build-javascript`) {
+    actions.setWebpackConfig({
+      devtool: false,
+    });
+  }
+};
