@@ -7,6 +7,7 @@
 
 import * as React from "react";
 
+import umami from "../data/umami";
 import siteMetadata from "../data/metadata";
 
 const Seo = ({ description, title, children }) => {
@@ -26,6 +27,15 @@ const Seo = ({ description, title, children }) => {
       <meta name="twitter:description" content={metaDescription} />
       {/* <style>{importantStyles}</style> */}
       {children}
+
+      <script
+        async
+        defer
+        src={umami.srcUrl}
+        data-website-id={umami.websiteId}
+        data-auto-track="false"
+        // data-respect-do-not-track="false"
+      ></script>
     </>
   );
 };
