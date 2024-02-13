@@ -10,7 +10,7 @@ import { parseTableOfContents } from "../utils/toc";
 
 function gen(toc) {
   return (
-    <List component="div" dense={true} sx={{ pt: 0, pb: 0 }}>
+    <List component="div" dense={true} disablePadding>
       {toc.map((el, index) => (
         <div key={index}>
           <ListItemButton component="a" href={el.href}>
@@ -39,7 +39,12 @@ const TableOfContents = ({ toc }) => {
 
   return parsedToc ? (
     <Box sx={{ my: 1.5 }}>
-      <Typography variant="body2" fontWeight="bold" color="text.secondary" sx={{ mt: 2, px: 2, py: 0.5 }}>
+      <Typography
+        variant="body2"
+        fontWeight="bold"
+        color="text.secondary"
+        sx={{ mt: 2, px: 2, py: 0.5, letterSpacing: "-0.2px" }}
+      >
         TABLE OF CONTENTS
       </Typography>
       {gen(parsedToc)}

@@ -9,7 +9,7 @@ import Seo from "../components/Seo";
 const getTitle = () => "404: Not Found";
 
 const NotFoundPage = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata.title;
+  // const siteTitle = data.site.siteMetadata.title;
   // console.log("[404]", siteTitle);
   
   return (

@@ -160,7 +160,7 @@ const Layout = ({ children }) => {
               },
             }}
           >
-            <DrawerContent />
+            <DrawerContent fold={false} />
             {navJson && <DrawerContentNav navJson={navJson} pathname={pathname} />}
           </Drawer>
 
@@ -170,7 +170,7 @@ const Layout = ({ children }) => {
             open={open}
             sx={{ display: { xs: "none", md: "block" } }}
           >
-            <DrawerContent />
+            <DrawerContent fold={!open} />
             {open && navJson && <DrawerContentNav navJson={navJson} pathname={pathname} />}
           </PermanentDrawer>
 

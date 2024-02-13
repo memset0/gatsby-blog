@@ -1,21 +1,25 @@
 import React from "react";
+import { StaticImage } from "gatsby-plugin-image";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
-import Divider from "@mui/material/Divider";
+import Avatar from "@mui/material/Avatar";
 import HomeIcon from "@mui/icons-material/Home";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import PersonIcon from "@mui/icons-material/Person";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import LinkIcon from "@mui/icons-material/Link";
 import { Link as GatsbyLink } from "gatsby";
-import Link from "../Link";
-// import LogoSvg from "../../images/logo.svg";
 
-const DrawerContent = () => {
+import siteMetadata from "../../data/metadata";
+import theme from "../../theme";
+
+const DrawerContent = ({ fold }) => {
   // const isRouteMatched = route => {
   //   // return route != "/" && location.pathname.startsWith(router);
   // };
@@ -23,7 +27,7 @@ const DrawerContent = () => {
   const navigators = [
     {
       to: "/",
-      text: "主页",
+      text: "所有文章",
       icon: <HomeIcon />,
     },
     {
@@ -43,7 +47,7 @@ const DrawerContent = () => {
     },
     {
       to: "/about/",
-      text: "关于我",
+      text: "关于博主",
       icon: <PersonIcon />,
     },
   ];
@@ -52,23 +56,43 @@ const DrawerContent = () => {
     <>
       <Toolbar
         sx={{
+          // color: "white",
+          // background: theme.palette.secondary.main,
+          color: theme.palette.secondary.main,
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-end",
-          px: [1],
+          px: [0],
         }}
       >
-        <Link to="/" sx={{ width: "100%", textAlign: "center" }}>
-          <img height="52" src="/logo.svg" loading="eager" alt="" />
-        </Link>
+        <Button component={GatsbyLink} to="/" sx={{ my: -2, py: 2, width: "100%", overflow: "hidden" }}>
+          <Avatar
+            sx={{
+              display: "inline-block",
+              "& img": {
+                transition: ["0.5s"],
+                "&:hover": {
+                  transform: ["rotate(360deg)"],
+                },
+              },
+            }}
+          >
+            <StaticImage src="../../images/avatar.png" alt={siteMetadata.author.name} />
+          </Avatar>
+          {/* <Box sx={{ ml: 2, display: "inline-block", fontWeight: "bold" }}>mem 的小站</Box> */}
+        </Button>
       </Toolbar>
       <Divider sx={{ opacity: { xs: 0, md: 1 } }} />
       <List component="nav">
         {navigators.map((navigator, index) => (
           <ListItem disablePadding key={index}>
-            <ListItemButton to={navigator.to} component={GatsbyLink}>
+            <ListItemButton
+              to={navigator.to}
+              component={GatsbyLink}
+              sx={{ pl: fold ? 2 : 4.75, transition: "padding 0.2s" }}
+            >
               <ListItemIcon>{navigator.icon}</ListItemIcon>
-              <ListItemText primary={navigator.text} />
+              <ListItemText sx={{ pl: 1 }} primary={navigator.text} />
             </ListItemButton>
           </ListItem>
         ))}

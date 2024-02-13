@@ -11,7 +11,7 @@ import { Link as GatsbyLink } from "gatsby";
 function generateNav(nav, level, pathname) {
   // console.log("[nav] generate", { nav, level, pathname });
   return (
-    <List component="div" dense={true} sx={{ pt: 0, pb: 0 }}>
+    <List component="div" dense={true} disablePadding>
       {nav.map((el, index) => {
         const correct = pathname === el.slug;
         const Text = (
