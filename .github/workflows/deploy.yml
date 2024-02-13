@@ -106,15 +106,6 @@ jobs:
           PREFIX_PATHS: 'true'
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
 
-      - name: Commit to the static repository
-        uses: ./.github/actions/push
-        with:
-          source: ./public
-          target-user: mem-static
-          target-repo: blog-ng
-          target-branch: main
-          access-token: ${{ secrets.GH_TOKEN }}
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
@@ -131,3 +122,17 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+
+  # Backup job
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Commit to the static repository
+        uses: ./.github/actions/push
+        with:
+          source: ./public
+          target-user: mem-static
+          target-repo: blog-ng
+          target-branch: main
+          access-token: ${{ secrets.GH_TOKEN }}
+    
