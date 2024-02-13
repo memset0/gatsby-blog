@@ -10,10 +10,10 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Footer from "./Footer";
 import AppBarContent from "./Layout/AppBarContent";
 import DrawerContent from "./Layout/DrawerContent";
 import DrawerContentNav from "./Layout/DrawerContentNav";
-import Footer from "./Layout/Footer";
 import LayoutContext from "./LayoutContext";
 
 import theme from "../theme";

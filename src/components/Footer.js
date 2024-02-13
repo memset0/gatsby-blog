@@ -11,11 +11,11 @@ const Footer = () => {
         // backgroundColor: "#f5f5f5",
         padding: "20px",
         textAlign: "center",
-        ["& .footer-link"]: {
+        "& .footer-link": {
           color: "inherit",
           textDecoration: "none",
           transition: "opacity 0.2s ease",
-          ["&:hover"]: {
+          "&:hover": {
             opacity: "0.5",
           },
         },
