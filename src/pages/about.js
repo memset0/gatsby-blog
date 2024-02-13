@@ -74,7 +74,7 @@ const AboutPage = ({ data, location }) => {
     props[prop.key] = prop.value;
   }
 
-  console.log("[about] page data", data, props);
+  // console.log("[about] page data", data, props);
 
   return (
     <Main maxWidth="md" title={getTitle()} location={location}>

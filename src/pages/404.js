@@ -10,7 +10,7 @@ const getTitle = () => "404: Not Found";
 
 const NotFoundPage = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title;
-  console.log("[404]", siteTitle);
+  // console.log("[404]", siteTitle);
   
   return (
     <Main maxWidth="md" title={getTitle()} location={location}>

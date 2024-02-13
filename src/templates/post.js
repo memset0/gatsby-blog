@@ -31,8 +31,8 @@ const PostTemplate = ({ data, pageContext, location }) => {
   const coverImage = cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
 
-  console.log("[nav]", navJson && JSON.parse(navJson));
-  console.log("[props]", props);
+  // console.log("[nav]", navJson && JSON.parse(navJson));
+  // console.log("[props]", props);
 
   return (
     <Main maxWidth="lg" title={getTitle({ data })} location={location} navJson={navJson}>

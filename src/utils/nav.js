@@ -67,12 +67,12 @@ class NavManager {
     this._navPool = {};
   }
   registerNav(slug, nav) {
-    console.log("[nav] register", slug, nav);
+    // console.log("[nav] register", slug, nav);
     this._navPool[slug] = this.parseNav(nav);
-    console.log("[nav] parsed", this._navPool[slug]);
+    // console.log("[nav] parsed", this._navPool[slug]);
   }
   queryNav(slug) {
-    console.log("[nav] query", slug, this._navPool);
+    // console.log("[nav] query", slug, this._navPool);
     let res = null;
     let len = -1;
     for (const [prefix, nav] of this._navPool.entries())
@@ -80,7 +80,7 @@ class NavManager {
         len = prefix.length;
         res = nav;
       }
-    console.log("[nav] query", slug, res);
+    // console.log("[nav] query", slug, res);
     return res;
   }
 }

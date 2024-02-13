@@ -80,6 +80,6 @@ export function parseTableOfContents(html) {
 
   // console.log("[toc] html =", html);
   const ast = build(0, html.length - 1, 0);
-  console.log("[toc] ast", ast);
+  // console.log("[toc] ast", ast);
   return ast;
 }

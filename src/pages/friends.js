@@ -18,7 +18,7 @@ const getTitle = () => "友情链接";
 
 const FriendsPage = ({ data, location }) => {
   const { friends } = data.site;
-  console.log("[friends]", friends);
+  // console.log("[friends]", friends);
 
   const date = new Date();
   const year = date.getFullYear();
