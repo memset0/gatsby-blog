@@ -82,7 +82,7 @@ const AboutPage = ({ data, location }) => {
         <Grid item xs={12} lg={4} sx={{ display: "flex", flexDirection: "column" }}>
           <Card sx={{ flexGrow: 1 }}>
             <CardMedia>
-              <StaticImage src="../images/avatar-4x.png" alt={siteMetadata.author.name} />
+              <StaticImage src="../images/avatar-8x.png" alt={siteMetadata.author.name} />
             </CardMedia>
             <CardContent sx={{ paddingBottom: "4px !important" }}>
               <Typography variant="h5">{siteMetadata.author.name}</Typography>
