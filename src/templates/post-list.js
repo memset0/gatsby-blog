@@ -42,7 +42,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
       {posts.map(postNode => {
         const post = postNode.node;
         const hasCover = !!post.fields.cover;
-        console.log("[post]", post);
+        // console.log("[post]", post);
 
         const walk = node => {
           if (node instanceof Array) {
