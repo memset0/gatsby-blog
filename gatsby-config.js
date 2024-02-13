@@ -162,5 +162,17 @@ module.exports = {
         icon: `src/images/favicon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: `gatsby-plugin-umami`,
+      options: {
+        websiteId: "e0782534-a92a-4374-9289-b3a902bb589f",
+        srcUrl: "https://umami.memset0.cn/script.js",
+        includeInDevelopment: false,
+        autoTrack: true,
+        respectDoNotTrack: false,
+        dataCache: false,
+        // dataDomains: "example.com,example2.com",
+      },
+    },
   ],
 };
