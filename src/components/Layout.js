@@ -12,7 +12,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import AppBarContent from "./Layout/AppBarContent";
 import DrawerContent from "./Layout/DrawerContent";
-import DrawerNav from "./Layout/DrawerNav";
+import DrawerContentNav from "./Layout/DrawerContentNav";
 import Footer from "./Layout/Footer";
 import LayoutContext from "./LayoutContext";
 
@@ -161,7 +161,7 @@ const Layout = ({ children }) => {
             }}
           >
             <DrawerContent />
-            {navJson && <DrawerNav navJson={navJson} pathname={pathname} />}
+            {navJson && <DrawerContentNav navJson={navJson} pathname={pathname} />}
           </Drawer>
 
           <PermanentDrawer
@@ -171,7 +171,7 @@ const Layout = ({ children }) => {
             sx={{ display: { xs: "none", md: "block" } }}
           >
             <DrawerContent />
-            {navJson && <DrawerNav navJson={navJson} pathname={pathname} />}
+            {navJson && <DrawerContentNav navJson={navJson} pathname={pathname} />}
           </PermanentDrawer>
 
           <Box

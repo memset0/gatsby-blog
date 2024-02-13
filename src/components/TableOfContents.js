@@ -6,7 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 
-import { parseTableOfContents } from "../../utils/toc";
+import { parseTableOfContents } from "../utils/toc";
 
 function gen(toc) {
   return (

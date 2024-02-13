@@ -48,7 +48,7 @@ function generateNav(nav, level, pathname) {
   );
 }
 
-const DrawerNav = ({ navJson, pathname }) => {
+const DrawerContentNav = ({ navJson, pathname }) => {
   const nav = JSON.parse(navJson);
   // console.log("[nav] reload with ", nav, pathname);
   if (pathname.endsWith("/")) {
@@ -63,4 +63,4 @@ const DrawerNav = ({ navJson, pathname }) => {
   );
 };
 
-export default DrawerNav;
+export default DrawerContentNav;

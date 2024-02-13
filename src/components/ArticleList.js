@@ -10,7 +10,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-import { checkNegIndent } from "../../utils/frontend";
+import { checkNegIndent } from "../utils/frontend";
 
 const ArticleList = ({ posts }) => {
   return (

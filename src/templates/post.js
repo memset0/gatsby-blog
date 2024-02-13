@@ -14,7 +14,7 @@ import Seo from "../components/Seo";
 import Main from "../components/Main";
 import Link from "../components/Link";
 import Comments from "../components/Comments";
-import TableOfContents from "../components/Article/TableOfContents";
+import TableOfContents from "../components/TableOfContents";
 
 import { checkNegIndent } from "../utils/frontend";
 import * as styles from "../style/article.module.less";

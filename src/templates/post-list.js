@@ -3,7 +3,7 @@ import { Link as GatsbyLink, graphql } from "gatsby";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import ArticleList from "../components/Article/ArticleList";
+import ArticleList from "../components/ArticleList";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
 
