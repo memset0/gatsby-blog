@@ -128,9 +128,8 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                       </Link>
                     </Typography>
                     <Typography
-                      component="span"
                       variant="body2"
-                      color="text.secondary"
+                      color="grey.500"
                       sx={{
                         display: "inline-flex",
                         alignItems: "center",
