@@ -33,8 +33,8 @@ const Seo = ({ description, title, children }) => {
         defer
         src={umami.srcUrl}
         data-website-id={umami.websiteId}
-        data-auto-track="false"
-        // data-respect-do-not-track="false"
+        // data-auto-track="false" // 禁用自动跟踪 
+        data-respect-do-not-track="false" // 不尊重浏览器do-not-track标识
       ></script>
     </>
   );
