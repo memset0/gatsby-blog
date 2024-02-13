@@ -2,7 +2,25 @@ html {
   overflow: hidden;
 }
 
+// ::selection {
+//   background: rgba(178, 143, 206, 0.2);
+//   color: inherit;
+// }
+
 ::selection {
-  background: rgba(178, 143, 206, 0.2);
-  color: inherit;
+  background-color: rgb(138, 43, 226, 0.28);
+  color: aliceblue;
+  text-shadow: 1px 1px 1px rgb(138, 43, 226, 0.64);
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 1em;
+  background-color: rgba(50, 50, 50, 0.3);
+}
+::-webkit-scrollbar-track {
+  border-radius: 1em;
+  background-color: rgba(50, 50, 50, 0.1);
 }
