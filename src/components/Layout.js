@@ -150,7 +150,7 @@ const Layout = ({ children }) => {
             open={mobileOpen}
             onClose={toggleMobileDrawer}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true, // 可以在移动设备上有更好的性能
             }}
             sx={{
               display: { xs: "block", md: "none" },
@@ -171,7 +171,7 @@ const Layout = ({ children }) => {
             sx={{ display: { xs: "none", md: "block" } }}
           >
             <DrawerContent />
-            {navJson && <DrawerContentNav navJson={navJson} pathname={pathname} />}
+            {open && navJson && <DrawerContentNav navJson={navJson} pathname={pathname} />}
           </PermanentDrawer>
 
           <Box
