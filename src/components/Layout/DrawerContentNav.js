@@ -49,6 +49,10 @@ function generateNav(nav, level, pathname) {
 }
 
 const DrawerContentNav = ({ navJson, pathname }) => {
+  if (!navJson) {
+    return <></>;
+  }
+
   const nav = JSON.parse(navJson);
   // console.log("[nav] reload with ", nav, pathname);
   if (pathname.endsWith("/")) {

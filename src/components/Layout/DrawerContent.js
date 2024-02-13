@@ -19,36 +19,37 @@ import { Link as GatsbyLink } from "gatsby";
 import siteMetadata from "../../data/metadata";
 import theme from "../../theme";
 
-const DrawerContent = ({ fold }) => {
-  // const isRouteMatched = route => {
-  //   // return route != "/" && location.pathname.startsWith(router);
-  // };
-
+const DrawerContent = ({ fold, pathname }) => {
   const navigators = [
     {
       to: "/",
       text: "所有文章",
       icon: <HomeIcon />,
+      rule: pathname => pathname === "/",
     },
     {
       to: "/oi/",
       text: "算法竞赛",
       icon: <LeaderboardIcon />,
+      rule: pathname => pathname.startsWith("/oi/"),
     },
     {
       to: "/course/",
       text: "课程笔记",
       icon: <LocalLibraryIcon />,
+      rule: pathname => pathname.startsWith("/course/"),
     },
     {
       to: "/friends/",
       text: "友情链接",
       icon: <LinkIcon />,
+      rule: pathname => pathname === "/friends/",
     },
     {
       to: "/about/",
       text: "关于博主",
       icon: <PersonIcon />,
+      rule: pathname => pathname === "/about/",
     },
   ];
 
@@ -65,7 +66,7 @@ const DrawerContent = ({ fold }) => {
           px: [0],
         }}
       >
-        <Button component={GatsbyLink} to="/" sx={{ my: -2, py: 2, width: "100%", overflow: "hidden" }}>
+        <Button component={GatsbyLink} to="/" sx={{ py: [1.5], width: "100%", borderRadius: "0" }}>
           <Avatar
             sx={{
               display: "inline-block",
@@ -88,8 +89,17 @@ const DrawerContent = ({ fold }) => {
           <ListItem disablePadding key={index}>
             <ListItemButton
               to={navigator.to}
+              selected={navigator.rule(pathname)}
+              className={navigator.rule(pathname) ? "selected" : ""}
               component={GatsbyLink}
-              sx={{ pl: fold ? 2 : 4.75, transition: "padding 0.2s" }}
+              sx={{
+                pl: fold ? 2 : 4.75,
+                transition: "padding 0.2s",
+                "&.selected": {
+                  color: theme.palette.secondary.main,
+                  "& svg": { fill: theme.palette.secondary.main },
+                },
+              }}
             >
               <ListItemIcon>{navigator.icon}</ListItemIcon>
               <ListItemText sx={{ pl: 1 }} primary={navigator.text} />

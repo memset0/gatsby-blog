@@ -69,6 +69,7 @@ const Layout = ({ children }) => {
 
   const [title, setTitle] = React.useState(siteMetadata.title);
   const [navJson, setNavJson] = React.useState("");
+  const [cachedNavJson, setCachedNavJson] = React.useState("");
   const [pathname, setPathname] = React.useState("");
 
   const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
@@ -107,6 +108,12 @@ const Layout = ({ children }) => {
   React.useEffect(() => {
     setShowAppBar(true);
   }, []);
+
+  React.useEffect(() => {
+    if (navJson) {
+      setCachedNavJson(navJson);
+    }
+  }, [navJson]);
 
   return (
     <LayoutContext.Provider value={{ setTitle, setNavJson, setPathname }}>
@@ -160,7 +167,7 @@ const Layout = ({ children }) => {
               },
             }}
           >
-            <DrawerContent fold={false} />
+            <DrawerContent fold={false} pathname={pathname} />
             {navJson && <DrawerContentNav navJson={navJson} pathname={pathname} />}
           </Drawer>
 
@@ -170,8 +177,12 @@ const Layout = ({ children }) => {
             open={open}
             sx={{ display: { xs: "none", md: "block" } }}
           >
-            <DrawerContent fold={!open} />
-            {open && navJson && <DrawerContentNav navJson={navJson} pathname={pathname} />}
+            <DrawerContent fold={!open} pathname={pathname} />
+            <CSSTransition in={open && navJson} timeout={200} classNames="fade" unmountOnExit>
+              <div>
+                <DrawerContentNav navJson={cachedNavJson} pathname={pathname} />
+              </div>
+            </CSSTransition>
           </PermanentDrawer>
 
           <Box
