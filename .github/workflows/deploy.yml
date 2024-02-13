@@ -65,7 +65,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          # cache: ${{ steps.detect-package-manager.outputs.manager }}
 
       - name: Setup Pages
         id: pages
@@ -75,18 +75,31 @@ jobs:
         #   # You may remove this line if you want to manage the configuration yourself.
         #   static_site_generator: gatsby
 
-      - name: Restore cache
-        uses: actions/cache@v3
+      - name: Restore NPM cache
+        id: cache-node-modules
+        uses: actions/cache@v2
         with:
-          path: |
-            public
-            .cache
-          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('public') }}
-          restore-keys: |
-            ${{ runner.os }}-gatsby-build-
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
 
+      # true代表缓存命中，node_modules没有变化，而''代表没有命中，node_modules发生变化
+      - name: "Debug: is cache hit?"
+        run: echo "${{ steps.cache-node-modules.outputs.cache-hit }}"
+
+      # 只有结果是''时才执行
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        if: steps.cache-node-modules.outputs.cache-hit == ''
+        run: npm ci
+
+      # - name: Restore Gatsby cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       public
+      #       .cache
+      #     key: ${{ runner.os }}-gatsby-build-${{ hashFiles('public') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-gatsby-build-
 
       - name: Build with Gatsby
         env:
