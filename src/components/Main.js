@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import LayoutContext from "../components/LayoutContext";
 
 import siteMetadata from "../data/metadata";
-import { trackPathname } from "../utils/umami";
+import { registerUmami, trackPathname } from "../utils/umami";
 
 const Main = ({ title, maxWidth, location, children, navJson }) => {
   // 读取上次滚动位置
@@ -30,11 +30,12 @@ const Main = ({ title, maxWidth, location, children, navJson }) => {
   setNavJson(navJson || "");
   setPathname(location.pathname);
 
-  // umami 跟踪
+  // umami跟踪器
   console.log("[umami] Main component re-rendered!!!");
   trackPathname(location.pathname, title);
   React.useEffect(() => {
-    setTimeout(() => trackPathname(location.pathname, title), 1000);
+    console.log("[umami] Main component useEffect():");
+    registerUmami(() => trackPathname(location.pathname, title));
   }, []);
 
   const [showMain, setShowMain] = React.useState(false);

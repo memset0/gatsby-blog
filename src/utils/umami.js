@@ -35,3 +35,27 @@ export function trackPathname(pathname, title) {
   umami.lastPathname = pathname;
   umami.track(props => ({ ...props, url: pathname, title }));
 }
+
+export function registerUmami(callback = () => {}) {
+  const unsafeWindow = typeof window === "undefined" ? {} : window;
+  if (window.umamiRegistered) {
+    return;
+  }
+  window.umamiRegistered = true;
+  console.log("[umami] register !!!");
+  const document = unsafeWindow.document;
+  const body = document.body;
+  const script = document.createElement("script");
+  script.src = umamiConfig.srcUrl;
+  script.async = true;
+  script.defer = true;
+  script.setAttribute("data-website-id", umamiConfig.websiteId);
+  script.setAttribute("data-auto-track", "false"); // 禁用自动跟踪
+  script.setAttribute("data-respect-do-not-track", "false"); // 不尊重浏览器do-not-track标识
+  body.appendChild(script);
+  script.addEventListener("load", () => {
+    console.log("[umami] script loaded!!");
+    getUmami().trackPathname = trackPathname;
+    callback();
+  });
+}
