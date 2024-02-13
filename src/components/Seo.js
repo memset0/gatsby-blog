@@ -7,8 +7,8 @@
 
 import * as React from "react";
 
-import umami from "../data/umami";
 import siteMetadata from "../data/metadata";
+import { umamiConfig } from "../utils/umami";
 
 const Seo = ({ description, title, children }) => {
   const metaDescription = description || siteMetadata.description;
@@ -31,9 +31,9 @@ const Seo = ({ description, title, children }) => {
       <script
         async
         defer
-        src={umami.srcUrl}
-        data-website-id={umami.websiteId}
-        // data-auto-track="false" // 禁用自动跟踪 
+        src={umamiConfig.srcUrl}
+        data-website-id={umamiConfig.websiteId}
+        data-auto-track="false" // 禁用自动跟踪
         data-respect-do-not-track="false" // 不尊重浏览器do-not-track标识
       ></script>
     </>
