@@ -38,7 +38,12 @@ const TableOfContents = ({ toc }) => {
   }
 
   return parsedToc ? (
-    <Box sx={{ mt: 2, mb: 2 }}>{gen(parsedToc)}</Box>
+    <Box sx={{ my: 1.5 }}>
+      <Typography variant="body2" fontWeight="bold" color="text.secondary" sx={{ mt: 2, px: 2, py: 0.5 }}>
+        TABLE OF CONTENTS
+      </Typography>
+      {gen(parsedToc)}
+    </Box>
   ) : (
     <Typography variant="body1" sx={{ m: 2 }}>
       TOC Load Failed!
