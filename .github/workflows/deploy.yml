@@ -103,10 +103,22 @@ jobs:
           PREFIX_PATHS: "true"
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
 
+      - name: Push to the static repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
+        with:
+          source-directory: ./public
+          destination-github-username: mem-static
+          destination-repository-name: blog-ng
+          target-branch: main
+          user-email: ci@memset0.cn
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./public
+
 
   # Deployment job
   deploy:
@@ -119,26 +131,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-
-  # Backup job
-  backup:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Restore artifact
-        uses: actions/cache@v3
-        with:
-          path: public
-          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('public') }}
-          restore-keys: ${{ runner.os }}-gatsby-build-
-
-      - name: Push to the static repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
-        with:
-          source-directory: ./public
-          destination-github-username: mem-static
-          destination-repository-name: blog-ng
-          target-branch: main
-          user-email: ci@memset0.cn
