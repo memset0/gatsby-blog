@@ -31,9 +31,23 @@ defaults:
     shell: bash
 
 jobs:
+  deploy:
+    name: Deploy on my server (sponsored by @Qingyu-Shi)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute deployment script
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_USERNAME }}
+          port: 22
+          script: cd /www/mem.ac && bash deploy.sh
+
   # Build job
   build:
     runs-on: ubuntu-latest
+    name: Build with Gatsby
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -119,9 +133,8 @@ jobs:
         with:
           path: ./public
 
-
-  # Deployment job
-  deploy:
+  pages:
+    name: Deploy with Github Pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
