@@ -9,7 +9,7 @@ export function getUmami() {
   if (umami) {
     return umami;
   }
-  const logUninitialized = () => console.log("[umami]", "uninitialized");
+  const logUninitialized = () => console.error("[umami]", "uninitialized");
   return { track: logUninitialized, identity: logUninitialized, unload: true };
 }
 
@@ -18,7 +18,7 @@ export function track(props) {
   if (umami.unload) {
     return;
   }
-  console.log("[umami]", "track", props);
+  // console.log("[umami]", "track", props);
   umami.track(props);
 }
 
@@ -28,10 +28,10 @@ export function trackPathname(pathname, title) {
     return;
   }
   if (umami.lastPathname && umami.lastPathname === pathname) {
-    console.log("[umami]", "skipped:", pathname);
+    // console.log("[umami]", "skipped:", pathname);
     return;
   }
-  console.log("[umami]", "tracking...", { pathname, title });
+  // console.log("[umami]", "tracking...", { pathname, title });
   umami.lastPathname = pathname;
   umami.track(props => ({ ...props, url: pathname, title }));
 }
@@ -42,7 +42,7 @@ export function registerUmami(callback = () => {}) {
     return;
   }
   window.umamiRegistered = true;
-  console.log("[umami] register !!!");
+  // console.log("[umami] register !!!");
   const document = unsafeWindow.document;
   const body = document.body;
   const script = document.createElement("script");
@@ -54,7 +54,7 @@ export function registerUmami(callback = () => {}) {
   script.setAttribute("data-respect-do-not-track", "false"); // 不尊重浏览器do-not-track标识
   body.appendChild(script);
   script.addEventListener("load", () => {
-    console.log("[umami] script loaded!!");
+    // console.log("[umami] script loaded!!");
     getUmami().trackPathname = trackPathname;
     callback();
   });

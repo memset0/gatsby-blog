@@ -31,10 +31,10 @@ const Main = ({ title, maxWidth, location, children, navJson }) => {
   setPathname(location.pathname);
 
   // umami跟踪器
-  console.log("[umami] Main component re-rendered!!!");
+  // console.log("[umami] Main component re-rendered!!!");
   trackPathname(location.pathname, title);
   React.useEffect(() => {
-    console.log("[umami] Main component useEffect():");
+    // console.log("[umami] Main component useEffect():");
     registerUmami(() => trackPathname(location.pathname, title));
   }, []);
 
