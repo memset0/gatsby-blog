@@ -1,6 +1,10 @@
 #! /bin/bash
 workdir=$(pwd)
 
+echo "Fetch source"
+cd $workdir
+git pull
+
 echo "Fetch blog-posts"
 cd $workdir/content
 git fetch --all
