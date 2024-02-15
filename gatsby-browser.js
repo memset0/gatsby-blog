@@ -2,6 +2,7 @@ require("./src/style/animation.less");
 require("./src/style/custom.less");
 require("./src/style/typography.less");
 require("./src/style/highlight.css");
+require("katex/dist/katex.min.css");
 
 const React = require("react");
 const Layout = require("./src/components/Layout").default;

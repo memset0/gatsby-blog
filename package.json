@@ -37,6 +37,7 @@
     "gatsby-transformer-remark": "^6.13.1",
     "gatsby-transformer-sharp": "^5.13.1",
     "hast-util-to-html": "^9.0.0",
+    "katex": "^0.16.8",
     "lodash": "^4.17.21",
     "mdast-util-to-string": "^4.0.0",
     "prismjs": "^1.29.0",

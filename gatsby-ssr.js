@@ -4,7 +4,7 @@
  * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-ssr/
  */
 
-const React = require("react");
+// const React = require("react");
 
 /**
  * @type {import('gatsby').GatsbySSR['onRenderBody']}
@@ -12,12 +12,12 @@ const React = require("react");
 exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
   setHtmlAttributes({ lang: `zh-CN` });
 
-  setHeadComponents([
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css"
-      rel="stylesheet"
-      crossOrigin="anonymous"
-      key="katexStyle"
-    />,
-  ]);
+  // setHeadComponents([
+  //   <link
+  //     href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css"
+  //     rel="stylesheet"
+  //     crossOrigin="anonymous"
+  //     key="katexStyle"
+  //   />,
+  // ]);
 };
