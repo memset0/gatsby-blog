@@ -21,6 +21,7 @@ python .github/scripts/push-to-blog.py
 echo "Build with gatsby"
 cd $workdir
 npm ci
+npm run clean
 npm run build
 
 echo "Finished."
