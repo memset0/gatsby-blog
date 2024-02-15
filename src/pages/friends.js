@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
+import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Main from "../components/Main";
@@ -31,11 +32,11 @@ const FriendsPage = ({ data, location }) => {
   const cardHeight = 120;
 
   return (
-    <Main maxWidth="md" title={getTitle()} location={location}>
+    <Main maxWidth="lg" title={getTitle()} location={location}>
       <Box sx={{ mt: 2 }}>
         <Grid container spacing={2}>
           {friends.map((friend, index) => (
-            <Grid item xs={12} lg={6} key={index}>
+            <Grid item xs={12} md={6} lg={4} key={index}>
               <Card component="div" sx={{ height: cardHeight }}>
                 <Button
                   variant="text"
@@ -62,15 +63,17 @@ const FriendsPage = ({ data, location }) => {
         </Grid>
       </Box>
 
-      <Card sx={{ mt: 2 }}>
-        <CardContent sx={{ paddingBottom: "16px !important" }}>
-          <Typography>
-            这里是 mem 的友链墙喵~ 卡片顺序以 24h 为周期随机打乱。如果您也想交换友链的话请在下方评论区留言……
-          </Typography>
-        </CardContent>
-      </Card>
+      <Container maxWidth="md">
+        <Card sx={{ mt: 2 }}>
+          <CardContent sx={{ paddingBottom: "16px !important" }}>
+            <Typography>
+              这里是 mem 的友链墙喵~ 卡片顺序以 24h 为周期随机打乱。如果您也想交换友链的话请在下方评论区留言……
+            </Typography>
+          </CardContent>
+        </Card>
 
-      <Comments slug="/friends" sx={{ mt: 2 }} />
+        <Comments slug="/friends" sx={{ mt: 2 }} />
+      </Container>
     </Main>
   );
 };
