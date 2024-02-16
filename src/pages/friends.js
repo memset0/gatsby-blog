@@ -63,7 +63,7 @@ const FriendsPage = ({ data, location }) => {
         </Grid>
       </Box>
 
-      <Container maxWidth="md">
+      <Container maxWidth="md" disableGutter={true}>
         <Card sx={{ mt: 2 }}>
           <CardContent sx={{ paddingBottom: "16px !important" }}>
             <Typography>
