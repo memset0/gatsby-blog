@@ -132,7 +132,7 @@ const Layout = ({ children }) => {
               }}
             >
               <AppBar position="absolute" open={open} isdesktop={(!!isDesktop).toString()}>
-                <Toolbar sx={{ pr: "24px" }}>
+                <Toolbar sx={{ pr: { sm: 2, lg: 4 } }}>
                   {/* Appbar 菜单按钮 */}
                   <IconButton
                     edge="start"

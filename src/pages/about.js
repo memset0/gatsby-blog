@@ -14,8 +14,10 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import GlassesIcon from "../components/Icon/GlassesIcon";
 // import Accordion from "@mui/material/Accordion";
 // import AccordionSummary from "@mui/material/AccordionSummary";
 // import AccordionDetails from "@mui/material/AccordionDetails";
@@ -25,6 +27,7 @@ import Seo from "../components/Seo";
 import MyTimeline from "../components/MyTimeline";
 import Comments from "../components/Comments";
 
+import theme from "../theme";
 import siteMetadata from "../data/metadata";
 
 // const timeline = [
@@ -62,13 +65,21 @@ function TabPanel(props) {
 }
 
 const AboutPage = ({ data, location }) => {
-  const [value, setValue] = React.useState(0);
   const propsJson = data.pageData.fields.propsJson;
   const props = {};
 
+  const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const isMobile = useMediaQuery(() => theme.breakpoints.down("md"));
+  const SocialLink = ({ text, href, children }) => (
+    <ListItemButton component={GatsbyLink} href={href} target="_blank" sx={{ px: isMobile ? 3 : 2 }}>
+      <ListItemIcon>{children}</ListItemIcon>
+      <ListItemText>{text}</ListItemText>
+    </ListItemButton>
+  );
 
   for (const prop of JSON.parse(propsJson)) {
     props[prop.key] = prop.value;
@@ -79,7 +90,7 @@ const AboutPage = ({ data, location }) => {
   return (
     <Main maxWidth="md" title={getTitle()} location={location}>
       <Grid container spacing={2} sx={{ mt: 2 }}>
-        <Grid item xs={12} lg={4} sx={{ display: "flex", flexDirection: "column" }}>
+        <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column" }}>
           <Card sx={{ flexGrow: 1 }}>
             <CardMedia>
               <StaticImage src="../images/avatar-8x.png" alt={siteMetadata.author.name} />
@@ -90,27 +101,20 @@ const AboutPage = ({ data, location }) => {
                 {siteMetadata.author.summary}
               </Typography>
             </CardContent>
-            <List dense={true}>
-              <ListItemButton component={GatsbyLink} href={siteMetadata.socialLink.github} target="_blank">
-                <ListItemIcon>
-                  <GitHubIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Github</ListItemText>
-              </ListItemButton>
-              <ListItemButton
-                component={GatsbyLink}
-                href={siteMetadata.socialLink.codeforces}
-                target="_blank"
-              >
-                <ListItemIcon>
-                  <LeaderboardIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Codeforces</ListItemText>
-              </ListItemButton>
+            <List dense={!isMobile}>
+              <SocialLink text="Github" href={siteMetadata.socialLink.github}>
+                <GitHubIcon fontSize="small" />
+              </SocialLink>
+              <SocialLink text="Codeforces" href={siteMetadata.socialLink.codeforces}>
+                <LeaderboardIcon fontSize="small" />
+              </SocialLink>
+              <SocialLink text="Virtual Judge" href="https://vjudge.net/user/memset0">
+                <GlassesIcon fontSize="small" />
+              </SocialLink>
             </List>
           </Card>
         </Grid>
-        <Grid item xs={12} lg={8} sx={{ display: "flex", flexDirection: "column" }}>
+        <Grid item xs={12} md={8} sx={{ display: "flex", flexDirection: "column" }}>
           <Card>
             <CardContent sx={{ padding: { sm: "12px !important", md: "20px !important" } }}>
               <StaticImage src="../images/tagcloud.png" alt={"关于 " + siteMetadata.author.name} />
