@@ -1,4 +1,5 @@
 import React from "react";
+import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
@@ -7,6 +8,8 @@ import ListItemText from "@mui/material/ListItemText";
 // import ExpandLess from "@mui/icons-material/ExpandLess";
 // import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link as GatsbyLink } from "gatsby";
+
+import theme from "../../theme";
 
 function generateNav(nav, level, pathname) {
   // console.log("[nav] generate", { nav, level, pathname });
@@ -17,7 +20,11 @@ function generateNav(nav, level, pathname) {
         const Text = (
           <ListItemText
             disableTypography={true}
-            sx={{ ml: level * 4, fontWeight: correct ? "bold" : "inherit" }}
+            sx={{
+              ml: level * 3,
+              color: correct ? theme.palette.primary.main : "inherit",
+              fontWeight: correct ? "bold" : "inherit",
+            }}
           >
             {el.title}
           </ListItemText>
@@ -26,7 +33,9 @@ function generateNav(nav, level, pathname) {
         if (el.children) {
           return (
             <div key={index}>
-              <ListItemButton>{Text}</ListItemButton>
+              <ListItemButton disabled sx={{ opacity: "1 !important", fontWeight: "bold" }}>
+                {Text}
+              </ListItemButton>
               <Collapse in={true} timeout="auto" unmountOnExit>
                 {generateNav(el.children, level + 1, pathname)}
               </Collapse>
@@ -62,7 +71,9 @@ const DrawerContentNav = ({ navJson, pathname }) => {
   return (
     <>
       <Divider sx={{ mb: 1 }} />
-      {generateNav(nav, 0, pathname)}
+      <Box sx={{ fontSize: "0.9em", "& .MuiListItemText-root": { my: 0.25 } }}>
+        {generateNav(nav, 0, pathname)}
+      </Box>
     </>
   );
 };
