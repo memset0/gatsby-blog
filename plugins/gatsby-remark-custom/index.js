@@ -15,21 +15,26 @@ module.exports = ({ markdownAST }) => {
     if (pattern) {
       html += 'style="';
       for (const plain of pattern.split(";")) {
-        switch (plain.trim()) {
-          case "sm":
-            html += "width: 300px; ";
-            break;
-          case "md":
-            html += "width: 450px; ";
-            break;
-          case "lg":
-            html += "width: 600px; ";
-            break;
-          case "xl":
-            html += "width: 768px; ";
-            break;
-          default:
-            html += plain.trim() + "; ";
+        const word = plain.trim();
+        if (word.endsWith("em")) {
+          html += "width: " + word + "; ";
+        } else {
+          switch (word) {
+            case "sm":
+              html += "width: 300px; ";
+              break;
+            case "md":
+              html += "width: 450px; ";
+              break;
+            case "lg":
+              html += "width: 600px; ";
+              break;
+            case "xl":
+              html += "width: 768px; ";
+              break;
+            default:
+              html += word + "; ";
+          }
         }
       }
       html += '" ';
