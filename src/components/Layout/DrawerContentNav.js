@@ -24,6 +24,7 @@ function generateNav(nav, level, pathname) {
               ml: level * 3,
               color: correct ? theme.palette.primary.main : "inherit",
               fontWeight: correct ? "bold" : "inherit",
+              whiteSpace: "normal",
             }}
           >
             {el.title}
