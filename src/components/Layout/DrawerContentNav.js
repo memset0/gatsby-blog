@@ -16,14 +16,13 @@ function generateNav(nav, level, pathname) {
   return (
     <List component="div" dense={true} disablePadding>
       {nav.map((el, index) => {
-        const correct = pathname === el.slug;
         const Text = (
           <ListItemText
             disableTypography={true}
             sx={{
               ml: level * 3,
-              color: correct ? theme.palette.primary.main : "inherit",
-              fontWeight: correct ? "bold" : "inherit",
+              color: pathname === el.slug ? theme.palette.secondary.main : "inherit",
+              fontWeight: "inherit",
               whiteSpace: "normal",
             }}
           >
