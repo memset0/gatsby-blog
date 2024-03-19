@@ -16,7 +16,7 @@ module.exports = ({ markdownAST }) => {
       html += 'style="';
       for (const plain of pattern.split(";")) {
         const word = plain.trim();
-        if (!isNaN(parseInt(word))) {
+        if (!isNaN(Number(word), 10)) {
           html += "width: " + word + "px; ";
         } else if (word.endsWith("em")) {
           html += "width: " + word + "; ";
