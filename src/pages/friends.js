@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Button from "@mui/material/Button";
@@ -18,15 +18,13 @@ import { shuffle } from "../utils/random";
 const getTitle = () => "友情链接";
 
 const FriendsPage = ({ data, location }) => {
-  const { friends } = data.site;
-  // console.log("[friends]", friends);
-
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const dateNum = year * 10000 + month * 100 + day;
 
+  const friends = JSON.parse(JSON.stringify(data.site.friends));
   shuffle(friends, dateNum);
 
   const cardHeight = 120;
