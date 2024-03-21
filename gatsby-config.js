@@ -73,7 +73,7 @@ module.exports = {
             options: {
               maxWidth: 800,
               quality: 90,
-              tracedSVG: true,
+              // tracedSVG: true, // no longer supported
             },
           },
           {

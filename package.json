@@ -2,7 +2,7 @@
   "name": "memset0-blog",
   "private": true,
   "description": "The next generation of memset0's Blog. Powered by Gatsby.js",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "author": "memset0 <memset0@outlook.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -28,7 +28,6 @@
     "gatsby-plugin-sharp": "^5.13.1",
     "gatsby-plugin-static-folders": "^1.0.1",
     "gatsby-plugin-umami": "^0.1.5",
-    "gatsby-remark-autolink-headers": "^6.13.1",
     "gatsby-remark-images": "^7.13.1",
     "gatsby-remark-katex": "^7.13.1",
     "gatsby-remark-prismjs": "^7.13.1",
@@ -38,7 +37,7 @@
     "gatsby-transformer-sharp": "^5.13.1",
     "hast-util-to-html": "^9.0.0",
     "lodash": "^4.17.21",
-    "mdast-util-to-string": "^4.0.0",
+    "mdast-util-to-string": "^2.0.0",
     "prismjs": "^1.29.0",
     "punycode": "^2.3.1",
     "react": "^18.2.0",
@@ -63,7 +62,7 @@
   },
   "scripts": {
     "build": "gatsby build",
-    "dev": "gatsby develop",
+    "dev": "gatsby develop --port 8080",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "gatsby develop",
     "serve": "gatsby serve",

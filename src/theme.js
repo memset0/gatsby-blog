@@ -15,7 +15,9 @@ const theme = createTheme({
       main: red.A400,
     },
   },
+
   typography: {
+    // inspired by Fonts.css
     fontFamily: [
       "-apple-system",
       '"Noto Sans"',
@@ -38,6 +40,16 @@ const theme = createTheme({
       "sans-serif",
     ].join(","),
   },
+
+  // components: {
+  //   MuiCard: {
+  //     styleOverrides: {
+  //       root: {
+  //         borderRadius: 4,
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 export default theme;
