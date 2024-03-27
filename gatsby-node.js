@@ -195,18 +195,11 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode });
 
-    const getNodeByPath = (resolvedPath, retried = false) => {
-      if (!cachedNodes) {
-        cachedNodes = getNodes();
-      }
-      for (const node of cachedNodes) {
+    const getNodeByPath = resolvedPath => {
+      for (const node of getNodes()) {
         if (node.absolutePath && path.resolve(node.absolutePath) === resolvedPath) {
           return node;
         }
-      }
-      if (!retried) {
-        cachedNodes = null;
-        return getNodeByPath(resolvedPath, true);
       }
       return null;
     };
@@ -236,6 +229,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
 
     const coverPath = node.frontmatter.cover;
     if (coverPath) {
+      // console.log("!!!", coverPath);
       let fileNode;
       if (coverPath.startsWith("http://") || coverPath.startsWith("https://")) {
         // 说明cover在远程网站，使用createRemoteFileNode方法创建文件节点
@@ -251,6 +245,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
         // 说明cover在本地，使用getNode方法获得gatsby-source-filesystem插件创建好的节点
         const resolvedCoverPath = path.resolve(__dirname, "./content/cover/", coverPath);
         fileNode = getNodeByPath(resolvedCoverPath);
+        // console.log(fileNode && fileNode.dir);
       }
 
       if (fileNode) {

@@ -23,8 +23,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content`,
-        name: `content`,
+        path: `${__dirname}/content/cover`,
+        name: `content-cover`,
       },
     },
     {
@@ -44,8 +44,9 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/cover`,
-        name: `content-cover`,
+        path: `${__dirname}/content`,
+        name: `content`,
+        ignore: [`**/.git/**`, `**/.vscode/**`],
       },
     },
     {
