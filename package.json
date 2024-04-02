@@ -8,14 +8,14 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@fontsource-variable/montserrat": "^5.0.17",
-    "@fontsource/merriweather": "^5.0.8",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fontsource-variable/montserrat": "^5.0.18",
+    "@fontsource/merriweather": "^5.0.12",
     "@giscus/react": "^2.4.0",
-    "@mui/icons-material": "^5.15.9",
-    "@mui/lab": "^5.0.0-alpha.165",
-    "@mui/material": "^5.15.9",
+    "@mui/icons-material": "^5.15.14",
+    "@mui/lab": "^5.0.0-alpha.169",
+    "@mui/material": "^5.15.14",
     "@parcellab/react-use-umami": "^2.0.1",
     "gatsby": "^5.13.3",
     "gatsby-awesome-pagination": "^0.3.8",
@@ -46,7 +46,7 @@
     "react-transition-group": "^4.4.5",
     "rehype-react": "^8.0.0",
     "unist-util-visit": "^2.0.3",
-    "yaml": "^2.3.4"
+    "yaml": "^2.4.1"
   },
   "devDependencies": {
     "prettier": "^2.8.8"
