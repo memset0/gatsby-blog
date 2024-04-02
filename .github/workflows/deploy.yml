@@ -115,7 +115,9 @@ jobs:
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: "true"
-        run: ${{ steps.detect-package-manager.outputs.manager }} run build
+        run: |
+          set NODE_OPTIONS=%NODE_OPTIONS%;--max-old-space-size=8192
+          ${{ steps.detect-package-manager.outputs.manager }} run build
 
       - name: Push to the static repository
         uses: cpina/github-action-push-to-another-repository@main
