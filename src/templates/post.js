@@ -31,9 +31,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
 
   const coverImage = cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
-  console.log(post.fields);
   const category = !isDoc && post.fields.category && JSON.parse(post.fields.category);
-  console.log(category);
 
   // console.log("[nav]", navJson && JSON.parse(navJson));
   // console.log("[props]", props);
