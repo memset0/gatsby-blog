@@ -2,10 +2,8 @@ import React from "react";
 import { Link as GatsbyLink, graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { toHtml } from "hast-util-to-html";
-import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -16,20 +14,13 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
+import HoverableCard from "../components/HoverableCard";
 import CalendarAltIcon from "../components/Icon/CalendarAltIcon";
 import LayerGroupIcon from "../components/Icon/LayerGroupIcon";
 
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
 import { checkNegIndent } from "../utils/frontend";
-
-const HoverableCard = styled(Card)(({ theme }) => ({
-  transition: "0.2s",
-  "&:hover": {
-    boxShadow: theme.shadows[4],
-  },
-  boxShadow: theme.shadows[1],
-}));
 
 const getTitle = ({ data, pageContext }) => {
   const names = JSON.parse(pageContext.names);
