@@ -2,6 +2,7 @@ import React from "react";
 import { Link as GatsbyLink, graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { toHtml } from "hast-util-to-html";
+import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Card from "@mui/material/Card";
@@ -21,6 +22,14 @@ import LayerGroupIcon from "../components/Icon/LayerGroupIcon";
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
 import { checkNegIndent } from "../utils/frontend";
+
+const HoverableCard = styled(Card)(({ theme }) => ({
+  transition: "0.2s",
+  "&:hover": {
+    boxShadow: theme.shadows[4],
+  },
+  boxShadow: theme.shadows[1],
+}));
 
 const getTitle = ({ data, pageContext }) => {
   const names = JSON.parse(pageContext.names);
@@ -59,7 +68,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
         walk(post.excerptAst);
 
         return (
-          <Card sx={{ mt: 2.5, display: "flex" }} key={post.id}>
+          <HoverableCard sx={{ mt: 2.5, display: "flex" }} key={post.id}>
             <Grid container direction="row-reverse">
               {/* 封面 */}
               <Grid item xs={12} md={5}>
@@ -169,7 +178,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                 </Box>
               </Grid>
             </Grid>
-          </Card>
+          </HoverableCard>
         );
       })}
 
