@@ -46,7 +46,7 @@ jobs:
 
   # Build job
   build:
-    runs-on: ubuntu-22.04-16core
+    runs-on: ubuntu-latest
     name: Build with Gatsby
     steps:
       - name: Checkout
@@ -99,6 +99,7 @@ jobs:
       - name: Build with Gatsby
         env:
           PREFIX_PATHS: "true"
+          GATSBY_CPU_COUNT: 1
         run: npm run build
 
       - name: Push to the static repository
