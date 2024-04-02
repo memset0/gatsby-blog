@@ -1,4 +1,8 @@
 export function parseTableOfContents(html) {
+  if (html.trim() === "") {
+    return [];
+  }
+
   html = html
     .replace(/\n/g, "")
     .replace(/<p>/g, "")

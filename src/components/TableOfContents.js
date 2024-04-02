@@ -45,7 +45,6 @@ const TableOfContents = ({ toc }) => {
   } catch (e) {
     console.error("[toc]", e);
   }
-  console.log("[toc]", parsedToc);
 
   return parsedToc ? (
     <Box sx={{ my: 1.5 }}>
