@@ -78,7 +78,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "20"
           # cache: ${{ steps.detect-package-manager.outputs.manager }}
 
       - name: Setup Pages
@@ -116,7 +116,7 @@ jobs:
         env:
           PREFIX_PATHS: "true"
         run: |
-          set NODE_OPTIONS=%NODE_OPTIONS%;--max-old-space-size=8192
+          export NODE_OPTIONS=--max_old_space_size=8192
           ${{ steps.detect-package-manager.outputs.manager }} run build
 
       - name: Push to the static repository
