@@ -76,6 +76,6 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
 
   return setHeadComponents([
     style,
-    <script key={`gatsby-remark-autolink-headers-script`} dangerouslySetInnerHTML={{ __html: script }} />,
+    // <script key={`gatsby-remark-autolink-headers-script`} dangerouslySetInnerHTML={{ __html: script }} />,
   ]);
 };

@@ -8,12 +8,21 @@ import Typography from "@mui/material/Typography";
 
 import { parseTableOfContents } from "../utils/toc";
 
+function scrollTo(href) {
+  const id = href.slice(1);
+  const element = document.getElementById(id);
+  console.log("[toc] scroll to", href, id, element, element.scrollTop);
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
 function gen(toc) {
   return (
     <List component="div" dense={true} disablePadding>
       {toc.map((el, index) => (
         <div key={index}>
-          <ListItemButton component="a" href={el.href}>
+          <ListItemButton onClick={() => scrollTo(el.href)}>
             <ListItemText sx={{ pl: `${el.level}em` }}>
               <span dangerouslySetInnerHTML={{ __html: el.text }}></span>
             </ListItemText>
@@ -36,6 +45,7 @@ const TableOfContents = ({ toc }) => {
   } catch (e) {
     console.error("[toc]", e);
   }
+  console.log("[toc]", parsedToc);
 
   return parsedToc ? (
     <Box sx={{ my: 1.5 }}>
