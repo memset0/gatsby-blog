@@ -66,7 +66,16 @@ const DrawerContent = ({ fold, pathname }) => {
           px: [0],
         }}
       >
-        <Button component={GatsbyLink} to="/" sx={{ py: [1.5], width: "100%", borderRadius: "0" }}>
+        <Button
+          component={GatsbyLink}
+          to="/"
+          sx={{
+            py: [1.5],
+            width: "100%",
+            borderRadius: "0",
+            opacity: fold ? 0 : 1,
+          }}
+        >
           <Avatar
             sx={{
               display: "inline-block",
@@ -83,7 +92,7 @@ const DrawerContent = ({ fold, pathname }) => {
           {/* <Box sx={{ ml: 2, display: "inline-block", fontWeight: "bold" }}>mem 的小站</Box> */}
         </Button>
       </Toolbar>
-      <Divider sx={{ opacity: { xs: 0, md: 1 } }} />
+      <Divider sx={{ opacity: { xs: 0, md: fold ? 0 : 1 }, transition: "opacity 0.2s" }} />
       <List component="nav">
         {navigators.map((navigator, index) => (
           <ListItem disablePadding key={index}>

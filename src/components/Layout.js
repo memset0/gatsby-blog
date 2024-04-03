@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
-import MuiAppBar from "@mui/material/AppBar";
+import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -17,12 +17,14 @@ import DrawerContentNav from "./Layout/DrawerContentNav";
 import LayoutContext from "./LayoutContext";
 
 import theme from "../theme";
-import scrollUtils from "../utils/scroll";
 import siteMetadata from "../data/metadata";
+
+import scrollUtils from "../utils/scroll";
+import storageUtils from "../utils/storage";
 
 export const drawerWidth = 220;
 
-const AppBar = styled(MuiAppBar, {
+const CustomAppBar = styled(AppBar, {
   shouldForwardProp: prop => prop !== "open",
 })(({ theme, open, isdesktop }) => ({
   transition: theme.transitions.create(["width", "margin"], {
@@ -63,7 +65,7 @@ const PermanentDrawer = styled(Drawer, {
 }));
 
 const Layout = ({ children }) => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(storageUtils.load("drawer-open", "open") === "open");
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const unsafeWindow = typeof window === "undefined" ? {} : window;
   unsafeWindow.setMobileOpen = setMobileOpen;
@@ -75,6 +77,7 @@ const Layout = ({ children }) => {
 
   const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
   const toggleDrawer = () => {
+    storageUtils.save("drawer-open", !open ? "open" : "close");
     setOpen(!open);
   };
   const toggleMobileDrawer = () => {
@@ -117,7 +120,7 @@ const Layout = ({ children }) => {
                 zIndex: theme.zIndex.drawer + 1,
               }}
             >
-              <AppBar position="absolute" open={open} isdesktop={(!!isDesktop).toString()}>
+              <CustomAppBar position="absolute" open={open} isdesktop={(!!isDesktop).toString()}>
                 <Toolbar sx={{ pr: { sm: 2, lg: 4 } }}>
                   {/* Appbar 菜单按钮 */}
                   <IconButton
@@ -133,7 +136,7 @@ const Layout = ({ children }) => {
 
                   <AppBarContent title={title} />
                 </Toolbar>
-              </AppBar>
+              </CustomAppBar>
             </div>
           </CSSTransition>
 
