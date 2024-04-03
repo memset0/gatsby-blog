@@ -4,10 +4,10 @@
 .__callout-template(@color, @image) {
   border: 1.2px solid tint(@color, 36%);
   & > summary {
-    color: @color;
-    background-color: tint(@color, 84%);
+    color: shade(@color, 12%);
+    background-color: tint(@color, 82%);
     &:before {
-      background-color: @color;
+      background-color: shade(@color, 12%);
       mask-image: @image;
     }
   }
@@ -34,9 +34,8 @@ details.callout {
     display: block;
     list-style-type: none; // 这可以禁用::marker伪类
     cursor: pointer;
-    font-size: var(--admonition-title-font-size);
-    font-weight: bold;
-    font-size: 1.04em;
+    font-weight: bold; // 标题栏加粗
+    font-size: 0.98em;
     line-height: @height - @paddingY * 2;
     margin: 0 -1em;
     letter-spacing: -0.1667px;
