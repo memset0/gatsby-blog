@@ -49,7 +49,7 @@ module.exports = ({ markdownAST }) => {
     node.type = "paragraph";
     node.children.unshift({
       type: "html",
-      value: `</summary><div>`,
+      value: `</summary><div class="callout-content">`,
     });
     for (let i = heading.length - 1; i >= 0; i--) {
       node.children.unshift(heading[i]);
@@ -58,6 +58,7 @@ module.exports = ({ markdownAST }) => {
       type: "html",
       value: `<details ${collapse ? "" : "open disabled"} class="callout callout-type-${type}"><summary>`,
     });
+
     node.children.push({
       type: "html",
       value: "</div></details>",
