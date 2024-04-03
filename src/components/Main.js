@@ -3,26 +3,13 @@ import { CSSTransition } from "react-transition-group";
 import Container from "@mui/material/Container";
 import LayoutContext from "../components/LayoutContext";
 
+import scrollUtils from "../utils/scroll";
 import siteMetadata from "../data/metadata";
 import { registerUmami, trackPathname } from "../utils/umami";
 
 const Main = ({ title, maxWidth, location, children, navJson }) => {
   // 读取上次滚动位置
-  if (typeof window !== "undefined") {
-    const unsafeWindow = typeof window === "undefined" ? {} : window;
-    if (typeof unsafeWindow.cachedScrollTop === "undefined") {
-      unsafeWindow.cachedScrollTop = {};
-    }
-    const pathname = (location || {}).pathname || "#";
-    const { document, lastPathname, cachedScrollTop } = unsafeWindow;
-    if (lastPathname !== pathname) {
-      const scrollTop = cachedScrollTop[pathname];
-      if (document && document.getElementById("main")) {
-        document.getElementById("main").scrollTop = scrollTop || 0;
-      }
-    }
-    unsafeWindow.lastPathname = pathname;
-  }
+  scrollUtils.loadLastScrollTop();
 
   const { setTitle, setNavJson, setPathname } = useContext(LayoutContext);
   title = title || siteMetadata.title;
@@ -36,7 +23,7 @@ const Main = ({ title, maxWidth, location, children, navJson }) => {
   React.useEffect(() => {
     // console.log("[umami] Main component useEffect():");
     registerUmami(() => trackPathname(location.pathname, title));
-  }, []);
+  }, [location, title]);
 
   const [showMain, setShowMain] = React.useState(false);
   React.useEffect(() => {

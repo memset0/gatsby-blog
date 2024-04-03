@@ -7,35 +7,19 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 
 import { parseTableOfContents } from "../utils/toc";
+import { customScrollTo } from "../utils/scroll";
+
+function getElementOffset(element) {
+  return element.offsetTop;
+}
 
 function scrollTo(href) {
   const id = href.slice(1);
   const element = document.getElementById(id);
   console.log("[toc] scroll to", href, id, element, element.scrollTop);
   if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
+    customScrollTo(getElementOffset(element) - 80, true);
   }
-}
-
-function gen(toc) {
-  return (
-    <List component="div" dense={true} disablePadding>
-      {toc.map((el, index) => (
-        <div key={index}>
-          <ListItemButton onClick={() => scrollTo(el.href)}>
-            <ListItemText sx={{ pl: `${el.level}em` }}>
-              <span dangerouslySetInnerHTML={{ __html: el.text }}></span>
-            </ListItemText>
-          </ListItemButton>
-          {el.children && (
-            <Collapse in={true} timeout="auto" unmountOnExit>
-              {gen(el.children)}
-            </Collapse>
-          )}
-        </div>
-      ))}
-    </List>
-  );
 }
 
 const TableOfContents = ({ toc }) => {
@@ -44,6 +28,27 @@ const TableOfContents = ({ toc }) => {
     parsedToc = parseTableOfContents(toc);
   } catch (e) {
     console.error("[toc]", e);
+  }
+
+  function gen(toc) {
+    return (
+      <List component="div" dense={true} disablePadding>
+        {toc.map((el, index) => (
+          <div key={index}>
+            <ListItemButton onClick={() => scrollTo(el.href)}>
+              <ListItemText sx={{ pl: `${el.level}em` }}>
+                <span dangerouslySetInnerHTML={{ __html: el.text }}></span>
+              </ListItemText>
+            </ListItemButton>
+            {el.children && (
+              <Collapse in={true} timeout="auto" unmountOnExit>
+                {gen(el.children)}
+              </Collapse>
+            )}
+          </div>
+        ))}
+      </List>
+    );
   }
 
   return parsedToc ? (

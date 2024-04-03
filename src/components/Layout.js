@@ -17,6 +17,7 @@ import DrawerContentNav from "./Layout/DrawerContentNav";
 import LayoutContext from "./LayoutContext";
 
 import theme from "../theme";
+import scrollUtils from "../utils/scroll";
 import siteMetadata from "../data/metadata";
 
 export const drawerWidth = 220;
@@ -85,22 +86,7 @@ const Layout = ({ children }) => {
 
   // 用于挂载记录滚动进度钩子
   React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      const unsafeWindow = typeof window === "undefined" ? {} : window;
-      if (typeof unsafeWindow.cachedScrollTop === "undefined") {
-        unsafeWindow.cachedScrollTop = {};
-      }
-      const $main = unsafeWindow.document.getElementById("main");
-      let lastScrollTop = 0;
-      $main.addEventListener("scroll", () => {
-        const scrollTop = $main.scrollTop;
-        if (Math.abs(scrollTop - lastScrollTop) > 100) {
-          const { location, cachedScrollTop } = unsafeWindow;
-          cachedScrollTop[location.pathname] = scrollTop;
-          lastScrollTop = scrollTop;
-        }
-      });
-    }
+    scrollUtils.registerScrollListener();
   }, []);
 
   // 用于控制AppBar出现动画
