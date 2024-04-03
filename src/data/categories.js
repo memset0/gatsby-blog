@@ -2,7 +2,6 @@ module.exports = {
   blog: {
     name: "博客",
     children: {
-      travelogue: { name: "游记" },
       "high-school": {
         name: "高考",
         children: {
@@ -11,6 +10,8 @@ module.exports = {
       },
     },
   },
+  travelogue: { name: "云游四方" },
+  game: { name: "游戏人间" },
   oi: {
     name: "算法竞赛",
     children: {
