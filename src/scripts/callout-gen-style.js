@@ -121,7 +121,7 @@ for (const type in calloutTypes) {
   } else {
     ref = type;
   }
-  result.push(`details.callout-type-${ref} {`);
+  result.push(`details.callout-type-${type} {`);
   result.push(`  .__callout-template(@callout-${ref}-color, @callout-${ref}-image);`);
   result.push(`}\n`);
 }

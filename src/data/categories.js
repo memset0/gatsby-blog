@@ -22,14 +22,18 @@ module.exports = {
   dev: {
     name: "开发札记",
   },
+  test: {
+    name: "测试",
+    doc: true,
+  },
   course: {
     name: "课程笔记",
     doc: true,
     useHeader: true,
-    children: {
-      "gen-ed": {
-        name: "通识课程",
-      },
-    },
+    // children: {
+    //   "gen-ed": {
+    //     name: "通识课程",
+    //   },
+    // },
   },
 };
