@@ -1,3 +1,5 @@
+import { smoothScrollTo } from "./smoothscroll";
+
 function isClient() {
   return typeof window !== "undefined";
 }
@@ -30,10 +32,7 @@ export function customScrollTo(scrollTop, smooth = false) {
     return;
   }
 
-  document.getElementById("main").scrollTo({
-    top: scrollTop,
-    behavior: "smooth",
-  });
+  smoothScrollTo(document.getElementById("main"), scrollTop, 500);
 }
 
 export function registerScrollListener() {
