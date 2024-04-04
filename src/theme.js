@@ -41,15 +41,15 @@ const theme = createTheme({
     ].join(","),
   },
 
-  // components: {
-  //   MuiCard: {
-  //     styleOverrides: {
-  //       root: {
-  //         borderRadius: 4,
-  //       },
-  //     },
-  //   },
-  // },
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+        },
+      },
+    },
+  },
 });
 
 export default theme;
