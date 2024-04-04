@@ -8,7 +8,7 @@ const HoverableCard = React.forwardRef(props => {
   return (
     <Card
       sx={{
-        transition: "0.2s",
+        transition: "0.16s",
         "&:hover": {
           boxShadow: theme.shadows[4],
         },
