@@ -36,6 +36,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           frontmatter {
             title
             publish
+            hide
           }
           fields {
             slug
@@ -122,7 +123,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   // 创建每篇博文/文档的页面
-  posts = posts.filter(post => post.frontmatter.publish || post.fields.isDoc);
+  posts = posts.filter(post => !post.frontmatter.hide);
   if (posts.length > 0) {
     const allNavJson = [];
     for (const post of posts) {
