@@ -4,11 +4,14 @@ module.exports = ({ markdownAST }) => {
   visit(markdownAST, "image", node => {
     let html = `<img src="${node.url}"`;
 
+    let data = node.alt;
     let alt = "";
     let pattern = "";
-    if (node.alt.includes("|")) {
-      alt = node.alt.split("|")[0];
-      pattern = node.alt.split("|")[1];
+    if (data.includes("|")) {
+      alt = data.split("|")[0];
+      pattern = data.split("|")[1];
+    } else if (!isNaN(Number(data), 10)) {
+      pattern = data;
     }
     html += 'alt="' + alt.replace(/\"/g, '\\"') + '" ';
 
@@ -43,7 +46,10 @@ module.exports = ({ markdownAST }) => {
     }
 
     html += ">";
-    if (alt) {
+    if (
+      alt &&
+      !(alt.endsWith(".png") || alt.endsWith(".jpg") || alt.endsWith(".webp") || alt.endsWith(".svg"))
+    ) {
       html += `<span class="image-alt">${alt}</span>`;
     }
 
