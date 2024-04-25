@@ -54,12 +54,23 @@ const TableOfContents = ({ toc }) => {
   }
 
   return parsedToc ? (
-    <Box sx={{ my: 1.5 }}>
+    <Box
+      sx={{
+        my: 1.5,
+        maxHeight: "calc(100vh - 140px)",
+        overflowY: "auto",
+      }}
+    >
       <Typography
         variant="body2"
         fontWeight="bold"
-        color="grey.600"
-        sx={{ mt: 2, px: 2, py: 0.5, letterSpacing: "-0.2px" }}
+        color="grey.500"
+        sx={{
+          mt: 0.5,
+          px: 2,
+          py: 0.5,
+          letterSpacing: "-0.2px",
+        }}
       >
         TABLE OF CONTENTS
       </Typography>
