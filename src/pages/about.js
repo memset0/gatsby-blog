@@ -123,12 +123,12 @@ const AboutPage = ({ data, location }) => {
           <Card sx={{ mt: 2, flexGrow: 1 }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs value={value} onChange={handleChange}>
-                <Tab label="中文" />
-                <Tab label="English" />
+                <Tab label="English" sx={{ minWidth: "50%" }} />
+                <Tab label="中文" sx={{ minWidth: "50%" }} />
               </Tabs>
             </Box>
-            <TabPanel value={value} index={0} html={data.cn.html} />
-            <TabPanel value={value} index={1} html={data.en.html} />
+            <TabPanel value={value} index={0} html={data.en.html} />
+            <TabPanel value={value} index={1} html={data.cn.html} />
           </Card>
         </Grid>
       </Grid>
