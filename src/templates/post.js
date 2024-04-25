@@ -188,6 +188,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
               sx={{
                 position: "sticky",
                 top: "98px",
+                display: { xs: "none", lg: "block" },
               }}
             >
               <TableOfContents toc={post.tableOfContents} />
