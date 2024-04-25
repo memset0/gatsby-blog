@@ -7,7 +7,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 
 import { parseTableOfContents } from "../utils/toc";
-import { customScrollTo } from "../utils/scroll";
+import { useScrollTop, customScrollTo } from "../utils/scroll";
 
 function getElementOffset(element) {
   return element.offsetTop;
@@ -29,6 +29,8 @@ const TableOfContents = ({ toc }) => {
   } catch (e) {
     console.error("[toc]", e);
   }
+
+  const scrollTop = useScrollTop();
 
   function gen(toc) {
     return (
@@ -64,8 +66,8 @@ const TableOfContents = ({ toc }) => {
       {gen(parsedToc)}
     </Box>
   ) : (
-    <Typography variant="body1" sx={{ m: 2 }}>
-      TOC Load Failed!
+    <Typography variant="body2" sx={{ m: 2 }}>
+      TOC 加载失败
     </Typography>
   );
 };

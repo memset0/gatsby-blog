@@ -25,3 +25,15 @@ export function random(seed) {
   var x = Math.sin(seed++) * 10000;
   return x - Math.floor(x);
 }
+
+export function randomString(length, seed = null) {
+  if (seed === null) {
+    seed = Math.random();
+  }
+
+  let s = "";
+  for (let i = 0; i < length; i++) {
+    s += String.fromCharCode(Math.floor(random(seed) * 26) + 97);
+  }
+  return s;
+}

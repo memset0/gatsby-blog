@@ -89,7 +89,7 @@ const Layout = ({ children }) => {
 
   // 用于挂载记录滚动进度钩子
   React.useEffect(() => {
-    scrollUtils.registerScrollListener();
+    scrollUtils.registerGlobalListener();
   }, []);
 
   // 用于控制AppBar出现动画
