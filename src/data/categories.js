@@ -37,4 +37,9 @@ module.exports = {
     //   },
     // },
   },
+  research: {
+    name: "科研笔记",
+    doc: true,
+    useHeader: true,
+  },
 };
