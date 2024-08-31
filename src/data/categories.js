@@ -38,7 +38,7 @@ module.exports = {
     // },
   },
   research: {
-    name: "科研笔记",
+    name: "科研随记",
     doc: true,
     useHeader: true,
   },
