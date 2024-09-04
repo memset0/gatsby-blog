@@ -78,7 +78,7 @@ const TableOfContents = ({ toc }) => {
     </Box>
   ) : (
     <Typography variant="body2" sx={{ m: 2 }}>
-      TOC 加载失败
+      <p>加载失败...</p>
     </Typography>
   );
 };
