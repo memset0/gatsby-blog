@@ -27,7 +27,7 @@ const POSTS_PER_PAGE = 10;
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
-  // Get all markdown blog posts sorted by date
+  // 获取所有按日期排序的markdown博客文章
   const result = await graphql(`
     {
       allMarkdownRemark(sort: { frontmatter: { date: ASC } }) {
@@ -35,12 +35,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id
           frontmatter {
             title
-            publish
             hide
           }
           fields {
             slug
             isDoc
+            isPublished
             navJson
           }
         }
@@ -59,7 +59,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const folders = {};
   for (const post of posts) {
-    if (post.frontmatter.publish && post.fields.slug) {
+    if (post.fields.isPublished && post.fields.slug) {
       const patterns = post.fields.slug.split("/");
       for (let i = 2; i + 1 < patterns.length; i++) {
         const folder = patterns.slice(0, i).join("/");
@@ -72,22 +72,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
   }
 
-  // 创建主页
-  paginate({
-    createPage,
-    items: posts.filter(post => post.frontmatter.publish),
-    itemsPerPage: POSTS_PER_PAGE,
-    pathPrefix: "/",
-    component: postListTemplate,
-    context: {
-      pathPrefix: "/",
-      prefixRegex: "^/",
-      names: "[]",
-      format: "index",
-    },
-  });
-
-  // 创建每个分类的页面
+  // 获取所有分类
   const categoryPages = [];
   const walkCategory = (node, uri, names) => {
     // console.log("#walk", node, uri, names);
@@ -104,6 +89,25 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
   };
   walkCategory(categories, "", []);
+
+  console.log(posts.map(post => post.frontmatter.title));
+  console.log(posts.filter(post => post.fields.isPublished).map(post => post.frontmatter.title));
+  // 创建主页
+  paginate({
+    createPage,
+    items: posts.filter(post => post.fields.isPublished),
+    itemsPerPage: POSTS_PER_PAGE,
+    pathPrefix: "/",
+    component: postListTemplate,
+    context: {
+      pathPrefix: "/",
+      prefixRegex: "^/",
+      names: "[]",
+      format: "index",
+    },
+  });
+
+  // 创建每个分类的页面
   for (const { uri, names } of categoryPages) {
     if (Object.keys(folders).includes(uri)) {
       paginate({
@@ -123,7 +127,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   // 创建每篇博文/文档的页面
-  posts = posts.filter(post => !post.frontmatter.hide);
+  posts = posts.filter(post => !post.frontmatter.hide); // 如果hide为真则不创建页面
   if (posts.length > 0) {
     const allNavJson = [];
     for (const post of posts) {
@@ -152,15 +156,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
       let previousPostId = null;
       let nextPostId = null;
-      if (!post.fields.isDoc) {
+      if (post.fields.isPublished) {
+        // 如果当前文章的isPublished为真，则自动寻找前一篇和后一篇文章
         for (let j = i - 1; j >= 0; j--) {
-          if (!posts[j].fields.isDoc) {
+          if (posts[j].fields.isPublished) {
             previousPostId = posts[j].id;
             break;
           }
         }
         for (let j = i + 1; j < posts.length; j++) {
-          if (!posts[j].fields.isDoc) {
+          if (posts[j].fields.isPublished) {
             nextPostId = posts[j].id;
             break;
           }
@@ -169,6 +174,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
       let navJson = "";
       if (post.fields.isDoc) {
+        // 如果isDoc为真,则需要生成侧边导航栏,信息通过navJson参数传递
         navJson = findNavJson(post.fields.slug);
       }
 
@@ -211,7 +217,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       value: slug,
     });
 
-    // 判断当前文件是不是文档
+    // 判断当前文件是不是文档,如果是文档,则field isDoc为真isDoc
     let isDoc = false;
     for (const category of flattedCategories) {
       if (slug.startsWith(category.slug)) {
@@ -228,9 +234,38 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       });
     }
 
+    let isPublished = false;
+    if (
+      node.frontmatter.publish || //
+      node.frontmatter["published-title"] ||
+      node.frontmatter.publishedTitle
+    ) {
+      isPublished = true;
+    }
+    if (
+      !node.frontmatter.date || // 如果date为空，则一定不发布
+      node.frontmatter.hide // 如果hide为真，则一定不发布
+    ) {
+      isPublished = false;
+    }
+    if (isPublished) {
+      createNodeField({
+        node,
+        name: "isPublished",
+        value: isPublished,
+      });
+      createNodeField({
+        node,
+        name: "publishedTitle",
+        value:
+          node.frontmatter["published-title"] || //
+          node.frontmatter.publishedTitle ||
+          node.frontmatter.title,
+      });
+    }
+
     const coverPath = node.frontmatter.cover;
     if (coverPath) {
-      // console.log("!!!", coverPath);
       let fileNode;
       if (coverPath.startsWith("http://") || coverPath.startsWith("https://")) {
         // 说明cover在远程网站，使用createRemoteFileNode方法创建文件节点
@@ -246,7 +281,6 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
         // 说明cover在本地，使用getNode方法获得gatsby-source-filesystem插件创建好的节点
         const resolvedCoverPath = path.resolve(__dirname, "./content/cover/", coverPath);
         fileNode = getNodeByPath(resolvedCoverPath);
-        // console.log(fileNode && fileNode.dir);
       }
 
       if (fileNode) {
@@ -255,7 +289,6 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
           name: "cover___NODE",
           value: fileNode.id,
         });
-        // node.frontmatter.cover___NODE = fileNode.id;
       }
     }
 

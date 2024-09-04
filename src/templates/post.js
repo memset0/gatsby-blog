@@ -27,10 +27,10 @@ const PostTemplate = ({ data, pageContext, location }) => {
   const { post } = data;
   const { navJson } = pageContext;
   const { slug, isDoc, cover, propsJson } = post.fields;
-  const { date } = post.frontmatter;
 
-  const coverImage = cover && getImage(cover);
+  const coverImage = !isDoc && cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
+  const date = !isDoc && post.frontmatter.date;
   const category = !isDoc && post.fields.category && JSON.parse(post.fields.category);
 
   // console.log("[nav]", navJson && JSON.parse(navJson));

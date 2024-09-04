@@ -113,7 +113,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                       sx={{
                         lineHeight: 1.35,
                         mb: 0.75,
-                        textIndent: checkNegIndent(post.frontmatter.title) ? "-0.35em" : 0,
+                        textIndent: checkNegIndent(post.fields.publishedTitle) ? "-0.35em" : 0,
                       }}
                     >
                       <Link
@@ -124,7 +124,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                           textDecoration: "none",
                         }}
                       >
-                        {post.frontmatter.title}
+                        {post.fields.publishedTitle}
                       </Link>
                     </Typography>
                     <Typography
@@ -158,7 +158,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                     </Typography>
 
                     {/* 概要部分 */}
-                    <Typography variant="body2" sx={{ minHeight: 2, mb: -1.5 }}>
+                    <Typography variant="body1" sx={{ minHeight: 2, mb: -1.5, fontSize: '0.95em' }}>
                       <section
                         className="typography"
                         itemProp="articleBody"
@@ -199,11 +199,10 @@ const PostListTemplate = ({ data, location, pageContext }) => {
 export default PostListTemplate;
 
 export const Head = ({ data, pageContext }) => <Seo title={getTitle({ data, pageContext })} />;
-
 export const pageQuery = graphql`
   query PostListTemplate($skip: Int!, $limit: Int!, $prefixRegex: String!) {
     posts: allMarkdownRemark(
-      filter: { frontmatter: { publish: { eq: true } }, fields: { slug: { regex: $prefixRegex } } }
+      filter: { fields: { isPublished: { eq: true }, slug: { regex: $prefixRegex } } }
       sort: { frontmatter: { date: DESC } }
       skip: $skip
       limit: $limit
@@ -213,12 +212,12 @@ export const pageQuery = graphql`
           id
           excerptAst
           frontmatter {
-            title
             date(formatString: "YYYY-MM-DD")
           }
           fields {
             slug
             category
+            publishedTitle
             cover {
               childImageSharp {
                 gatsbyImageData
