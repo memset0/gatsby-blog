@@ -21,6 +21,7 @@ import siteMetadata from "../data/metadata";
 
 import scrollUtils from "../utils/scroll";
 import storageUtils from "../utils/storage";
+import { useScrollTop } from "../utils/scroll";
 
 export const drawerWidth = 220;
 
@@ -71,9 +72,11 @@ const Layout = ({ children }) => {
   unsafeWindow.setMobileOpen = setMobileOpen;
 
   const [title, setTitle] = React.useState(siteMetadata.title);
+  const [pathname, setPathname] = React.useState("");
+  const [scrollTop, setScrollTop] = useScrollTop();
+
   const [navJson, setNavJson] = React.useState("");
   const [cachedNavJson, setCachedNavJson] = React.useState("");
-  const [pathname, setPathname] = React.useState("");
 
   const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
   const toggleDrawer = () => {
@@ -105,7 +108,7 @@ const Layout = ({ children }) => {
   }, [navJson]);
 
   return (
-    <LayoutContext.Provider value={{ setTitle, setNavJson, setPathname }}>
+    <LayoutContext.Provider value={{ setTitle, setNavJson, setPathname, scrollTop, setScrollTop }}>
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />

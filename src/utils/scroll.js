@@ -15,7 +15,7 @@ export function useScrollTop() {
       removeScrollListener(listenerId);
     };
   }, []);
-  return scrollTop;
+  return [scrollTop, setScrollTop];
 }
 
 const onScroll = [];
