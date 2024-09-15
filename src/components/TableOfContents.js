@@ -41,7 +41,7 @@ const TableOfContents = ({ toc }) => {
       <List component="div" dense={true} disablePadding>
         {toc.map((item, index) => {
           const $heading = document.getElementById(item.href.slice(1));
-          console.log(item, $heading, getElementOffset($heading));
+          console.log("[toc]", item, $heading, getElementOffset($heading));
 
           return (
             <div key={index}>
@@ -58,7 +58,7 @@ const TableOfContents = ({ toc }) => {
                     },
                   }}
                 >
-                  {item.text}
+                  {item.text.replace(/&#x26;/g, "&")}
                 </ListItemText>
               </ListItemButton>
               {item.children && (
