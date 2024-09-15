@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
+import LayoutContext from "../components/LayoutContext";
 
 import { parseTableOfContents } from "../utils/toc";
-import { useScrollTop, customScrollTo } from "../utils/scroll";
+import { customScrollTo } from "../utils/scroll";
 
 function getElementOffset(element) {
+  if (!element) {
+    return 0;
+  }
   return element.offsetTop;
 }
 
@@ -30,25 +34,41 @@ const TableOfContents = ({ toc }) => {
     console.error("[toc]", e);
   }
 
-  const scrollTop = useScrollTop();
+  // const { scrollTop } = useContext(LayoutContext);
 
   function gen(toc) {
     return (
       <List component="div" dense={true} disablePadding>
-        {toc.map((el, index) => (
-          <div key={index}>
-            <ListItemButton onClick={() => scrollTo(el.href)}>
-              <ListItemText sx={{ pl: `${el.level}em` }}>
-                <span dangerouslySetInnerHTML={{ __html: el.text }}></span>
-              </ListItemText>
-            </ListItemButton>
-            {el.children && (
-              <Collapse in={true} timeout="auto" unmountOnExit>
-                {gen(el.children)}
-              </Collapse>
-            )}
-          </div>
-        ))}
+        {toc.map((item, index) => {
+          const $heading = document.getElementById(item.href.slice(1));
+          console.log(item, $heading, getElementOffset($heading));
+
+          return (
+            <div key={index}>
+              <ListItemButton onClick={() => scrollTo(item.href)} sx={{ px: 1, py: 0.25 }}>
+                <ListItemText
+                  sx={{
+                    pl: item.level * 2 + 1,
+                    "& .MuiListItemText-primary": {
+                      width: "100%",
+                      display: "block",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                    },
+                  }}
+                >
+                  {item.text}
+                </ListItemText>
+              </ListItemButton>
+              {item.children && (
+                <Collapse in={true} timeout="auto" unmountOnExit>
+                  {gen(item.children)}
+                </Collapse>
+              )}
+            </div>
+          );
+        })}
       </List>
     );
   }
