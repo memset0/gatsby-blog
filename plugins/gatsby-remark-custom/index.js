@@ -76,7 +76,13 @@ module.exports = ({ markdownAST }) => {
     html += ">";
     if (
       alt &&
-      !(alt.endsWith(".png") || alt.endsWith(".jpg") || alt.endsWith(".webp") || alt.endsWith(".svg"))
+      !(
+        alt.endsWith(".png") ||
+        alt.endsWith(".jpg") ||
+        alt.endsWith(".jpeg") ||
+        alt.endsWith(".webp") ||
+        alt.endsWith(".svg")
+      )
     ) {
       html += `<span class="image-alt">${alt}</span>`;
     }
