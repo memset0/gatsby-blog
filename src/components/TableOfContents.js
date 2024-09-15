@@ -40,8 +40,8 @@ const TableOfContents = ({ toc }) => {
     return (
       <List component="div" dense={true} disablePadding>
         {toc.map((item, index) => {
-          const $heading = document.getElementById(item.href.slice(1));
-          console.log("[toc]", item, $heading, getElementOffset($heading));
+          // const $heading = document.getElementById(item.href.slice(1));
+          // console.log("[toc]", item, $heading, getElementOffset($heading));
 
           return (
             <div key={index}>
