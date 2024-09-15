@@ -1,6 +1,34 @@
 const visit = require("unist-util-visit");
 
 module.exports = ({ markdownAST }) => {
+  // 支持使用==语法表示内容高亮
+  // visit(markdownAST, "text", node => {
+  //   const text = node.value;
+  //   const highlightedText = text.replace(/==(.+?)==/g, "<mark>$1</mark>");
+  //   node.value = highlightedText;
+  // });
+
+  // 支持双链语法
+  // visit(markdownAST, "link", node => {
+  //   const text = node.value;
+  //   const link = node.url;
+  //   const doubleLink = text + "[" + link + "]";
+  //   node.value = doubleLink;
+  // });
+
+  // 禁用一些无法点击的本地连接
+  visit(markdownAST, "link", node => {
+    if (
+      node.url.startsWith("file://") || // 本地文件
+      node.url.startsWith("zotero://") || // zotero
+      node.url.startsWith("obsidian://") // obsidian
+    ) {
+      node.type = "html";
+      node.value = `<span class="disabled-link">${node.value}</span>`;
+    }
+  });
+
+  // 支持自定义图片样式控制语法
   visit(markdownAST, "image", node => {
     let html = `<img src="${node.url}"`;
 
