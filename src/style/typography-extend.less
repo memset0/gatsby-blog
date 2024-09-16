@@ -1,8 +1,66 @@
+@mdui-shadow-1: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+
 .m- {
   &disabled-link {
     color: #ccc;
     text-decoration: underline;
     text-underline-offset: 0.2rem;
     cursor: not-allowed;
+  }
+
+  .__clip(@color) {
+    font-size: 0.875em;
+    max-width: 100%;
+    height: 1em;
+    white-space: nowrap;
+    cursor: unset;
+    padding: 2px 4px;
+    border-radius: 4px;
+    opacity: 0.9;
+    &:after {
+      font-weight: bold;
+      // font-family: Consolas, monospace;
+    }
+
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1), background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+    color: @color;
+    border: 1px solid @color;
+    &:hover {
+      background: @color;
+      color: white;
+      border: 1px solid @color;
+      box-shadow: @mdui-shadow-1;
+    }
+  }
+
+  &definition {
+    .__clip(rgb(68, 115, 218));
+    &:after {
+      content: "Definition";
+    }
+  }
+
+  &theorem {
+    .__clip(rgb(62, 138, 0));
+    &:after {
+      content: "Theorem";
+    }
+  }
+
+  &proposition {
+    .__clip(rgb(0, 133, 143));
+    &:after {
+      content: "Proposition";
+    }
+  }
+
+  &example {
+    .__clip(rgb(132, 90, 231));
+    &:after {
+      content: "Example";
+    }
   }
 }
