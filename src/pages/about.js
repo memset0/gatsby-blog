@@ -101,6 +101,7 @@ const AboutPage = ({ data, location }) => {
                 flexWrap: "wrap",
                 justifyContent: "center",
                 gap: 0,
+                mb: 1,
               }}
             >
               <SocialLink text="Github" href={siteMetadata.socialLink.github}>
@@ -122,9 +123,13 @@ const AboutPage = ({ data, location }) => {
             </CardContent>
           </Card>
           <Card sx={{ mt: 2, flexGrow: 1 }}>
-            <CardContent sx={{ padding: "8px 16px !important" }}>
+            <CardContent sx={{ pb: '16px !important' }}>
               <Typography variant="body1">
-                <div dangerouslySetInnerHTML={{ __html: data.about.html }}></div>
+                <section
+                  className="typography"
+                  itemProp="articleBody"
+                  dangerouslySetInnerHTML={{ __html: data.about.html }}
+                />
               </Typography>
             </CardContent>
           </Card>
