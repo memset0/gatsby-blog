@@ -236,7 +236,7 @@ const Layout = ({ children }) => {
                 >
                   <Zoom
                     key="fab"
-                    in={!open && !mobileOpen && !!cachedNavJson}
+                    in={!open && !mobileOpen && !!navJson}
                     appear={true}
                     timeout={{
                       enter: transitionDuration,
