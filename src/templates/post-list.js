@@ -183,11 +183,14 @@ const PostListTemplate = ({ data, location, pageContext }) => {
           }}
         >
           <Pagination
+            showFirstButton 
+            showLastButton 
             page={pageNumber + 1}
             count={numberOfPages}
             color="primary"
-            variant="outlined"
-            shape="rounded"
+            // variant="outlined"
+            size="large"
+            // shape="rounded"
             renderItem={item => <PaginationItem component={GatsbyLink} to={getTarget(item.page)} {...item} />}
           />
         </Box>
