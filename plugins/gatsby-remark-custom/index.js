@@ -2,11 +2,37 @@ const visit = require("unist-util-visit");
 
 module.exports = ({ markdownAST }) => {
   // 支持使用==语法表示内容高亮
-  // visit(markdownAST, "text", node => {
-  //   const text = node.value;
-  //   const highlightedText = text.replace(/==(.+?)==/g, "<mark>$1</mark>");
-  //   node.value = highlightedText;
-  // });
+  visit(markdownAST, "text", node => {
+    const regex = /==(.+?)==/g;
+    if (regex.test(node.value)) {
+      const newNodes = [];
+      let lastIndex = 0;
+      let match;
+
+      while ((match = regex.exec(node.value)) !== null) {
+        if (match.index > lastIndex) {
+          newNodes.push({
+            type: "text",
+            value: node.value.slice(lastIndex, match.index),
+          });
+        }
+        newNodes.push({
+          type: "html",
+          value: `<mark>${match[1]}</mark>`,
+        });
+        lastIndex = regex.lastIndex;
+      }
+
+      if (lastIndex < node.value.length) {
+        newNodes.push({
+          type: "text",
+          value: node.value.slice(lastIndex),
+        });
+      }
+
+      return newNodes;
+    }
+  });
 
   // 支持双链语法
   // visit(markdownAST, "link", node => {
@@ -23,8 +49,16 @@ module.exports = ({ markdownAST }) => {
       node.url.startsWith("zotero://") || // zotero
       node.url.startsWith("obsidian://") // obsidian
     ) {
-      node.type = "html";
-      node.value = `<span class="disabled-link">${node.value}</span>`;
+      console.log("[link]", node);
+      delete node.value;
+      node.type = "parent";
+      node.data = {
+        hName: "span",
+        hProperties: {
+          className: "m-disabled-link",
+        },
+      };
+      console.log("[link]", node);
     }
   });
 

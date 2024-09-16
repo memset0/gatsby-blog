@@ -4,6 +4,7 @@ require("./src/style/animation.less");
 // typography
 require("katex/dist/katex.min.css");
 require("./src/style/typography.less");
+require("./src/style/typography-extend.less");
 require("./src/style/highlight.css");
 
 const React = require("react");
