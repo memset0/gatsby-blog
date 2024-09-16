@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
-import LayoutContext from "../components/LayoutContext";
+// import LayoutContext from "../components/LayoutContext";
 
 import { parseTableOfContents } from "../utils/toc";
 import { customScrollTo } from "../utils/scroll";
