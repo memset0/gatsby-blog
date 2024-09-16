@@ -90,8 +90,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   };
   walkCategory(categories, "", []);
 
-  console.log(posts.map(post => post.frontmatter.title));
-  console.log(posts.filter(post => post.fields.isPublished).map(post => post.frontmatter.title));
+  // console.log(posts.map(post => post.frontmatter.title));
+  // console.log(posts.filter(post => post.fields.isPublished).map(post => post.frontmatter.title));
   // 创建主页
   paginate({
     createPage,
