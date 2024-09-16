@@ -18,10 +18,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListIcon from "@mui/icons-material/List";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Footer from "./Footer";
+
+import ArticleNav from "./ArticleNav";
 import AppBarContent from "./Layout/AppBarContent";
 import DrawerContent from "./Layout/DrawerContent";
-import ArticleNav from "./Layout/ArticleNav";
+import Footer from "./Layout/Footer";
+
 import LayoutContext from "./LayoutContext";
 
 import theme from "../theme";
@@ -257,11 +259,11 @@ const Layout = ({ children }) => {
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
                   onClose={handleClose}
+                  elevation={0}
                   anchorOrigin={{
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  elevation={0}
                   transformOrigin={{
                     vertical: "bottom",
                     horizontal: "right",

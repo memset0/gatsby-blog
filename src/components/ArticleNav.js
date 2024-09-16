@@ -4,11 +4,9 @@ import Collapse from "@mui/material/Collapse";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-// import ExpandLess from "@mui/icons-material/ExpandLess";
-// import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link as GatsbyLink } from "gatsby";
 
-import theme from "../../theme";
+import theme from "../theme";
 
 const ArticleNav = ({ navJson, pathname, dense = true }) => {
   if (!navJson) {
