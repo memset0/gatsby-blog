@@ -1,40 +1,28 @@
 import React from "react";
-import { Link as GatsbyLink } from "gatsby";
+// import { Link as GatsbyLink } from "gatsby";
 import { graphql } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import LeaderboardIcon from "@mui/icons-material/Leaderboard";
-import GlassesIcon from "../components/Icon/GlassesIcon";
-// import Accordion from "@mui/material/Accordion";
-// import AccordionSummary from "@mui/material/AccordionSummary";
-// import AccordionDetails from "@mui/material/AccordionDetails";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import Main from "../components/Main";
 import Seo from "../components/Seo";
 import MyTimeline from "../components/MyTimeline";
 import Comments from "../components/Comments";
 
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import GlassesIcon from "../components/Icon/GlassesIcon";
+
 import theme from "../theme";
 import siteMetadata from "../data/metadata";
-
-// const timeline = [
-//   { title: "Award 1", description: "Description for Award 1" },
-//   { title: "Award 2", description: "Description for Award 2" },
-//   // Add more timeline as needed
-// ];
 
 const getTitle = () => "关于我";
 
@@ -75,10 +63,15 @@ const AboutPage = ({ data, location }) => {
 
   const isMobile = useMediaQuery(() => theme.breakpoints.down("md"));
   const SocialLink = ({ text, href, children }) => (
-    <ListItemButton component={GatsbyLink} href={href} target="_blank" sx={{ px: isMobile ? 3 : 2 }}>
-      <ListItemIcon>{children}</ListItemIcon>
-      <ListItemText>{text}</ListItemText>
-    </ListItemButton>
+    <Tooltip
+      title={text}
+      onClick={() => {
+        window.open(href, "_blank");
+      }}
+      sx={{ cursor: "pointer", margin: "0 4px" }}
+    >
+      <IconButton size="large">{children}</IconButton>
+    </Tooltip>
   );
 
   for (const prop of JSON.parse(propsJson)) {
@@ -101,17 +94,25 @@ const AboutPage = ({ data, location }) => {
                 {siteMetadata.author.summary}
               </Typography>
             </CardContent>
-            <List dense={!isMobile}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                gap: 0,
+              }}
+            >
               <SocialLink text="Github" href={siteMetadata.socialLink.github}>
-                <GitHubIcon fontSize="small" />
+                <GitHubIcon />
               </SocialLink>
               <SocialLink text="Codeforces" href={siteMetadata.socialLink.codeforces}>
-                <LeaderboardIcon fontSize="small" />
+                <LeaderboardIcon />
               </SocialLink>
               <SocialLink text="Virtual Judge" href="https://vjudge.net/user/memset0">
-                <GlassesIcon fontSize="small" />
+                <GlassesIcon />
               </SocialLink>
-            </List>
+            </Box>
           </Card>
         </Grid>
         <Grid item xs={12} md={8} sx={{ display: "flex", flexDirection: "column" }}>
@@ -121,14 +122,11 @@ const AboutPage = ({ data, location }) => {
             </CardContent>
           </Card>
           <Card sx={{ mt: 2, flexGrow: 1 }}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <Tabs value={value} onChange={handleChange}>
-                <Tab label="English" sx={{ minWidth: "50%" }} />
-                <Tab label="中文" sx={{ minWidth: "50%" }} />
-              </Tabs>
-            </Box>
-            <TabPanel value={value} index={0} html={data.en.html} />
-            <TabPanel value={value} index={1} html={data.cn.html} />
+            <CardContent sx={{ padding: "8px 16px !important" }}>
+              <Typography variant="body1">
+                <div dangerouslySetInnerHTML={{ __html: data.about.html }}></div>
+              </Typography>
+            </CardContent>
           </Card>
         </Grid>
       </Grid>
@@ -146,10 +144,7 @@ export default AboutPage;
 
 export const pageQuery = graphql`
   query {
-    en: markdownRemark(fileAbsolutePath: {regex: "/about\\.en\\.md$/"}) {
-      html
-    }
-    cn: markdownRemark(fileAbsolutePath: {regex: "/about\\.cn\\.md$/"}) {
+    about: markdownRemark(fileAbsolutePath: {regex: "/about\\.en\\.md$/"}) {
       html
     }
     pageData: markdownRemark(fileAbsolutePath: {regex: "/about\\.data\\.md$/"}) {
