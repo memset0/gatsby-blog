@@ -32,7 +32,6 @@ import siteMetadata from "../data/metadata";
 import scrollUtils from "../utils/scroll";
 import storageUtils from "../utils/storage";
 import { useScrollTop } from "../utils/scroll";
-import { transitionDuration } from "../data/preset";
 
 export const drawerWidth = 220;
 
@@ -135,7 +134,11 @@ const Layout = ({ children }) => {
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
 
-          <CSSTransition in={showAppBar} timeout={500} classNames="appbar-float">
+          <CSSTransition
+            in={showAppBar}
+            timeout={theme.transitions.duration.complex}
+            classNames="appbar-float"
+          >
             <div
               style={{
                 position: "fixed",
@@ -197,7 +200,12 @@ const Layout = ({ children }) => {
             sx={{ display: { xs: "none", md: "block" } }}
           >
             <DrawerContent fold={!open} pathname={pathname} />
-            <CSSTransition in={open && navJson} timeout={transitionDuration} classNames="fade" unmountOnExit>
+            <CSSTransition
+              in={open && navJson}
+              timeout={theme.transitions.duration.short}
+              classNames="fade"
+              unmountOnExit
+            >
               <div>
                 <Divider sx={{ mb: 1 }} />
                 <ArticleNav navJson={cachedNavJson} pathname={pathname} />
@@ -239,8 +247,8 @@ const Layout = ({ children }) => {
                     in={!open && !mobileOpen && !!navJson}
                     appear={true}
                     timeout={{
-                      enter: transitionDuration,
-                      exit: transitionDuration,
+                      enter: theme.transitions.duration.short,
+                      exit: theme.transitions.duration.short,
                     }}
                   >
                     <Fab color="primary" aria-label="list" onClick={handleClick}>
