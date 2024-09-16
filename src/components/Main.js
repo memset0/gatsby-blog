@@ -6,6 +6,7 @@ import LayoutContext from "../components/LayoutContext";
 import scrollUtils from "../utils/scroll";
 import siteMetadata from "../data/metadata";
 import { registerUmami, trackPathname } from "../utils/umami";
+import { animationDuration } from "../data/preset";
 
 const Main = ({ title, maxWidth, location, children, navJson }) => {
   // 读取上次滚动位置
@@ -31,7 +32,7 @@ const Main = ({ title, maxWidth, location, children, navJson }) => {
   }, []);
 
   return (
-    <CSSTransition in={showMain} timeout={200} classNames="fade">
+    <CSSTransition in={showMain} timeout={animationDuration} classNames="fade">
       <div style={{ opacity: "0" }}>
         <Container maxWidth={maxWidth || "lg"} sx={{ mt: 4, mb: 4 }}>
           {children}

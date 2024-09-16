@@ -8,7 +8,6 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        // backgroundColor: "#f5f5f5",
         padding: "20px",
         textAlign: "center",
         "& .footer-link": {

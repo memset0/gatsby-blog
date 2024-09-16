@@ -1,11 +1,13 @@
+@animation-duration: 250ms;
+
 .fade {
-  transition: opacity 200ms;
+  transition: opacity @animation-duration;
   &-enter {
     opacity: 0 !important;
   }
   &-enter-active {
     opacity: 1 !important;
-    transition: opacity 200ms;
+    transition: opacity @animation-duration;
   }
   &-enter-done {
     opacity: 1 !important;
@@ -15,7 +17,7 @@
   }
   &-exit-active {
     opacity: 0 !important;
-    transition: opacity 200ms;
+    transition: opacity @animation-duration;
   }
 }
 
@@ -26,7 +28,7 @@
 
   &-enter-active {
     top: 0px !important;
-    transition: top 500ms;
+    transition: top (2 * @animation-duration);
   }
 
   &-enter-done {
@@ -37,7 +39,7 @@
 .appbar-animation {
   &-basic {
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity (2 * @animation-duration);
   }
   &-fade-in {
     opacity: 1;

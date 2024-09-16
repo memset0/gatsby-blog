@@ -13,7 +13,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Footer from "./Footer";
 import AppBarContent from "./Layout/AppBarContent";
 import DrawerContent from "./Layout/DrawerContent";
-import DrawerContentNav from "./Layout/DrawerContentNav";
+import DrawerNavContent from "./Layout/DrawerNavContent";
 import LayoutContext from "./LayoutContext";
 
 import theme from "../theme";
@@ -22,6 +22,7 @@ import siteMetadata from "../data/metadata";
 import scrollUtils from "../utils/scroll";
 import storageUtils from "../utils/storage";
 import { useScrollTop } from "../utils/scroll";
+import { animationDuration } from "../data/preset";
 
 export const drawerWidth = 220;
 
@@ -48,6 +49,8 @@ const PermanentDrawer = styled(Drawer, {
   "& .MuiDrawer-paper": {
     position: "relative",
     whiteSpace: "nowrap",
+    overflowY: "auto",
+    height: "100vh",
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -160,7 +163,7 @@ const Layout = ({ children }) => {
             }}
           >
             <DrawerContent fold={false} pathname={pathname} />
-            {navJson && <DrawerContentNav navJson={navJson} pathname={pathname} />}
+            {navJson && <DrawerNavContent navJson={navJson} pathname={pathname} />}
           </Drawer>
 
           <PermanentDrawer
@@ -170,9 +173,9 @@ const Layout = ({ children }) => {
             sx={{ display: { xs: "none", md: "block" } }}
           >
             <DrawerContent fold={!open} pathname={pathname} />
-            <CSSTransition in={open && navJson} timeout={200} classNames="fade" unmountOnExit>
+            <CSSTransition in={open && navJson} timeout={animationDuration} classNames="fade" unmountOnExit>
               <div>
-                <DrawerContentNav navJson={cachedNavJson} pathname={pathname} />
+                <DrawerNavContent navJson={cachedNavJson} pathname={pathname} />
               </div>
             </CSSTransition>
           </PermanentDrawer>

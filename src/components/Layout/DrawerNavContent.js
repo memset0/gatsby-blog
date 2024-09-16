@@ -57,7 +57,7 @@ function generateNav(nav, level, pathname) {
   );
 }
 
-const DrawerContentNav = ({ navJson, pathname }) => {
+const DrawerNavContent = ({ navJson, pathname }) => {
   if (!navJson) {
     return <></>;
   }
@@ -78,4 +78,4 @@ const DrawerContentNav = ({ navJson, pathname }) => {
   );
 };
 
-export default DrawerContentNav;
+export default DrawerNavContent;
