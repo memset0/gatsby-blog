@@ -2,6 +2,7 @@ tmp
 obsidian-vault
 /content
 /content*
+/src/**/*.min.css
 
 # Logs
 logs
