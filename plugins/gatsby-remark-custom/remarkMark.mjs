@@ -11,21 +11,21 @@ function micromarkExt() {
     partial: true,
     tokenize: function (effects, ok, nok) {
       let markerSize = 0;
-      if (this.previous === codes.exclamationMark) {
+      if (this.previous === codes.equalsTo) {
         return nok;
       }
       const start = function (code) {
-        effects.enter("spoilerMarker");
+        effects.enter("markMarker");
         return marker;
       };
       const marker = function (code) {
-        if (code === codes.exclamationMark) {
+        if (code === codes.equalsTo) {
           effects.consume(code);
           markerSize++;
           return marker;
         }
         if (markerSize == 2) {
-          effects.exit("spoilerMarker");
+          effects.exit("markMarker");
           markerSize = 0;
           return ok;
         }
@@ -35,11 +35,11 @@ function micromarkExt() {
     },
   };
 
-  const spoiler = {
-    name: "spoiler",
+  const mark = {
+    name: "mark",
     tokenize: function (effects, ok, nok) {
       const start = function (code) {
-        effects.enter("spoiler");
+        effects.enter("mark");
         return effects.attempt(marker, factorySpace(effects, contentStart, types.whitespace), nok);
       };
       const contentStart = function (code) {
@@ -63,7 +63,7 @@ function micromarkExt() {
         return effects.attempt(marker, after, nok);
       };
       const after = function (code) {
-        effects.exit("spoiler");
+        effects.exit("mark");
         return ok;
       };
       return start;
@@ -72,42 +72,42 @@ function micromarkExt() {
 
   return {
     text: {
-      [codes.exclamationMark]: spoiler,
+      [codes.equalsTo]: mark,
     },
   };
 }
 
 function fromMarkdownExt() {
-  const enterSpoiler = function (token) {
+  const enterMark = function (token) {
     this.enter(
       {
-        type: "spoiler",
+        type: "mark",
         children: [],
       },
       token
     );
   };
-  const exitSpoiler = function (token) {
+  const exitMark = function (token) {
     const node = this.exit(token);
     node.data = {
       ...node.data,
-      hName: "del",
+      hName: "mark",
       hProperties: {
-        className: "m-spoiler",
+        className: "m-mark",
       },
     };
   };
   return {
     enter: {
-      spoiler: enterSpoiler,
+      mark: enterMark,
     },
     exit: {
-      spoiler: exitSpoiler,
+      mark: exitMark,
     },
   };
 }
 
-export default function remarkSpoiler() {
+export default function remarkMark() {
   const self = /** @type {Processor<Root>} */ (this);
   const data = self.data();
   function add(key, value) {

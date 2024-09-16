@@ -1,6 +1,7 @@
 import mdastDisableLocalLink from "./mdastDisableLocalLink.mjs";
 import mdastImageControl from "./mdastImageControl.mjs";
 import remarkSpoiler from "./remarkSpoiler.mjs";
+import remarkMark from "./remarkMark.mjs";
 
 function gatsbyRemarkCustom({ markdownAST }) {
   // 禁用指向本地文件的链接
@@ -11,6 +12,11 @@ function gatsbyRemarkCustom({ markdownAST }) {
 }
 
 // 注入自定义remark插件
-gatsbyRemarkCustom.setParserPlugins = () => [remarkSpoiler];
+gatsbyRemarkCustom.setParserPlugins = () => [
+  // 支持标记语法
+  remarkMark,
+  // 支持Spoiler语法
+  remarkSpoiler,
+];
 
 export default gatsbyRemarkCustom;
