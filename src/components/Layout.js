@@ -2,18 +2,26 @@ import React from "react";
 import { CSSTransition } from "react-transition-group";
 import { styled, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import NoSsr from "@mui/material/NoSsr";
 import Toolbar from "@mui/material/Toolbar";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import Fab from "@mui/material/Fab";
+import Zoom from "@mui/material/Zoom";
 import AppBar from "@mui/material/AppBar";
+import Popover from "@mui/material/Popover";
+import Backdrop from "@mui/material/Backdrop";
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ListIcon from "@mui/icons-material/List";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Footer from "./Footer";
 import AppBarContent from "./Layout/AppBarContent";
 import DrawerContent from "./Layout/DrawerContent";
-import DrawerNavContent from "./Layout/DrawerNavContent";
+import ArticleNav from "./Layout/ArticleNav";
 import LayoutContext from "./LayoutContext";
 
 import theme from "../theme";
@@ -22,7 +30,7 @@ import siteMetadata from "../data/metadata";
 import scrollUtils from "../utils/scroll";
 import storageUtils from "../utils/storage";
 import { useScrollTop } from "../utils/scroll";
-import { animationDuration } from "../data/preset";
+import { transitionDuration } from "../data/preset";
 
 export const drawerWidth = 220;
 
@@ -110,6 +118,15 @@ const Layout = ({ children }) => {
     }
   }, [navJson]);
 
+  // 用于控制弹出菜单
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <LayoutContext.Provider value={{ setTitle, setNavJson, setPathname, scrollTop, setScrollTop }}>
       <ThemeProvider theme={theme}>
@@ -163,7 +180,12 @@ const Layout = ({ children }) => {
             }}
           >
             <DrawerContent fold={false} pathname={pathname} />
-            {navJson && <DrawerNavContent navJson={navJson} pathname={pathname} />}
+            {navJson && (
+              <>
+                <Divider sx={{ mb: 1 }} />
+                <ArticleNav navJson={navJson} pathname={pathname} />
+              </>
+            )}
           </Drawer>
 
           <PermanentDrawer
@@ -173,9 +195,10 @@ const Layout = ({ children }) => {
             sx={{ display: { xs: "none", md: "block" } }}
           >
             <DrawerContent fold={!open} pathname={pathname} />
-            <CSSTransition in={open && navJson} timeout={animationDuration} classNames="fade" unmountOnExit>
+            <CSSTransition in={open && navJson} timeout={transitionDuration} classNames="fade" unmountOnExit>
               <div>
-                <DrawerNavContent navJson={cachedNavJson} pathname={pathname} />
+                <Divider sx={{ mb: 1 }} />
+                <ArticleNav navJson={cachedNavJson} pathname={pathname} />
               </div>
             </CSSTransition>
           </PermanentDrawer>
@@ -196,8 +219,76 @@ const Layout = ({ children }) => {
             {/* 这里进入页面主体 */}
             {children}
 
-            {/* 这里放页脚啦~ */}
+            {/* 这里是页脚 */}
             <Footer />
+
+            {/* 这里是浮动按钮 */}
+            <NoSsr>
+              <React.Fragment>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: 32,
+                    right: 32,
+                  }}
+                >
+                  <Zoom
+                    key="fab"
+                    in={!open && !mobileOpen && !!cachedNavJson}
+                    appear={true}
+                    timeout={{
+                      enter: transitionDuration,
+                      exit: transitionDuration,
+                    }}
+                  >
+                    <Fab color="primary" aria-label="list" onClick={handleClick}>
+                      <ListIcon />
+                    </Fab>
+                  </Zoom>
+                </Box>
+
+                <Backdrop
+                  sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}
+                  open={Boolean(anchorEl)}
+                  onClick={handleClose}
+                />
+
+                <Popover
+                  open={Boolean(anchorEl)}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  elevation={0}
+                  transformOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  slotProps={{
+                    paper: {
+                      sx: {
+                        overflow: "visible",
+                        background: "transparent",
+                        paddingRight: "24px",
+                        paddingBottom: "16px",
+                      },
+                    },
+                  }}
+                >
+                  <Card
+                    elevation={4}
+                    sx={{
+                      width: "min(300px, calc(100vw - 64px))",
+                      padding: "12px 0",
+                    }}
+                  >
+                    <ArticleNav navJson={cachedNavJson} pathname={pathname} dense={false} />
+                  </Card>
+                </Popover>
+              </React.Fragment>
+            </NoSsr>
           </Box>
         </Box>
       </ThemeProvider>

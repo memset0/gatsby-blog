@@ -1,3 +1,3 @@
 module.exports = {
-  animationDuration: 250,
+  transitionDuration: 250,
 };

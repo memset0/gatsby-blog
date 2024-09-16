@@ -47,7 +47,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
         const walk = node => {
           if (node instanceof Array) {
             for (const child of node) walk(child);
-          } else {
+          } else if (node) {
             if (node.tagName && node.tagName === "blockquote") {
               node.tagName = "div";
             }
@@ -158,7 +158,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                     </Typography>
 
                     {/* 概要部分 */}
-                    <Typography variant="body1" sx={{ minHeight: 2, mb: -1.5, fontSize: '0.95em' }}>
+                    <Typography variant="body1" sx={{ minHeight: 2, mb: -1.5, fontSize: "0.95em" }}>
                       <section
                         className="typography"
                         itemProp="articleBody"
@@ -183,8 +183,8 @@ const PostListTemplate = ({ data, location, pageContext }) => {
           }}
         >
           <Pagination
-            showFirstButton 
-            showLastButton 
+            showFirstButton
+            showLastButton
             page={pageNumber + 1}
             count={numberOfPages}
             color="primary"
