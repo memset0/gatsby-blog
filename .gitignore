@@ -1,6 +1,7 @@
 tmp
-content
 obsidian-vault
+/content
+/content*
 
 # Logs
 logs

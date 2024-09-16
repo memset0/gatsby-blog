@@ -2,6 +2,7 @@
   0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 
 .m- {
+  // 禁用的链接
   &disabled-link {
     color: #ccc;
     text-decoration: underline;
@@ -9,6 +10,20 @@
     cursor: not-allowed;
   }
 
+  // Spoiler
+  &spoiler {
+    color: transparent;
+    background-color: black;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1), background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    &:hover {
+      color: inherit;
+      background-color: inherit;
+    }
+  }
+
+  // 支持自定义纸片
   .__clip(@color) {
     font-size: 0.875em;
     max-width: 100%;
@@ -22,7 +37,6 @@
       font-weight: bold;
       // font-family: Consolas, monospace;
     }
-
     transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1), background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
     background: white;
@@ -35,28 +49,24 @@
       box-shadow: @mdui-shadow-1;
     }
   }
-
   &definition {
     .__clip(rgb(68, 115, 218));
     &:after {
       content: "Definition";
     }
   }
-
   &theorem {
     .__clip(rgb(62, 138, 0));
     &:after {
       content: "Theorem";
     }
   }
-
   &proposition {
     .__clip(rgb(0, 133, 143));
     &:after {
       content: "Proposition";
     }
   }
-
   &example {
     .__clip(rgb(132, 90, 231));
     &:after {
