@@ -8,7 +8,7 @@ import { Link as GatsbyLink } from "gatsby";
 
 import theme from "../theme";
 
-const ArticleNav = ({ navJson, pathname, dense = true }) => {
+const ArticleNav = ({ navJson, pathname, dense = true, onClick = () => {} }) => {
   if (!navJson) {
     return <></>;
   }
@@ -27,6 +27,7 @@ const ArticleNav = ({ navJson, pathname, dense = true }) => {
                 fontWeight: "inherit",
                 whiteSpace: "normal",
               }}
+              onClick={onClick}
             >
               {el.title}
             </ListItemText>
@@ -47,7 +48,7 @@ const ArticleNav = ({ navJson, pathname, dense = true }) => {
             return (
               <div key={index}>
                 {
-                  <ListItemButton key={index} component={GatsbyLink} to={el.slug}>
+                  <ListItemButton key={index} component={GatsbyLink} to={el.slug} onClick={onClick}>
                     {Text}
                   </ListItemButton>
                 }

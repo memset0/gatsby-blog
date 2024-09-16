@@ -87,8 +87,24 @@ const Layout = ({ children }) => {
   const [pathname, setPathname] = React.useState("");
   const [scrollTop, setScrollTop] = useScrollTop();
 
+  // 用于控制浮动按钮的弹出菜单
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleFloatingOpen = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleFloatingClose = () => {
+    setAnchorEl(null);
+  };
+
   const [navJson, setNavJson] = React.useState("");
   const [cachedNavJson, setCachedNavJson] = React.useState("");
+  React.useEffect(() => {
+    // 避免在页面切换的一瞬间使nav为空（从而无法出发动画）
+    // 也为了避免在相同nav的页面之间切换时出现闪烁
+    if (navJson) {
+      setCachedNavJson(navJson);
+    }
+  }, [navJson]);
 
   const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
   const toggleDrawer = () => {
@@ -112,21 +128,6 @@ const Layout = ({ children }) => {
   React.useEffect(() => {
     setShowAppBar(true);
   }, []);
-
-  React.useEffect(() => {
-    if (navJson) {
-      setCachedNavJson(navJson);
-    }
-  }, [navJson]);
-
-  // 用于控制弹出菜单
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <LayoutContext.Provider value={{ setTitle, setNavJson, setPathname, scrollTop, setScrollTop }}>
@@ -245,7 +246,7 @@ const Layout = ({ children }) => {
                       exit: theme.transitions.duration.short,
                     }}
                   >
-                    <Fab color="primary" aria-label="list" onClick={handleClick}>
+                    <Fab color="primary" aria-label="list" onClick={handleFloatingOpen}>
                       <ListIcon />
                     </Fab>
                   </Zoom>
@@ -254,13 +255,13 @@ const Layout = ({ children }) => {
                 <Backdrop
                   sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}
                   open={Boolean(anchorEl)}
-                  onClick={handleClose}
+                  onClick={handleFloatingClose}
                 />
 
                 <Popover
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
-                  onClose={handleClose}
+                  onClose={handleFloatingClose}
                   elevation={0}
                   anchorOrigin={{
                     vertical: "top",
@@ -288,7 +289,12 @@ const Layout = ({ children }) => {
                       padding: "12px 0",
                     }}
                   >
-                    <ArticleNav navJson={cachedNavJson} pathname={pathname} dense={false} />
+                    <ArticleNav
+                      navJson={cachedNavJson}
+                      pathname={pathname}
+                      dense={false}
+                      onClick={handleFloatingClose}
+                    />
                   </Card>
                 </Popover>
               </React.Fragment>
