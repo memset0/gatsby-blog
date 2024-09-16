@@ -185,12 +185,6 @@ const Layout = ({ children }) => {
             }}
           >
             <DrawerContent fold={false} pathname={pathname} />
-            {navJson && (
-              <>
-                <Divider sx={{ mb: 1 }} />
-                <ArticleNav navJson={navJson} pathname={pathname} />
-              </>
-            )}
           </Drawer>
 
           <PermanentDrawer
