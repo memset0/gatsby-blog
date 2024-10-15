@@ -239,7 +239,7 @@ const Layout = ({ children }) => {
                 >
                   <Zoom
                     key="fab"
-                    in={!open && !mobileOpen && !!navJson}
+                    in={(isDesktop ? !open : !mobileOpen) && !!navJson}
                     appear={true}
                     timeout={{
                       enter: theme.transitions.duration.short,
