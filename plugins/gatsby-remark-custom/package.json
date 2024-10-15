@@ -2,5 +2,8 @@
   "name": "gatsby-remark-custom",
   "version": "0.0.0",
   "main": "index.mjs",
-  "author": "memset0 <memset0@outlook.com>"
+  "author": "memset0 <memset0@outlook.com>",
+  "dependencies": {
+    "gatsby-remark-custom": "file:"
+  }
 }

@@ -2,5 +2,8 @@
   "name": "gatsby-remark-callout",
   "version": "0.0.0",
   "main": "index.js",
-  "author": "memset0 <memset0@outlook.com>"
+  "author": "memset0 <memset0@outlook.com>",
+  "dependencies": {
+    "gatsby-remark-callout": "file:"
+  }
 }
