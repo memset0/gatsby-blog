@@ -38,6 +38,7 @@
     "hast-util-to-html": "^9.0.0",
     "lodash": "^4.17.21",
     "mdast-util-to-string": "^2.0.0",
+    "memset0-blog": "file:",
     "micromark-factory-space": "^2.0.0",
     "micromark-util-character": "^2.1.0",
     "micromark-util-symbol": "^2.0.0",
