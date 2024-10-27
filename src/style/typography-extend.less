@@ -42,9 +42,14 @@
     padding: 2px 4px;
     border-radius: 4px;
     opacity: 0.9;
-    &:after {
+    &:before {
       font-weight: bold;
       // font-family: Consolas, monospace;
+    }
+    &[data-content]:after {
+      font-size: 1.125em;
+      content: " (" attr(data-content) ")";
+      font-weight: normal;
     }
     transition: color 250ms @mdui-timing-fuction, background-color 250ms @mdui-timing-fuction,
       box-shadow 250ms @mdui-timing-fuction;
@@ -60,25 +65,25 @@
   }
   &definition {
     .__clip(rgb(68, 115, 218));
-    &:after {
+    &:before {
       content: "Definition";
     }
   }
   &theorem {
     .__clip(rgb(62, 138, 0));
-    &:after {
+    &:before {
       content: "Theorem";
     }
   }
   &proposition {
     .__clip(rgb(0, 133, 143));
-    &:after {
+    &:before {
       content: "Proposition";
     }
   }
   &example {
     .__clip(rgb(132, 90, 231));
-    &:after {
+    &:before {
       content: "Example";
     }
   }
