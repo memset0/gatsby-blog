@@ -56,12 +56,7 @@ const AboutPage = ({ data, location }) => {
   const propsJson = data.pageData.fields.propsJson;
   const props = {};
 
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const isMobile = useMediaQuery(() => theme.breakpoints.down("md"));
+  // const isMobile = useMediaQuery(() => theme.breakpoints.down("md"));
   const SocialLink = ({ text, href, children }) => (
     <Tooltip
       title={text}
