@@ -45,7 +45,7 @@ const MyTimeline = props => {
             my: 0.5,
             px: 0,
             [`& .${timelineOppositeContentClasses.root}`]: {
-              maxWidth: "5.8em",
+              maxWidth: "5.5em",
             },
           }}
         >
