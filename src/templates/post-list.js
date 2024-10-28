@@ -149,7 +149,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                           "& .MuiBreadcrumbs-separator": { mx: 0.5 },
                         }}
                       >
-                        {JSON.parse(post.fields.category).map(({ name, to }, index) => (
+                        {JSON.parse(post.fields.category)?.map(({ name, to }, index) => (
                           <Link component={GatsbyLink} underline="hover" color="inherit" to={to} key={index}>
                             {name}
                           </Link>
