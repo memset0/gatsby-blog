@@ -433,7 +433,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       isDoc: Boolean
       isPublished: Boolean
       publishedTitle: String
-      cover: File
       navJson: String
       propsJson: String
       category: String
