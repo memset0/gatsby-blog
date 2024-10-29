@@ -1,6 +1,4 @@
-@mdui-timing-fuction: cubic-bezier(0.4, 0, 0.2, 1);
-@mdui-shadow-1: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-  0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+@import "./variables.less";
 
 .m- {
   // 禁用的链接
@@ -34,29 +32,32 @@
 
   // 支持自定义纸片
   .__clip(@color) {
-    font-size: 0.875em;
     max-width: 100%;
-    height: 1em;
     white-space: nowrap;
     cursor: unset;
-    padding: 2px 4px;
-    border-radius: 4px;
     opacity: 0.9;
+    display: inline;
+    font-weight: normal;
+    font-family: @theme-font;
+    color: @color;
+    background: white;
     &:before {
+      font-size: 0.875em;
       font-weight: bold;
       // font-family: Consolas, monospace;
+      letter-spacing: 0.02em;
+      padding: 0.1em 0.3em;
+      border-radius: 0.3em;
+      border: 1px solid @color;
+      transition: color 250ms @mdui-timing-fuction, background-color 250ms @mdui-timing-fuction,
+        box-shadow 250ms @mdui-timing-fuction;
     }
     &[data-content]:after {
-      font-size: 1.125em;
-      content: " (" attr(data-content) ")";
-      font-weight: normal;
+      // font-size: 1.2em;
+      content: "(" attr(data-content) ")";
+      padding: 0 0.25em;
     }
-    transition: color 250ms @mdui-timing-fuction, background-color 250ms @mdui-timing-fuction,
-      box-shadow 250ms @mdui-timing-fuction;
-    background: white;
-    color: @color;
-    border: 1px solid @color;
-    &:hover {
+    &:hover:before {
       background: @color;
       color: white;
       border: 1px solid @color;
@@ -85,6 +86,73 @@
     .__clip(rgb(132, 90, 231));
     &:before {
       content: "Example";
+    }
+  }
+
+  // 大纲笔记样式（仿幕布）
+  &mubu {
+    ul > li:before {
+      @width: 1.2em;
+      content: "\25CF";
+      // font-size: 80%;
+      display: inline-block;
+      width: @width;
+      margin-left: -@width;
+      // -webkit-text-stroke: 0.05em white;
+    }
+    ol {
+      counter-reset: item;
+      & > li:before {
+        @width: 1.2em;
+        counter-increment: item;
+        content: counter(item) + ". ";
+        display: inline-block;
+        width: @width;
+        margin-left: -@width;
+      }
+    }
+    ul,
+    ol {
+      & > li {
+        list-style: none;
+        &:focus {
+          color: red;
+        }
+        &:before {
+          color: #a0a0a0;
+          transition: color @theme-transitions-duration-shorter @mdui-timing-fuction;
+        }
+        &:hover:before {
+          color: @theme-color-main;
+          // -webkit-text-stroke: 0.5em #ccc;
+        }
+      }
+    }
+    // 缩进线
+    li > ul:before,
+    li > ol:before {
+      content: "\200B";
+      position: absolute;
+      display: block;
+      inset-inline-start: -0.94em;
+      top: 0;
+      bottom: 0;
+      border-inline-end: 1px solid #a0a0a080;
+    }
+    // 缩进微调
+    ul,
+    ol {
+      padding-left: @paragraph-distance * 3;
+    }
+    li > ul,
+    li > ol {
+      position: relative;
+      padding-left: @paragraph-distance * 4;
+    }
+    // 间距微调
+    li {
+      margin-block-start: @paragraph-distance;
+      margin-block-end: @paragraph-distance;
     }
   }
 }
