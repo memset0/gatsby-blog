@@ -117,12 +117,12 @@
           color: red;
         }
         &:before {
-          color: #a0a0a0;
+          color: #808080;
           transition: color @theme-transitions-duration-shorter @mdui-timing-fuction;
+          -webkit-text-stroke: 0.05em white;
         }
         &:hover:before {
           color: @theme-color-main;
-          // -webkit-text-stroke: 0.5em #ccc;
         }
       }
     }
@@ -140,7 +140,7 @@
     // 缩进微调
     ul,
     ol {
-      padding-left: @paragraph-distance * 3;
+      padding-left: @paragraph-distance * 3.2;
     }
     li > ul,
     li > ol {
