@@ -37,30 +37,28 @@
     cursor: unset;
     opacity: 0.9;
     display: inline;
-    font-weight: normal;
-    font-family: @theme-font;
     color: @color;
-    background: white;
     &:before {
       font-size: 0.875em;
       font-weight: bold;
+      font-family: @theme-font;
       // font-family: Consolas, monospace;
+      background: white;
       letter-spacing: 0.02em;
-      padding: 0.1em 0.3em;
-      border-radius: 0.3em;
-      border: 1px solid @color;
+      padding: 0.15em 0.25em;
+      border-radius: 0.25em;
+      border: 0.1em solid @color;
       transition: color 250ms @mdui-timing-fuction, background-color 250ms @mdui-timing-fuction,
         box-shadow 250ms @mdui-timing-fuction;
+      margin-right: 0.3em;
     }
     &[data-content]:after {
       // font-size: 1.2em;
       content: "(" attr(data-content) ")";
-      padding: 0 0.25em;
     }
     &:hover:before {
       background: @color;
       color: white;
-      border: 1px solid @color;
       box-shadow: @mdui-shadow-1;
     }
   }
