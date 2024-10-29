@@ -27,6 +27,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
   const { post } = data;
   const { navJson } = pageContext;
   const { slug, isDoc, cover, propsJson } = post.fields;
+  const cssclasses = post.fields.cssclasses || [];
 
   const coverImage = !isDoc && cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
@@ -38,7 +39,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
 
   return (
     <Main maxWidth="lg" title={getTitle({ data })} location={location} navJson={navJson}>
-      <article itemScope itemType="http://schema.org/Article">
+      <article itemScope itemType="http://schema.org/Article" className={cssclasses.join(" ")}>
         <Grid container spacing={2}>
           {/* 这里是博文 */}
           <Grid item xs={12} lg={9}>
@@ -232,6 +233,7 @@ export const pageQuery = graphql`
           }
         }
         slug
+        cssclasses
         isDoc
         category
         propsJson

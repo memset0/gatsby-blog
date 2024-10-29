@@ -217,6 +217,23 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       value: slug,
     });
 
+    // 处理cssstyles
+    let cssclasses = [];
+    if (node.frontmatter.cssclasses) {
+      cssclasses.push(node.frontmatter.cssclasses);
+    }
+    if (node.frontmatter["blog-cssclasses"]) {
+      cssclasses.push(node.frontmatter["blog-cssclasses"]);
+    }
+    cssclasses = cssclasses.flat();
+    if (cssclasses.length > 0) {
+      createNodeField({
+        node,
+        name: "cssclasses",
+        value: cssclasses,
+      });
+    }
+
     // 判断当前文件是不是文档,如果是文档,则field isDoc为真isDoc
     let isDoc = false;
     for (const category of flattedCategories) {
@@ -412,6 +429,14 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     type Fields {
       slug: String
+      cssclasses: [String]
+      isDoc: Boolean
+      isPublished: Boolean
+      publishedTitle: String
+      cover: File
+      navJson: String
+      propsJson: String
+      category: String
     }
     
     type Friend implements Node {
