@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import GitIcon from "../Icon/GitIcon";
+import ViewSourceIcon from "../Icon/ViewSourceIcon";
 
 import siteMetadata from "../../data/metadata";
 import { checkNegIndent } from "../../utils/frontend";
@@ -25,7 +25,7 @@ const AppBarContent = ({ title }) => {
 
       {/* Appbar 右侧 */}
       <IconButton href="https://github.com/memset0/gatsby-blog" target="_blank">
-        <GitIcon sx={{ fill: "white" }} />
+        <ViewSourceIcon sx={{ fill: "white" }} />
       </IconButton>
     </>
   );
