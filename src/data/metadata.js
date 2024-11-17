@@ -13,4 +13,5 @@ module.exports = {
     github: `https://github.com/memset0`,
     codeforces: `https://codeforces.com/profile/memset0c`,
   },
+  icp: "浙ICP备19006255号-1",
 };

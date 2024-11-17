@@ -3,6 +3,8 @@ import { Link as GatsbyLink } from "gatsby";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
+import metadata from "../../data/metadata";
+
 const Footer = () => {
   return (
     <Box
@@ -34,7 +36,15 @@ const Footer = () => {
         <GatsbyLink component="a" to="/about/" className="footer-link">
           memset0
         </GatsbyLink>
-        . All rights reserved.
+        . All rights reserved.{" "}
+        {metadata.icp && (
+          <>
+            <br />
+            <GatsbyLink component="a" to="https://beian.miit.gov.cn/" target="_blank">
+              {metadata.icp}
+            </GatsbyLink>
+          </>
+        )}
       </Typography>
     </Box>
   );
