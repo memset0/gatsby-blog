@@ -58,7 +58,7 @@ const TableOfContents = ({ toc }) => {
                     },
                   }}
                 >
-                  {item.text.replace(/&#x26;/g, "&")}
+                  <span dangerouslySetInnerHTML={{ __html: item.text }} />
                 </ListItemText>
               </ListItemButton>
               {item.children && (
