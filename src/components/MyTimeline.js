@@ -30,6 +30,32 @@ function Text(props) {
   }
 }
 
+function getBackgroundColor(background) {
+  if (background === "gold") {
+    return "#efbf04";
+  }
+  if (background === "silver") {
+    return "#BFC1C2";
+  }
+  if (background === "bronze") {
+    return "#CD7F32";
+  }
+  return '#bdbdbd';
+}
+
+function getTextColor(color) {
+  if (color === "gold") {
+    return "#efbf04";
+  }
+  if (color === "silver") {
+    return "#838996";
+  }
+  if (color === "bronze") {
+    return "#CD7F32";
+  }
+  return "#fff";
+}
+
 const MyTimeline = props => {
   let { timeline, ...other } = props;
 
@@ -71,7 +97,15 @@ const MyTimeline = props => {
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineConnector sx={{ opacity: index === 0 ? 0 : 1 }} />
-                  <TimelineDot>{item.type === "award" && <EmojiEventsIcon fontSize="small" />}</TimelineDot>
+                  <TimelineDot
+                    sx={{
+                      backgroundColor: getTextColor(item.color) === '#fff' ? '#bdbdbd' : '#fff',
+                      borderColor: getBackgroundColor(item.background),
+                      color: getTextColor(item.color),
+                    }}
+                  >
+                    {item.type === "award" && <EmojiEventsIcon fontSize="small" />}
+                  </TimelineDot>
                   <TimelineConnector sx={{ opacity: index + 1 === timeline.length ? 0 : 1 }} />
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: "24px", px: "16px" }}>
