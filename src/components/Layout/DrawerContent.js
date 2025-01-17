@@ -65,7 +65,7 @@ const DrawerContent = ({ fold, pathname }) => {
               className={navigator.rule(pathname) ? "selected" : ""}
               component={GatsbyLink}
               sx={{
-                pl: fold ? 2 : 4.75,
+                pl: fold ? 2 : 5.5,
                 transition: "padding 0.2s",
                 "&.selected": {
                   color: theme.palette.secondary.main,
@@ -74,7 +74,7 @@ const DrawerContent = ({ fold, pathname }) => {
               }}
             >
               <ListItemIcon>{navigator.icon}</ListItemIcon>
-              <ListItemText sx={{ pl: 1 }} primary={navigator.text} />
+              <ListItemText sx={{ pl: 0.125, fontSize: '1.125rem', letterSpacing: '0.025rem' }} primary={navigator.text} />
             </ListItemButton>
           </ListItem>
         ))}

@@ -17,9 +17,10 @@ const theme = createTheme({
   },
 
   typography: {
-    // inspired by Fonts.css
     fontFamily: [
-      "-apple-system",
+      "LXGW WenKai Screen",
+      // the following items are inspired by Fonts.css
+      "-apple-system", 
       '"Noto Sans"',
       '"Helvetica Neue"',
       "Helvetica",
