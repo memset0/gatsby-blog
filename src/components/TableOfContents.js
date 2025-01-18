@@ -83,13 +83,13 @@ const TableOfContents = ({ toc }) => {
     >
       <Typography
         variant="body2"
-        fontWeight="bold"
         color="grey.500"
         sx={{
-          mt: 0.5,
+          // mt: 0.5,
           px: 2,
-          py: 0.5,
-          letterSpacing: "-0.2px",
+          py: 0.75,
+          fontWeight: '500',
+          letterSpacing: "-0.25px",
         }}
       >
         TABLE OF CONTENTS

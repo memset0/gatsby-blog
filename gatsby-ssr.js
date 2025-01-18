@@ -11,15 +11,24 @@ const React = require("react");
  */
 exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
   setHtmlAttributes({ lang: `zh-CN` });
-
+  
   setHeadComponents([
     <link
-      href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css"
+      href="https://static.zeoseven.com/zsft/69/main/result.css"
       rel="stylesheet"
       crossOrigin="anonymous"
-      key="LxgwFont"
+      key="NotoSansFont"
     />,
   ]);
+
+  // setHeadComponents([
+  //   <link
+  //     href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css"
+  //     rel="stylesheet"
+  //     crossOrigin="anonymous"
+  //     key="LxgwWenkaiFont"
+  //   />,
+  // ]);
 
   // setHeadComponents([
   //   <link

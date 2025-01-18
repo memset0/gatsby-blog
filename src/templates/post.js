@@ -66,7 +66,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
                     component="div"
                     className={styles.articleTitle + " " + styles.articleTitleDoc}
                     sx={{
-                      textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0,
+                      textIndent: checkNegIndent(post.frontmatter.title) ? "-0.5em" : 0,
                       mt: 2,
                     }}
                   >
@@ -76,7 +76,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
                   <Typography
                     component="div"
                     className={styles.articleTitle + " " + styles.articleTitlePost}
-                    sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.32em" : 0 }}
+                    sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.5em" : 0 }}
                   >
                     {post.frontmatter.title}
                   </Typography>
