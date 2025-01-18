@@ -29,6 +29,8 @@ const PostTemplate = ({ data, pageContext, location }) => {
   const { slug, isDoc, cover, propsJson } = post.fields;
   const cssclasses = post.fields.cssclasses || [];
 
+  const authors = post.fields.authors; // 作者信息（常用于有多位作者的场景）
+
   const coverImage = !isDoc && cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
   const createTime = !isDoc && post.fields.createTime;
@@ -235,6 +237,7 @@ export const pageQuery = graphql`
         slug
         cssclasses
         isDoc
+        authors
         createTime(formatString: "YYYY 年 MM 月 DD 日")
         updateTime(formatString: "YYYY 年 MM 月 DD 日")
         category

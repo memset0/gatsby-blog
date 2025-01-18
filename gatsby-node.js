@@ -7,6 +7,7 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("yaml");
+const lodash = require("lodash");
 const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`);
 const { paginate } = require("gatsby-awesome-pagination");
 
@@ -324,7 +325,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
 
     // authors
     let authors = []
-    for (const author in Array.flat([
+    for (const author in lodash.flattenDeep([
       [node.frontmatter.author],
       [node.frontmatter.authors],
     ])) {
@@ -341,7 +342,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
     // cover
     const coverPath = node.frontmatter.cover;
     if (coverPath) {
-      let fileNode;
+      let fileNode = null;
       if (coverPath.startsWith("http://") || coverPath.startsWith("https://")) {
         // 说明cover在远程网站，使用createRemoteFileNode方法创建文件节点
         fileNode = await createRemoteFileNode({
@@ -357,6 +358,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
         const resolvedCoverPath = path.resolve(__dirname, "./content/cover/", coverPath);
         fileNode = getNodeByPath(resolvedCoverPath);
       }
+      // console.log("!!!", node.frontmatter.title, fileNode);
       if (fileNode) {
         createNodeField({
           node,
@@ -498,6 +500,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       propsJson: String
       category: String
       authors: [String]
+      cover: File
     }
     
     type Friend implements Node {
