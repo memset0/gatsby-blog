@@ -20,7 +20,7 @@ function Text(props) {
     return (
       <>
         <Typography {...other}>{content[0]}</Typography>
-        <Typography color="text.secondary" {...other}>
+        <Typography color="text.secondary"  {...other} sx={{ ...(other.sx || {}), fontSize: "0.9em" }}>
           {content[1]}
         </Typography>
       </>
@@ -40,7 +40,7 @@ function getBackgroundColor(background) {
   if (background === "bronze") {
     return "#CD7F32";
   }
-  return '#bdbdbd';
+  return "#bdbdbd";
 }
 
 function getTextColor(color) {
@@ -99,7 +99,7 @@ const MyTimeline = props => {
                   <TimelineConnector sx={{ opacity: index === 0 ? 0 : 1 }} />
                   <TimelineDot
                     sx={{
-                      backgroundColor: getTextColor(item.color) === '#fff' ? '#bdbdbd' : '#fff',
+                      backgroundColor: getTextColor(item.color) === "#fff" ? "#bdbdbd" : "#fff",
                       borderColor: getBackgroundColor(item.background),
                       color: getTextColor(item.color),
                     }}
