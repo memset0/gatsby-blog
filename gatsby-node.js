@@ -358,7 +358,6 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
         const resolvedCoverPath = path.resolve(__dirname, "./content/cover/", coverPath);
         fileNode = getNodeByPath(resolvedCoverPath);
       }
-      // console.log("!!!", node.frontmatter.title, fileNode);
       if (fileNode) {
         createNodeField({
           node,
@@ -500,7 +499,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       propsJson: String
       category: String
       authors: [String]
-      cover: File
     }
     
     type Friend implements Node {
