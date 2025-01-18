@@ -139,7 +139,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                       }}
                     >
                       <CalendarAltIcon fontSize="tiny" />
-                      <span style={{ wordSpacing: "-2px" }}> {post.frontmatter.date}</span>
+                      <span style={{ wordSpacing: "-2px" }}> {post.fields.createTime}</span>
                       <LayerGroupIcon fontSize="tiny" />
                       <Breadcrumbs
                         aria-label="breadcrumb"
@@ -207,7 +207,7 @@ export const pageQuery = graphql`
   query PostListTemplate($skip: Int!, $limit: Int!, $prefixRegex: String!) {
     posts: allMarkdownRemark(
       filter: { fields: { isPublished: { eq: true }, slug: { regex: $prefixRegex } } }
-      sort: { frontmatter: { date: DESC } }
+      sort: { fields: { createTime: DESC } }
       skip: $skip
       limit: $limit
     ) {
@@ -215,13 +215,11 @@ export const pageQuery = graphql`
         node {
           id
           excerptAst
-          frontmatter {
-            date(formatString: "YYYY-MM-DD")
-          }
           fields {
             slug
             category
             publishedTitle
+            createTime(formatString: "YYYY-MM-DD")
             cover {
               childImageSharp {
                 gatsbyImageData

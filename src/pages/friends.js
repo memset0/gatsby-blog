@@ -23,10 +23,10 @@ const FriendsPage = ({ data, location }) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const dateNum = year * 10000 + month * 100 + day;
+  const dateHash = year * 10000 + month * 100 + day;
 
   const friends = JSON.parse(JSON.stringify(data.site.friends));
-  shuffle(friends, dateNum);
+  shuffle(friends, dateHash);
 
   const cardHeight = 120;
 

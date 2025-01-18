@@ -31,7 +31,8 @@ const PostTemplate = ({ data, pageContext, location }) => {
 
   const coverImage = !isDoc && cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
-  const date = !isDoc && post.frontmatter.date;
+  const createTime = !isDoc && post.fields.createTime;
+  const updateTime = !isDoc && post.fields.updateTime;
   const category = !isDoc && post.fields.category && JSON.parse(post.fields.category);
 
   // console.log("[nav]", navJson && JSON.parse(navJson));
@@ -82,7 +83,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
                   </Typography>
                 )}
 
-                {(date || category) && (
+                {(createTime || category) && (
                   <Box
                     sx={{
                       display: "flex",
@@ -95,11 +96,11 @@ const PostTemplate = ({ data, pageContext, location }) => {
                       "& :first-child": { ml: 0 },
                     }}
                   >
-                    {date && (
+                    {createTime && (
                       <>
                         <CalendarAltIcon fontSize="small" />
                         <Typography variant="body1" color="inherit" sx={{ wordSpacing: "-3px" }}>
-                          {date}
+                          {createTime}
                         </Typography>
                       </>
                     )}
@@ -223,7 +224,6 @@ export const pageQuery = graphql`
       tableOfContents(maxDepth: 3)
       frontmatter {
         title
-        date(formatString: "YYYY 年 MM 月 DD 日")
         description
       }
       fields {
@@ -235,6 +235,8 @@ export const pageQuery = graphql`
         slug
         cssclasses
         isDoc
+        createTime(formatString: "YYYY 年 MM 月 DD 日")
+        updateTime(formatString: "YYYY 年 MM 月 DD 日")
         category
         propsJson
       }

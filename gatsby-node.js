@@ -21,6 +21,16 @@ const postTemplate = path.resolve("./src/templates/post.js");
 
 const POSTS_PER_PAGE = 10;
 
+function selectFromMatter(matter, keys) {
+  let result = null;
+  for (const key of keys.reverse()) {
+    if (Object.keys(matter).includes(key) && matter[key]) {
+      result = matter[key];
+    }
+  }
+  return result;
+}
+
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
@@ -30,7 +40,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // 获取所有按日期排序的markdown博客文章
   const result = await graphql(`
     {
-      allMarkdownRemark(sort: { frontmatter: { date: ASC } }) {
+      allMarkdownRemark(sort: { fields: { createTime: ASC } }) {
         nodes {
           id
           frontmatter {
@@ -211,13 +221,47 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       return null;
     };
 
+    // slug
     createNodeField({
       node,
       name: `slug`,
       value: slug,
     });
 
-    // 处理cssstyles
+    // updateTime / createTime
+    let createTime = selectFromMatter(
+      node.frontmatter,
+      [
+        'date',
+        'create',
+        'create-time',
+        'createTime',
+        'create-date',
+        'createDate',
+      ]
+    );
+    createNodeField({
+      node,
+      name: 'createTime',
+      value: createTime,
+    });
+    let updateTime = selectFromMatter(
+      node.frontmatter,
+      [
+        'update',
+        'update-time',
+        'updateTime',
+        'update-date',
+        'updateDate'
+      ]
+    ) || createTime;
+    createNodeField({
+      node,
+      name: 'updateTime',
+      value: updateTime,
+    });
+
+    // cssstyles
     let cssclasses = [];
     if (node.frontmatter.cssclasses) {
       cssclasses.push(node.frontmatter.cssclasses);
@@ -234,7 +278,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       });
     }
 
-    // 判断当前文件是不是文档,如果是文档,则field isDoc为真isDoc
+    // is doc? (判断当前文件是不是文档)
     let isDoc = false;
     for (const category of flattedCategories) {
       if (slug.startsWith(category.slug)) {
@@ -251,20 +295,20 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       });
     }
 
-    let isPublished = false;
-    if (
-      node.frontmatter.publish || //
-      node.frontmatter["published-title"] ||
-      node.frontmatter.publishedTitle
-    ) {
-      isPublished = true;
-    }
-    if (
-      !node.frontmatter.date || // 如果date为空，则一定不发布
-      node.frontmatter.hide // 如果hide为真，则一定不发布
-    ) {
-      isPublished = false;
-    }
+    // is publish? (处理是否需要发布的相关逻辑)
+    let publishedTitle = selectFromMatter(
+      node.frontmatter,
+      [
+        'publish-title',
+        'publishTitle',
+        'published-title',
+        'publishedTitle'
+      ]
+    );
+    let isPublished = !!(
+      (node.frontmatter.publish || publishedTitle) && // 允许发布的条件
+      !(node.frontmatter.hide || !createTime) // 禁止发布的条件(必须不满足)
+    );
     if (isPublished) {
       createNodeField({
         node,
@@ -274,13 +318,27 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       createNodeField({
         node,
         name: "publishedTitle",
-        value:
-          node.frontmatter["published-title"] || //
-          node.frontmatter.publishedTitle ||
-          node.frontmatter.title,
+        value: publishedTitle || node.frontmatter.title,
       });
     }
 
+    // authors
+    let authors = []
+    for (const author in Array.flat([
+      [node.frontmatter.author],
+      [node.frontmatter.authors],
+    ])) {
+      if (author && author instanceof String && author.length < 100) {
+        authors.push(author);
+      }
+    }
+    createNodeField({
+      node,
+      name: 'authors',
+      authors,
+    });
+
+    // cover
     const coverPath = node.frontmatter.cover;
     if (coverPath) {
       let fileNode;
@@ -299,7 +357,6 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
         const resolvedCoverPath = path.resolve(__dirname, "./content/cover/", coverPath);
         fileNode = getNodeByPath(resolvedCoverPath);
       }
-
       if (fileNode) {
         createNodeField({
           node,
@@ -309,6 +366,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       }
     }
 
+    // nav
     if (node.frontmatter.nav) {
       const parsedNav = parseNav(path.dirname(node.fileAbsolutePath), slug, node.frontmatter.nav);
       createNodeField({
@@ -318,6 +376,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       });
     }
 
+    // props (主要用于在文档页展示自定义条目)
     const props = [];
     if (node.frontmatter.props) {
       for (const el of Object.entries(node.frontmatter.props)) {
@@ -430,12 +489,15 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Fields {
       slug: String
       cssclasses: [String]
+      updateTime: Date @dateformat
+      createTime: Date @dateformat
       isDoc: Boolean
       isPublished: Boolean
       publishedTitle: String
       navJson: String
       propsJson: String
       category: String
+      authors: [String]
     }
     
     type Friend implements Node {

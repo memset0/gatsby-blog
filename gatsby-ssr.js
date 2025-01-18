@@ -12,6 +12,7 @@ const React = require("react");
 exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
   setHtmlAttributes({ lang: `zh-CN` });
   
+  // Noto Sans SC
   setHeadComponents([
     <link
       href="https://static.zeoseven.com/zsft/69/main/result.css"
