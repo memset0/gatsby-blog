@@ -113,7 +113,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                       sx={{
                         lineHeight: 1.35,
                         mb: 0.75,
-                        fontWeight: '500',
+                        fontWeight: '600',
                         textIndent: checkNegIndent(post.fields.publishedTitle) ? "-0.5em" : 0,
                       }}
                     >

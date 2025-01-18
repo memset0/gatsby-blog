@@ -29,24 +29,24 @@ const PostTemplate = ({ data, pageContext, location }) => {
   const { slug, isDoc, cover, propsJson } = post.fields;
   const cssclasses = post.fields.cssclasses || [];
 
-  const authors = post.fields.authors; // 作者信息（常用于有多位作者的场景）
+  const authors = post.fields.authors || []; // 作者信息（常用于有多位作者的场景）
+  const createTime = post.fields.createTime;
+  const updateTime = post.fields.updateTime;
+  const category = post.fields.category && JSON.parse(post.fields.category);
 
   const coverImage = !isDoc && cover && getImage(cover);
   const props = propsJson && JSON.parse(propsJson);
-  const createTime = !isDoc && post.fields.createTime;
-  const updateTime = !isDoc && post.fields.updateTime;
-  const category = !isDoc && post.fields.category && JSON.parse(post.fields.category);
 
   // console.log("[nav]", navJson && JSON.parse(navJson));
   // console.log("[props]", props);
 
   return (
     <Main maxWidth="lg" title={getTitle({ data })} location={location} navJson={navJson}>
-      <article itemScope itemType="http://schema.org/Article" className={cssclasses.join(" ")}>
+      <article itemScope itemType="http://schema.org/Article">
         <Grid container spacing={2}>
           {/* 这里是博文 */}
           <Grid item xs={12} lg={9}>
-            <Card className={styles.articleCard}>
+            <Card className={styles.articleCard} sx={{ pt: coverImage ? 0 : 2 }}>
               {coverImage && (
                 <CardMedia component="div">
                   <GatsbyImage
@@ -64,52 +64,54 @@ const PostTemplate = ({ data, pageContext, location }) => {
                   paddingBottom: { sm: "8px !important", md: "16px !important" },
                 }}
               >
-                {isDoc ? (
-                  <Typography
-                    component="div"
-                    className={styles.articleTitle + " " + styles.articleTitleDoc}
-                    sx={{
-                      textIndent: checkNegIndent(post.frontmatter.title) ? "-0.5em" : 0,
-                      mt: 2,
-                    }}
-                  >
-                    {post.frontmatter.title}
-                  </Typography>
-                ) : (
-                  <Typography
-                    component="div"
-                    className={styles.articleTitle + " " + styles.articleTitlePost}
-                    sx={{ textIndent: checkNegIndent(post.frontmatter.title) ? "-0.5em" : 0 }}
-                  >
-                    {post.frontmatter.title}
-                  </Typography>
-                )}
+                <Typography
+                  component="div"
+                  className={
+                    styles.articleTitle + " " + (isDoc ? styles.articleTitleDoc : styles.articleTitlePost)
+                  }
+                  sx={{
+                    color: "#202020",
+                    fontWeight: "600",
+                    letterSpacing: "0.02938em !important",
+                    px: 0.25,
+                    textIndent: checkNegIndent(post.frontmatter.title) ? "-0.5em" : 0,
+                  }}
+                >
+                  {post.frontmatter.title}
+                </Typography>
 
-                {(createTime || category) && (
+                {(createTime || authors.length) && (
                   <Box
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
+                      // display: "flex",
+                      // alignItems: "center",
                       color: "grey.500",
-                      mt: 1,
-                      ml: 0.25,
-                      mb: 4,
-                      "& svg": { ml: 3, mr: 1 },
-                      "& :first-child": { ml: 0 },
+                      mx: 0.25,
+                      mt: isDoc ? 1.5 : 1,
+                      mb: 2.75,
+                      "& div": { ml: 2, display: "inline-flex", alignItems: "center" },
+                      "& div:first-child": { ml: 0 },
+                      "& svg": { mr: 0.75, fontSize: "1.2em", display: "inline-block" },
                     }}
                   >
                     {createTime && (
-                      <>
-                        <CalendarAltIcon fontSize="small" />
-                        <Typography variant="body1" color="inherit" sx={{ wordSpacing: "-3px" }}>
-                          {createTime}
+                      <div>
+                        <CalendarAltIcon />
+                        <Typography variant="body1" color="inherit" sx={{ wordSpacing: "-1px" }}>
+                          {createTime === updateTime
+                            ? createTime
+                            : `${createTime}  (更新于 ${
+                                createTime.slice(0, 4) == updateTime.slice(0, 4)
+                                  ? updateTime.slice(7)
+                                  : updateTime
+                              })`}
                         </Typography>
-                      </>
+                      </div>
                     )}
 
                     {category && (
-                      <>
-                        <LayerGroupIcon fontSize="small" />
+                      <div>
+                        <LayerGroupIcon />
                         <Breadcrumbs
                           aria-label="breadcrumb"
                           sx={{ color: "inherit", "& .MuiBreadcrumbs-separator": { mx: 0.625 } }}
@@ -126,7 +128,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
                             </Link>
                           ))}
                         </Breadcrumbs>
-                      </>
+                      </div>
                     )}
                   </Box>
                 )}
@@ -147,7 +149,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
                   </Box>
                 )}
 
-                <Typography variant="body1" sx={{ mt: 4 }}>
+                <Typography variant="body1" className={cssclasses.join(" ")}>
                   <section
                     className="typography"
                     itemProp="articleBody"
@@ -238,8 +240,8 @@ export const pageQuery = graphql`
         cssclasses
         isDoc
         authors
-        createTime(formatString: "YYYY 年 MM 月 DD 日")
-        updateTime(formatString: "YYYY 年 MM 月 DD 日")
+        createTime(formatString: "YYYY 年 M 月 D 日")
+        updateTime(formatString: "YYYY 年 M 月 D 日")
         category
         propsJson
       }
