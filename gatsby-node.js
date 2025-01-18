@@ -230,35 +230,30 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
     });
 
     // updateTime / createTime
-    let createTime = selectFromMatter(
-      node.frontmatter,
-      [
-        'date',
-        'create',
-        'create-time',
-        'createTime',
-        'create-date',
-        'createDate',
-      ]
-    );
+    let createTime = selectFromMatter(node.frontmatter, [
+      "date",
+      "create",
+      "create-time",
+      "createTime",
+      "create-date",
+      "createDate",
+    ]);
     createNodeField({
       node,
-      name: 'createTime',
+      name: "createTime",
       value: createTime,
     });
-    let updateTime = selectFromMatter(
-      node.frontmatter,
-      [
-        'update',
-        'update-time',
-        'updateTime',
-        'update-date',
-        'updateDate'
-      ]
-    ) || createTime;
+    let updateTime =
+      selectFromMatter(node.frontmatter, [
+        "update",
+        "update-time",
+        "updateTime",
+        "update-date",
+        "updateDate",
+      ]) || createTime;
     createNodeField({
       node,
-      name: 'updateTime',
+      name: "updateTime",
       value: updateTime,
     });
 
@@ -297,18 +292,17 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
     }
 
     // is publish? (处理是否需要发布的相关逻辑)
-    let publishedTitle = selectFromMatter(
-      node.frontmatter,
-      [
-        'publish-title',
-        'publishTitle',
-        'published-title',
-        'publishedTitle'
-      ]
-    );
+    let publishedTitle = selectFromMatter(node.frontmatter, [
+      "publish-title",
+      "publishTitle",
+      "published-title",
+      "publishedTitle",
+    ]);
     let isPublished = !!(
-      (node.frontmatter.publish || publishedTitle) && // 允许发布的条件
-      !(node.frontmatter.hide || !createTime) // 禁止发布的条件(必须不满足)
+      (
+        (node.frontmatter.publish || publishedTitle) && // 允许发布的条件
+        !(node.frontmatter.hide || !createTime)
+      ) // 禁止发布的条件(必须不满足)
     );
     if (isPublished) {
       createNodeField({
@@ -324,20 +318,25 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
     }
 
     // authors
-    let authors = []
-    for (const author in lodash.flattenDeep([
-      [node.frontmatter.author],
-      [node.frontmatter.authors],
+    const authors = [];
+    for (const author of lodash.flattenDeep([
+      [node.frontmatter.author || []], //
+      [node.frontmatter.authors || []], //
     ])) {
-      if (author && author instanceof String && author.length < 100) {
+      console.log("???", node.frontmatter.title, author);
+      if (author && typeof author === "string" && author.length < 100) {
+        console.log("!!!", node.frontmatter.title, author);
         authors.push(author);
       }
     }
-    createNodeField({
-      node,
-      name: 'authors',
-      authors,
-    });
+    if (authors.length > 0) {
+      console.log("add fields", node.frontmatter.title, authors);
+      createNodeField({
+        node,
+        name: "authors",
+        authors,
+      });
+    }
 
     // cover
     const coverPath = node.frontmatter.cover;
@@ -489,6 +488,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     type Fields {
       slug: String
+      authors: [String]
       cssclasses: [String]
       updateTime: Date @dateformat
       createTime: Date @dateformat
@@ -498,7 +498,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       navJson: String
       propsJson: String
       category: String
-      authors: [String]
     }
     
     type Friend implements Node {

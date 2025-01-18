@@ -2,7 +2,9 @@ import React from "react";
 import { graphql, Link as GatsbyLink } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
+import Chip from "@mui/material/Chip";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -39,6 +41,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
 
   // console.log("[nav]", navJson && JSON.parse(navJson));
   // console.log("[props]", props);
+  console.log("[author]", authors, post.fields);
 
   return (
     <Main maxWidth="lg" title={getTitle({ data })} location={location} navJson={navJson}>
@@ -80,7 +83,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
                   {post.frontmatter.title}
                 </Typography>
 
-                {(createTime || authors.length) && (
+                {!!(createTime || authors.length > 0) && (
                   <Box
                     sx={{
                       // display: "flex",
@@ -101,12 +104,20 @@ const PostTemplate = ({ data, pageContext, location }) => {
                           {createTime === updateTime
                             ? createTime
                             : `${createTime}  (更新于 ${
-                                createTime.slice(0, 4) == updateTime.slice(0, 4)
+                                createTime.slice(0, 4) === updateTime.slice(0, 4)
                                   ? updateTime.slice(7)
                                   : updateTime
                               })`}
                         </Typography>
                       </div>
+                    )}
+
+                    {authors.length > 0 && (
+                      <>
+                        {authors.map(author => (
+                          <Chip size="small" avatar={<Avatar>F</Avatar>} />
+                        ))}
+                      </>
                     )}
 
                     {category && (
