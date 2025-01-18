@@ -2,7 +2,7 @@
   "name": "memset0-blog",
   "private": true,
   "description": "The next generation of memset0's Blog. Powered by Gatsby.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "memset0 <memset0@outlook.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
