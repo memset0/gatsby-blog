@@ -58,7 +58,9 @@ module.exports = ({ markdownAST }) => {
     }
     node.children.unshift({
       type: "html",
-      value: `<details ${collapse ? "" : "open disabled"} class="callout callout-type-${type}"><summary>`,
+      value:
+        `<details ${collapse ? "" : "open"} class="callout callout-type-${type}">` +
+        `<summary ${collapse ? "" : 'style="pointer-events: none;"'}>`,
     });
 
     node.children.push({
