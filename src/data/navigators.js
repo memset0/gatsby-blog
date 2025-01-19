@@ -5,7 +5,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import LinkIcon from "@mui/icons-material/Link";
 
-export default [
+const navigators = [
   {
     to: "/",
     text: "所有文章",
@@ -37,3 +37,5 @@ export default [
     rule: pathname => pathname === "/about/",
   },
 ];
+
+export default navigators;

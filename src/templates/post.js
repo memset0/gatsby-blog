@@ -14,6 +14,7 @@ import Seo from "../components/Seo";
 import Main from "../components/Main";
 import Link from "../components/Link";
 import Comments from "../components/Comments";
+import PersonIcon from "@mui/icons-material/Person";
 import CalendarAltIcon from "../components/Icon/CalendarAltIcon";
 import LayerGroupIcon from "../components/Icon/LayerGroupIcon";
 import TableOfContents from "../components/TableOfContents";
@@ -41,7 +42,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
 
   // console.log("[nav]", navJson && JSON.parse(navJson));
   // console.log("[props]", props);
-  console.log("[author]", authors, post.fields);
+  console.log("[author]", authors, post.fields.authors);
 
   return (
     <Main maxWidth="lg" title={getTitle({ data })} location={location} navJson={navJson}>
@@ -69,9 +70,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
               >
                 <Typography
                   component="div"
-                  className={
-                    styles.articleTitle + " " + (isDoc ? styles.articleTitleDoc : styles.articleTitlePost)
-                  }
+                  className={styles.articleTitle}
                   sx={{
                     color: "#202020",
                     fontWeight: "600",
@@ -86,43 +85,33 @@ const PostTemplate = ({ data, pageContext, location }) => {
                 {!!(createTime || authors.length > 0) && (
                   <Box
                     sx={{
-                      // display: "flex",
-                      // alignItems: "center",
                       color: "grey.500",
                       mx: 0.25,
                       mt: isDoc ? 1.5 : 1,
                       mb: 2.75,
-                      "& div": { ml: 2, display: "inline-flex", alignItems: "center" },
-                      "& div:first-child": { ml: 0 },
-                      "& svg": { mr: 0.75, fontSize: "1.2em", display: "inline-block" },
+                      height: "1.5rem",
+                      "& div": { mr: 2, display: "inline-flex", alignItems: "center", height: "1.5rem" },
+                      "& svg": { display: "inline-block", height: "1.5rem", lineHeight: "1.5rem" },
                     }}
                   >
                     {createTime && (
                       <div>
-                        <CalendarAltIcon />
+                        <CalendarAltIcon sx={{ fontSize: "1em", mr: 0.75 }} />
                         <Typography variant="body1" color="inherit" sx={{ wordSpacing: "-1px" }}>
                           {createTime === updateTime
                             ? createTime
                             : `${createTime}  (更新于 ${
-                                createTime.slice(0, 4) === updateTime.slice(0, 4)
-                                  ? updateTime.slice(7)
+                                createTime.split("年")[0] === updateTime.split("年")[0]
+                                  ? updateTime.split("年")[1].trim()
                                   : updateTime
                               })`}
                         </Typography>
                       </div>
                     )}
 
-                    {authors.length > 0 && (
-                      <>
-                        {authors.map(author => (
-                          <Chip size="small" avatar={<Avatar>F</Avatar>} />
-                        ))}
-                      </>
-                    )}
-
                     {category && (
                       <div>
-                        <LayerGroupIcon />
+                        <LayerGroupIcon sx={{ fontSize: "1.3em", mr: 0.75 }} />
                         <Breadcrumbs
                           aria-label="breadcrumb"
                           sx={{ color: "inherit", "& .MuiBreadcrumbs-separator": { mx: 0.625 } }}
@@ -139,6 +128,37 @@ const PostTemplate = ({ data, pageContext, location }) => {
                             </Link>
                           ))}
                         </Breadcrumbs>
+                      </div>
+                    )}
+
+                    {authors.length > 0 && (
+                      <div>
+                        <PersonIcon sx={{ fontSize: "1.5em", mr: 0.5 }} />
+                        {authors.map((author, index) => (
+                            <Chip
+                              size="small"
+                              avatar={
+                                author.avatar?.childImageSharp?.gatsbyImageData ? (
+                                  <GatsbyImage
+                                    style={{ borderRadius: "50%" }}
+                                    image={getImage(author.avatar)}
+                                    alt={author.name}
+                                  />
+                                ) : (
+                                  <Avatar>{author.name[0]}</Avatar>
+                                )
+                              }
+                              label={author.name}
+                              component={author.link ? Link : "div"}
+                              href={author.link}
+                              target="_blank"
+                              clickable={!!author.link}
+                              sx={{ 
+                                mr: 1,
+                                whiteSpace: 'nowrap',
+                              }}
+                            />
+                        ))}
                       </div>
                     )}
                   </Box>
@@ -250,7 +270,15 @@ export const pageQuery = graphql`
         slug
         cssclasses
         isDoc
-        authors
+        authors {
+          link
+          name
+          avatar {
+            childImageSharp {
+              gatsbyImageData(width: 40, height: 40)
+            }
+          }
+        }
         createTime(formatString: "YYYY 年 M 月 D 日")
         updateTime(formatString: "YYYY 年 M 月 D 日")
         category

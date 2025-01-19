@@ -258,13 +258,7 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
     });
 
     // cssstyles
-    let cssclasses = [];
-    if (node.frontmatter.cssclasses) {
-      cssclasses.push(node.frontmatter.cssclasses);
-    }
-    if (node.frontmatter["blog-cssclasses"]) {
-      cssclasses.push(node.frontmatter["blog-cssclasses"]);
-    }
+    let cssclasses = [node.frontmatter.cssclasses || [], node.frontmatter["blog-cssclasses"] || []];
     cssclasses = cssclasses.flat();
     if (cssclasses.length > 0) {
       createNodeField({
@@ -323,18 +317,15 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       [node.frontmatter.author || []], //
       [node.frontmatter.authors || []], //
     ])) {
-      console.log("???", node.frontmatter.title, author);
       if (author && typeof author === "string" && author.length < 100) {
-        console.log("!!!", node.frontmatter.title, author);
-        authors.push(author);
+        authors.push(author); // 只存储作者名字，实际的 Friend 信息会通过 GraphQL 关联获取
       }
     }
     if (authors.length > 0) {
-      console.log("add fields", node.frontmatter.title, authors);
       createNodeField({
         node,
         name: "authors",
-        authors,
+        value: authors,
       });
     }
 
@@ -421,26 +412,54 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
  * @type {import('gatsby').GatsbyNode['createResolvers']}
  */
 exports.createResolvers = ({ createResolvers, cache, store, actions, createNodeId }) => {
+  const friendsFilePath = path.resolve(__dirname, "./content/friends.yml");
+  const friends = yaml.parse(fs.readFileSync(friendsFilePath, "utf-8").toString());
+
   createResolvers({
+    Fields: {
+      authors: {
+        type: ["Friend"],
+        resolve: async (source, args, context, info) => {
+          if (!source.authors || source.authors.length === 0) {
+            return [];
+          }
+
+          // 确保按照原始 source.authors 的顺序返回结果
+          return await source.authors.map(async (name) => {
+            const friend = friends.find(f => f.name.toLowerCase() === name.toLowerCase());
+            if (!friend) {
+              return { name };
+            }
+            if (!friend.avatar && friend.avatarUrl) {
+              friend.avatar = await createRemoteFileNode({ 
+                url: friend.avatarUrl,
+                createNode: actions.createNode,
+                createNodeId,
+                cache,
+                store,
+              });
+            }
+            return friend;
+          });
+        },
+      },
+    },
     Site: {
       friends: {
         type: ["Friend"],
         resolve: async ({ node }) => {
-          const filePath = path.resolve(__dirname, "./content/friends.yml");
-          const friends = yaml.parse(fs.readFileSync(filePath, "utf-8").toString());
-          // console.log(friends);
           for (const friend of friends) {
-            friend.avatar = await createRemoteFileNode({
-              url: friend.avatarUrl,
-              // parentNodeId: node.id,
-              createNode: actions.createNode,
-              createNodeId,
-              cache,
-              store,
-            });
+            if (friend.avatarUrl) {
+              friend.avatar = await createRemoteFileNode({ 
+                url: friend.avatarUrl,
+                createNode: actions.createNode,
+                createNodeId,
+                cache,
+                store,
+              });
+            }
           }
-          // console.log(friends);
-          return friends;
+          return friends.filter(friend => !friend.hide);
         },
       },
     },
@@ -486,9 +505,17 @@ exports.createSchemaCustomization = ({ actions }) => {
       date: Date @dateformat
     }
 
+    type Friend implements Node {
+      link: String
+      name: String
+      bio: String
+      avatar: File
+      avatarUrl: String
+    }
+
     type Fields {
       slug: String
-      authors: [String]
+      authors: [Friend]
       cssclasses: [String]
       updateTime: Date @dateformat
       createTime: Date @dateformat
@@ -498,14 +525,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       navJson: String
       propsJson: String
       category: String
-    }
-    
-    type Friend implements Node {
-      link: String
-      name: String
-      bio: String
-      avatar: File
-      avatarUrl: String
     }
   `);
 };

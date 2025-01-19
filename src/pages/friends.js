@@ -53,7 +53,7 @@ const FriendsPage = ({ data, location }) => {
                     </Typography>
                   </CardContent>
                   <CardMedia component="div" sx={{ width: cardHeight }}>
-                    <GatsbyImage image={getImage(friend.avatar)} alt />
+                    <GatsbyImage image={getImage(friend.avatar)} alt={friend.name} />
                   </CardMedia>
                 </Button>
               </HoverableCard>
