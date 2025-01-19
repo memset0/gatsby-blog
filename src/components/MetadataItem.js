@@ -1,8 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 
-const MetadataItem = ({ icon, children }) => {
-  const size = "1.5rem";
+const MetadataItem = ({ icon, children, size = "1.5rem" }) => {
   return (
     <Box
       sx={{
@@ -11,6 +10,7 @@ const MetadataItem = ({ icon, children }) => {
         alignItems: "center",
         height: size,
         lineHeight: size,
+        "& svg": { display: "inline-block", height: size, lineHeight: size },
       }}
     >
       <span

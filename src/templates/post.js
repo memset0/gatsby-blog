@@ -89,8 +89,6 @@ const PostTemplate = ({ data, pageContext, location }) => {
                       color: "grey.500",
                       mt: isDoc ? 1.5 : 1,
                       mb: 2.5,
-                      lineHeight: "1.5rem",
-                      "& svg": { display: "inline-block", height: "1.5rem", lineHeight: "1.5rem" },
                     }}
                   >
                     {createTime && (
@@ -129,7 +127,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
                     )}
 
                     {authors.length > 0 && (
-                      <MetadataItem icon={<PersonIcon sx={{ fontSize: "1.5em" }} />}>
+                      <MetadataItem icon={<PersonIcon />}>
                         {authors.map((author, index) => (
                           <Chip
                             key={index}
