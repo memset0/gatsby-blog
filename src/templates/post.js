@@ -18,6 +18,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import CalendarAltIcon from "../components/Icon/CalendarAltIcon";
 import LayerGroupIcon from "../components/Icon/LayerGroupIcon";
 import TableOfContents from "../components/TableOfContents";
+import MetadataItem from "../components/MetadataItem";
 
 import { checkNegIndent } from "../utils/frontend";
 import * as styles from "../style/article.module.less";
@@ -42,7 +43,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
 
   // console.log("[nav]", navJson && JSON.parse(navJson));
   // console.log("[props]", props);
-  console.log("[author]", authors, post.fields.authors);
+  // console.log("[author]", authors, post.fields.authors);
 
   return (
     <Main maxWidth="lg" title={getTitle({ data })} location={location} navJson={navJson}>
@@ -86,17 +87,14 @@ const PostTemplate = ({ data, pageContext, location }) => {
                   <Box
                     sx={{
                       color: "grey.500",
-                      mx: 0.25,
                       mt: isDoc ? 1.5 : 1,
-                      mb: 2.75,
-                      height: "1.5rem",
-                      "& div": { mr: 2, display: "inline-flex", alignItems: "center", height: "1.5rem" },
+                      mb: 2.5,
+                      lineHeight: "1.5rem",
                       "& svg": { display: "inline-block", height: "1.5rem", lineHeight: "1.5rem" },
                     }}
                   >
                     {createTime && (
-                      <div>
-                        <CalendarAltIcon sx={{ fontSize: "1em", mr: 0.75 }} />
+                      <MetadataItem icon={<CalendarAltIcon sx={{ fontSize: "1em" }} />}>
                         <Typography variant="body1" color="inherit" sx={{ wordSpacing: "-1px" }}>
                           {createTime === updateTime
                             ? createTime
@@ -106,12 +104,11 @@ const PostTemplate = ({ data, pageContext, location }) => {
                                   : updateTime
                               })`}
                         </Typography>
-                      </div>
+                      </MetadataItem>
                     )}
 
                     {category && (
-                      <div>
-                        <LayerGroupIcon sx={{ fontSize: "1.3em", mr: 0.75 }} />
+                      <MetadataItem icon={<LayerGroupIcon sx={{ fontSize: "1.2em" }} />}>
                         <Breadcrumbs
                           aria-label="breadcrumb"
                           sx={{ color: "inherit", "& .MuiBreadcrumbs-separator": { mx: 0.625 } }}
@@ -128,38 +125,39 @@ const PostTemplate = ({ data, pageContext, location }) => {
                             </Link>
                           ))}
                         </Breadcrumbs>
-                      </div>
+                      </MetadataItem>
                     )}
 
                     {authors.length > 0 && (
-                      <div>
-                        <PersonIcon sx={{ fontSize: "1.5em", mr: 0.5 }} />
+                      <MetadataItem icon={<PersonIcon sx={{ fontSize: "1.5em" }} />}>
                         {authors.map((author, index) => (
-                            <Chip
-                              size="small"
-                              avatar={
-                                author.avatar?.childImageSharp?.gatsbyImageData ? (
-                                  <GatsbyImage
-                                    style={{ borderRadius: "50%" }}
-                                    image={getImage(author.avatar)}
-                                    alt={author.name}
-                                  />
-                                ) : (
-                                  <Avatar>{author.name[0]}</Avatar>
-                                )
-                              }
-                              label={author.name}
-                              component={author.link ? Link : "div"}
-                              href={author.link}
-                              target="_blank"
-                              clickable={!!author.link}
-                              sx={{ 
-                                mr: 1,
-                                whiteSpace: 'nowrap',
-                              }}
-                            />
+                          <Chip
+                            key={index}
+                            size="small"
+                            avatar={
+                              author.avatar?.childImageSharp?.gatsbyImageData ? (
+                                <GatsbyImage
+                                  style={{ borderRadius: "50%" }}
+                                  image={getImage(author.avatar)}
+                                  alt={author.name}
+                                />
+                              ) : (
+                                <Avatar>{author.name[0]}</Avatar>
+                              )
+                            }
+                            label={author.name}
+                            component={author.link ? Link : "div"}
+                            href={author.link}
+                            target="_blank"
+                            clickable={!!author.link}
+                            sx={{
+                              mr: 0.5,
+                              letterSpacing: "-0.2px",
+                              whiteSpace: "nowrap",
+                            }}
+                          />
                         ))}
-                      </div>
+                      </MetadataItem>
                     )}
                   </Box>
                 )}
