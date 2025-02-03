@@ -1,51 +1,128 @@
 import React from "react";
 import { Link as GatsbyLink } from "gatsby";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-
+import { Box, Typography, Link, Grid, Divider, useTheme, Container } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import metadata from "../../data/metadata";
 
+const textStyle = ({ theme }) => ({
+  fontSize: "0.875rem",
+  color: theme.palette.text.secondary,
+});
+
+const StyledTypography = styled(Typography)(textStyle);
+
+const linkStyle = ({ theme }) => ({
+  fontSize: "0.875rem",
+  textDecoration: "none",
+  position: "relative",
+  transition: "color 0.3s ease",
+  "&:hover": {
+    color: theme.palette.primary.main,
+    "&::after": {
+      width: "100%",
+      left: 0,
+    },
+  },
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    width: 0,
+    height: "1.5px",
+    bottom: "-1px",
+    right: 0,
+    backgroundColor: theme.palette.primary.main,
+    transition: "width 0.3s ease, left 0.3s ease",
+  },
+});
+
+const StyledLink = styled(Link)(textStyle, linkStyle);
+const StyledGatsbyLink = styled(GatsbyLink)(textStyle, linkStyle);
+
 const Footer = () => {
+  const theme = useTheme();
+
   return (
     <Box
       component="footer"
       sx={{
-        padding: "20px",
-        textAlign: "center",
-        "& .footer-link": {
-          color: "inherit",
-          textDecoration: "none",
-          transition: "opacity 0.2s ease",
-          "&:hover": {
-            opacity: "0.5",
-          },
-        },
+        pt: 6,
+        pb: 4,
+        px: 1,
+        fontSize: "0.8rem",
+        backgroundColor: "transparent",
+        mt: "auto",
       }}
     >
-      <Typography variant="body2" color="textSecondary">
-        Proudly powered by{" "}
-        <a href="https://gatsbyjs.org/" class="footer-link" target="_blank" rel="noreferrer">
-          Gatsby.js
-        </a>{" "}
-        and themed by{" "}
-        <a href="https://github.com/memset0/gatsby-blog" class="footer-link" target="_blank" rel="noreferrer">
-          myself
-        </a>
-        . <br />
-        Copyright © 2024{" "}
-        <GatsbyLink component="a" to="/about/" className="footer-link">
-          memset0
-        </GatsbyLink>
-        . All rights reserved.{" "}
-        {metadata.icp && (
-          <>
-            <br />
-            <GatsbyLink component="a" to="https://beian.miit.gov.cn/" target="_blank">
-              {metadata.icp}
-            </GatsbyLink>
-          </>
-        )}
-      </Typography>
+      <Container maxWidth="md">
+        <Grid container spacing={2} justifyContent="space-between">
+          <Grid item xs={6}>
+            <Grid
+              container
+              justifyContent="flex-start"
+              alignItems="flex-start"
+              direction="column"
+              spacing={0.5}
+            >
+              <Grid item xs="auto">
+                <StyledTypography>
+                  © 2018-{new Date().getFullYear()}{" "}
+                  <StyledGatsbyLink to="/about">{metadata.author.name}</StyledGatsbyLink>.
+                </StyledTypography>
+              </Grid>
+              <Grid item xs="auto">
+                <StyledTypography>All rights reserved.</StyledTypography>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Grid container justifyContent="flex-end" alignItems="flex-end" direction="column" spacing={0.5}>
+            <Grid item xs="auto">
+                <StyledTypography>
+                  <StyledLink
+                    href="https://github.com/memset0/gatsby-blog"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Source Code
+                  </StyledLink>
+                </StyledTypography>
+              </Grid>
+              <Grid item xs="auto">
+                <StyledTypography>
+                  Built with{" "}
+                  <StyledLink href="https://gatsbyjs.org/" target="_blank" rel="noopener noreferrer">
+                    Gatsby.js
+                  </StyledLink>
+                </StyledTypography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Divider
+          sx={{
+            mx: 0.5,
+            my: 2,
+            backgroundColor: "rgba(0, 0, 0, 0.08)",
+          }}
+        />
+
+        <Grid container spacing={2} justifyContent="space-between">
+          <Grid item xs={6}>
+            <Grid container justifyContent="flex-start">
+              <StyledTypography>Made with ❤️ in China</StyledTypography>
+            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <Grid container justifyContent="flex-end">
+              <StyledLink href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
+                {metadata.icp}
+              </StyledLink>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Container>
     </Box>
   );
 };
