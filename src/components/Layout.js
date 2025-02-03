@@ -276,8 +276,8 @@ const Layout = ({ children }) => {
                       sx: {
                         overflow: "visible",
                         background: "transparent",
-                        paddingRight: "24px",
-                        paddingBottom: "16px",
+                        paddingRight: "1.5rem",
+                        paddingBottom: "1rem",
                       },
                     },
                   }}

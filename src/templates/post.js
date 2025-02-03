@@ -66,7 +66,7 @@ const PostTemplate = ({ data, pageContext, location }) => {
               <CardContent
                 sx={{
                   p: { sm: 2, md: 3 },
-                  paddingBottom: { sm: "8px !important", md: "16px !important" },
+                  paddingBottom: { sm: "0.5rem !important", md: "1rem !important" },
                 }}
               >
                 <Typography

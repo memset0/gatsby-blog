@@ -118,7 +118,7 @@ const AboutPage = ({ data, location }) => {
             </CardContent>
           </Card>
           <Card sx={{ mt: 2, flexGrow: 1 }}>
-            <CardContent sx={{ pb: '16px !important' }}>
+            <CardContent sx={{ pb: '1rem !important' }}>
               <Typography variant="body1">
                 <section
                   className="typography"

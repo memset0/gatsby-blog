@@ -62,9 +62,9 @@ const FriendsPage = ({ data, location }) => {
         </Grid>
       </Box>
 
-      <Container maxWidth="md" disableGutter={true}>
+      <Container maxWidth="md" disableGutter={true} sx={{ p: "0 !important" }}>
         <Card sx={{ mt: 2 }}>
-          <CardContent sx={{ paddingBottom: "16px !important" }}>
+          <CardContent sx={{ paddingBottom: "1rem !important" }}>
             <Typography>
               这里是 mem 的友链墙喵~ 卡片顺序以 24h 为周期随机打乱。如果您也想交换友链的话请在下方评论区留言……
             </Typography>

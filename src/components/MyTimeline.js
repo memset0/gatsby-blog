@@ -61,7 +61,7 @@ const MyTimeline = props => {
 
   return (
     <Card {...other}>
-      <CardContent sx={{ paddingBottom: "16px !important" }}>
+      <CardContent sx={{ paddingBottom: "1rem !important" }}>
         <Typography variant="h6" gutterBottom>
           Timeline
         </Typography>
@@ -108,7 +108,7 @@ const MyTimeline = props => {
                   </TimelineDot>
                   <TimelineConnector sx={{ opacity: index + 1 === timeline.length ? 0 : 1 }} />
                 </TimelineSeparator>
-                <TimelineContent sx={{ py: "24px", px: "16px" }}>
+                <TimelineContent sx={{ py: "1.5rem", px: "1rem" }}>
                   <Box sx={{ float: "left" }}>
                     <Text content={item.name} component="div" variant="body1" />
                   </Box>
