@@ -35,7 +35,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
   const { pathPrefix, pageNumber, numberOfPages } = pageContext;
 
   const getTarget = page => (page === 1 ? pathPrefix : `${pathPrefix}${page}`);
-  const posts = data.posts.edges;
+  const posts =(data && data.posts &&  data.posts.edges) || [];
 
   return (
     <Main maxWidth="md" title={getTitle({ data, pageContext })} location={location}>
@@ -204,9 +204,20 @@ export default PostListTemplate;
 
 export const Head = ({ data, pageContext }) => <Seo title={getTitle({ data, pageContext })} />;
 export const pageQuery = graphql`
-  query PostListTemplate($skip: Int!, $limit: Int!, $prefixRegex: String!) {
+  query PostListTemplate(
+    $skip: Int!
+    $limit: Int!
+    $publishStatus: [Boolean]!
+    $prefixRegex: String!
+  ) {
     posts: allMarkdownRemark(
-      filter: { fields: { isPublished: { eq: true }, slug: { regex: $prefixRegex } } }
+      filter: {
+        fields: {
+          isIndexed: { eq: true }
+          isPublished: { in: $publishStatus }
+          slug: { regex: $prefixRegex }
+        }
+      }
       sort: { fields: { createTime: DESC } }
       skip: $skip
       limit: $limit

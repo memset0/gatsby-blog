@@ -30,7 +30,6 @@ module.exports = {
   course: {
     name: "课程笔记",
     doc: true,
-    useHeader: true,
     // children: {
     //   "gen-ed": {
     //     name: "通识课程",
@@ -38,8 +37,15 @@ module.exports = {
     // },
   },
   research: {
-    name: "科研随记",
-    doc: true,
-    useHeader: true,
+    name: "科研",
+    children: {
+      "note": {
+        name: "通识课程",
+        doc: true,
+      },
+      "paper-reading": {
+        name: "论文精读",
+      }
+    },
   },
 };

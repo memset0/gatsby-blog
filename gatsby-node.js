@@ -52,6 +52,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             slug
             isDoc
             isPublished
+            isIndexed
             navJson
           }
         }
@@ -63,17 +64,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return;
   }
   let posts = result.data.allMarkdownRemark.nodes;
-  // require("fs").writeFileSync(
-  //   require("path").join(__dirname, "./tmp/posts.json"),
-  //   JSON.stringify(posts, null, 2)
-  // );
 
+  // 收集所有文章
   const folders = {};
   for (const post of posts) {
-    if (post.fields.isPublished && post.fields.slug) {
+    if (post.fields.isIndexed && post.fields.slug) {
       const patterns = post.fields.slug.split("/");
       for (let i = 2; i + 1 < patterns.length; i++) {
         const folder = patterns.slice(0, i).join("/");
+        // 将该文件信息添加到其所属的每一个文件夹中
         if (folder in folders) {
           folders[folder].push(post);
         } else {
@@ -112,6 +111,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     component: postListTemplate,
     context: {
       pathPrefix: "/",
+      publishStatus: [true], // 只允许发布的文章出现在内容中（isPublished为真，自然isIndexed也为真）
       prefixRegex: "^/",
       names: "[]",
       format: "index",
@@ -129,6 +129,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         component: postListTemplate,
         context: {
           pathPrefix: `${uri}/`,
+          publishStatus: [true, false], // 只要被索引的文章就可以出现（isIndexed为真即可，isPublished可以为真或假）
           prefixRegex: `^${uri}/`,
           names,
           format: "index",
@@ -293,17 +294,23 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       "publishedTitle",
     ]);
     let isPublished = !!(
-      (
-        (node.frontmatter.publish || publishedTitle) && // 允许发布的条件
-        !(node.frontmatter.hide || !createTime)
-      ) // 禁止发布的条件(必须不满足)
+      (node.frontmatter.publish || publishedTitle) && // 允许发布的条件
+      !((node.frontmatter.hide || !createTime) /* 禁止发布的条件(必须不满足) */)
     );
-    if (isPublished) {
-      createNodeField({
-        node,
-        name: "isPublished",
-        value: isPublished,
-      });
+    createNodeField({
+      node,
+      name: "isPublished",
+      value: isPublished,
+    });
+    let isIndexed = !!(
+      (isPublished || node.frontmatter.indexed) // 设置 indexed 为真表示仅索引不发布
+    );
+    createNodeField({
+      node,
+      name: "isIndexed",
+      value: isIndexed,
+    });
+    if (isIndexed) {
       createNodeField({
         node,
         name: "publishedTitle",
@@ -425,13 +432,13 @@ exports.createResolvers = ({ createResolvers, cache, store, actions, createNodeI
           }
 
           // 确保按照原始 source.authors 的顺序返回结果
-          return await source.authors.map(async (name) => {
+          return await source.authors.map(async name => {
             const friend = friends.find(f => f.name.toLowerCase() === name.toLowerCase());
             if (!friend) {
               return { name };
             }
             if (!friend.avatar && friend.avatarUrl) {
-              friend.avatar = await createRemoteFileNode({ 
+              friend.avatar = await createRemoteFileNode({
                 url: friend.avatarUrl,
                 createNode: actions.createNode,
                 createNodeId,
@@ -450,7 +457,7 @@ exports.createResolvers = ({ createResolvers, cache, store, actions, createNodeI
         resolve: async ({ node }) => {
           for (const friend of friends) {
             if (friend.avatarUrl) {
-              friend.avatar = await createRemoteFileNode({ 
+              friend.avatar = await createRemoteFileNode({
                 url: friend.avatarUrl,
                 createNode: actions.createNode,
                 createNodeId,
@@ -521,6 +528,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       createTime: Date @dateformat
       isDoc: Boolean
       isPublished: Boolean
+      isIndexed: Boolean
       publishedTitle: String
       navJson: String
       propsJson: String
