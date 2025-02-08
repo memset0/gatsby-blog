@@ -22,7 +22,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import ArticleNav from "./ArticleNav";
 import AppBarContent from "./Layout/AppBarContent";
 import DrawerContent from "./Layout/DrawerContent";
-import Footer from "./Layout/Footer";
 
 import LayoutContext from "./LayoutContext";
 
@@ -223,9 +222,6 @@ const Layout = ({ children }) => {
 
             {/* 这里进入页面主体 */}
             {children}
-
-            {/* 这里是页脚 */}
-            <Footer />
 
             {/* 这里是浮动按钮 */}
             <NoSsr>

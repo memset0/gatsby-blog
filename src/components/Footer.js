@@ -2,7 +2,7 @@ import React from "react";
 import { Link as GatsbyLink } from "gatsby";
 import { Box, Typography, Link, Grid, Divider, useTheme, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import metadata from "../../data/metadata";
+import metadata from "../data/metadata";
 
 const textStyle = ({ theme }) => ({
   fontSize: "0.875rem",
@@ -53,7 +53,7 @@ const Footer = () => {
         mt: "auto",
       }}
     >
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{ px: "0 !important" }}>
         <Grid container spacing={2} justifyContent="space-between">
           <Grid item xs={6}>
             <Grid
@@ -77,7 +77,7 @@ const Footer = () => {
 
           <Grid item xs={6}>
             <Grid container justifyContent="flex-end" alignItems="flex-end" direction="column" spacing={0.5}>
-            <Grid item xs="auto">
+              <Grid item xs="auto">
                 <StyledTypography>
                   <StyledLink
                     href="https://github.com/memset0/gatsby-blog"

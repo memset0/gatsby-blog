@@ -9,9 +9,11 @@ import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+
 import Main from "../components/Main";
 import Seo from "../components/Seo";
-import HoverableCard from '../components/HoverableCard';
+import Footer from "../components/Footer";
+import HoverableCard from "../components/HoverableCard";
 import Comments from "../components/Comments";
 
 import { shuffle } from "../utils/random";
@@ -72,6 +74,8 @@ const FriendsPage = ({ data, location }) => {
         </Card>
 
         <Comments slug="/friends" sx={{ mt: 2 }} />
+
+        <Footer />
       </Container>
     </Main>
   );

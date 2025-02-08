@@ -5,13 +5,14 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
+import Footer from "../components/Footer";
 
 const getTitle = () => "404: Not Found";
 
 const NotFoundPage = ({ data, location }) => {
   // const siteTitle = data.site.siteMetadata.title;
   // console.log("[404]", siteTitle);
-  
+
   return (
     <Main maxWidth="md" title={getTitle()} location={location}>
       <Card sx={{ mt: 1 }}>
@@ -25,6 +26,8 @@ const NotFoundPage = ({ data, location }) => {
           </Typography>
         </CardContent>
       </Card>
+
+      <Footer />
     </Main>
   );
 };

@@ -14,6 +14,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import Main from "../components/Main";
 import Seo from "../components/Seo";
+import Footer from "../components/Footer";
 import MyTimeline from "../components/MyTimeline";
 import Comments from "../components/Comments";
 
@@ -118,7 +119,7 @@ const AboutPage = ({ data, location }) => {
             </CardContent>
           </Card>
           <Card sx={{ mt: 2, flexGrow: 1 }}>
-            <CardContent sx={{ pb: '1rem !important' }}>
+            <CardContent sx={{ pb: "1rem !important" }}>
               <Typography variant="body1">
                 <section
                   className="typography"
@@ -134,6 +135,8 @@ const AboutPage = ({ data, location }) => {
       <MyTimeline timeline={props.timeline} sx={{ mt: 2 }} />
 
       <Comments slug="/about" sx={{ mt: 2 }} />
+
+      <Footer />
     </Main>
   );
 };

@@ -14,6 +14,7 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import Main from "../components/Main";
 import Seo from "../components/Seo";
+import Footer from "../components/Footer";
 import HoverableCard from "../components/HoverableCard";
 import CalendarAltIcon from "../components/Icon/CalendarAltIcon";
 import LayerGroupIcon from "../components/Icon/LayerGroupIcon";
@@ -35,7 +36,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
   const { pathPrefix, pageNumber, numberOfPages } = pageContext;
 
   const getTarget = page => (page === 1 ? pathPrefix : `${pathPrefix}${page}`);
-  const posts =(data && data.posts &&  data.posts.edges) || [];
+  const posts = (data && data.posts && data.posts.edges) || [];
 
   return (
     <Main maxWidth="md" title={getTitle({ data, pageContext })} location={location}>
@@ -113,7 +114,7 @@ const PostListTemplate = ({ data, location, pageContext }) => {
                       sx={{
                         lineHeight: 1.35,
                         mb: 0.75,
-                        fontWeight: '600',
+                        fontWeight: "600",
                         textIndent: checkNegIndent(post.fields.publishedTitle) ? "-0.5em" : 0,
                       }}
                     >
@@ -196,6 +197,8 @@ const PostListTemplate = ({ data, location, pageContext }) => {
           />
         </Box>
       )}
+
+      <Footer />
     </Main>
   );
 };
@@ -204,12 +207,7 @@ export default PostListTemplate;
 
 export const Head = ({ data, pageContext }) => <Seo title={getTitle({ data, pageContext })} />;
 export const pageQuery = graphql`
-  query PostListTemplate(
-    $skip: Int!
-    $limit: Int!
-    $publishStatus: [Boolean]!
-    $prefixRegex: String!
-  ) {
+  query PostListTemplate($skip: Int!, $limit: Int!, $publishStatus: [Boolean]!, $prefixRegex: String!) {
     posts: allMarkdownRemark(
       filter: {
         fields: {

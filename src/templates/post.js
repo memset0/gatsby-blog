@@ -19,6 +19,7 @@ import CalendarAltIcon from "../components/Icon/CalendarAltIcon";
 import LayerGroupIcon from "../components/Icon/LayerGroupIcon";
 import TableOfContents from "../components/TableOfContents";
 import MetadataItem from "../components/MetadataItem";
+import Footer from "../components/Footer";
 
 import { checkNegIndent } from "../utils/frontend";
 import * as styles from "../style/article.module.less";
@@ -226,6 +227,11 @@ const PostTemplate = ({ data, pageContext, location }) => {
             >
               <TableOfContents toc={post.tableOfContents} />
             </Card>
+          </Grid>
+
+          {/* 这里是页脚 */}
+          <Grid item xs={12} lg={9}>
+            <Footer />
           </Grid>
         </Grid>
       </article>
