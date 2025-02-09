@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import Main from "../components/Main";
 import Seo from "../components/Seo";
@@ -22,36 +21,10 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import GlassesIcon from "../components/Icon/GlassesIcon";
 
-import theme from "../theme";
+// import theme from "../theme";
 import siteMetadata from "../data/metadata";
 
 const getTitle = () => "关于我";
-
-function TabPanel(props) {
-  const { html, value, index, ...other } = props;
-
-  return (
-    <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && (
-        <CardContent
-          sx={{
-            paddingTop: "8px !important",
-            paddingBottom: "8px !important",
-            height: "100%",
-          }}
-        >
-          <Typography variant="body1">
-            <section
-              className="typography"
-              itemProp="articleBody"
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          </Typography>
-        </CardContent>
-      )}
-    </div>
-  );
-}
 
 const AboutPage = ({ data, location }) => {
   const propsJson = data.pageData.fields.propsJson;

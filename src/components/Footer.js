@@ -39,8 +39,6 @@ const StyledLink = styled(Link)(textStyle, linkStyle);
 const StyledGatsbyLink = styled(GatsbyLink)(textStyle, linkStyle);
 
 const Footer = () => {
-  const theme = useTheme();
-
   return (
     <Box
       component="footer"

@@ -105,7 +105,7 @@ const Layout = ({ children }) => {
     }
   }, [navJson]);
 
-  const isDesktop = useMediaQuery(() => theme.breakpoints.up("md"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const toggleDrawer = () => {
     storageUtils.save("drawer-open", !open ? "open" : "close");
     setOpen(!open);

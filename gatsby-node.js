@@ -412,6 +412,13 @@ exports.onCreateNode = async ({ node, actions, getNode, getNodes, createNodeId, 
       name: "category",
       value: JSON.stringify(category),
     });
+
+    // 为搜索添加纯文本内容
+    createNodeField({
+      node,
+      name: "plainText",
+      value: node.internal.content,
+    });
   }
 };
 

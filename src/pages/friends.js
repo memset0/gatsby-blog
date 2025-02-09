@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
+// import { useState, useEffect, useRef } from "react";
 import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Button from "@mui/material/Button";
@@ -21,21 +22,6 @@ import { shuffle } from "../utils/random";
 
 const getTitle = () => "友情链接";
 
-function forceLeadingZeros(value, targetValue) {
-  function countDigits(value) {
-    if (value == 0) {
-      return 0;
-    }
-    return countDigits(Math.floor(value / 10)) + 1;
-  }
-
-  let result = "";
-  for (let i = 0; i < countDigits(targetValue) - countDigits(value); i++) {
-    result += "0";
-  }
-  return value ? result + value : result;
-}
-
 const FriendsPage = ({ data, location }) => {
   const date = new Date();
   const year = date.getFullYear();
@@ -48,42 +34,57 @@ const FriendsPage = ({ data, location }) => {
 
   const cardHeight = 120;
 
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const counterRef = useRef(null);
+  // const [count, setCount] = useState(0);
+  // const [isVisible, setIsVisible] = useState(false);
+  // const counterRef = useRef(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+  // function forceLeadingZeros(value, targetValue) {
+  //   function countDigits(value) {
+  //     if (value === 0) {
+  //       return 0;
+  //     }
+  //     return countDigits(Math.floor(value / 10)) + 1;
+  //   }
 
-    if (counterRef.current) {
-      observer.observe(counterRef.current);
-    }
+  //   let result = "";
+  //   for (let i = 0; i < countDigits(targetValue) - countDigits(value); i++) {
+  //     result += "0";
+  //   }
+  //   return value ? result + value : result;
+  // }
 
-    return () => observer.disconnect();
-  }, [isVisible]);
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       if (entry.isIntersecting && !isVisible) {
+  //         setIsVisible(true);
+  //       }
+  //     },
+  //     { threshold: 0.1 }
+  //   );
 
-  useEffect(() => {
-    if (isVisible && count < friends.length) {
-      const timer = setInterval(() => {
-        setCount(prev => {
-          const next = prev + 1;
-          if (next >= friends.length) {
-            clearInterval(timer);
-          }
-          return next;
-        });
-      }, Math.max(1, Math.floor((count * count) / (friends.length * 10))));
+  //   if (counterRef.current) {
+  //     observer.observe(counterRef.current);
+  //   }
 
-      return () => clearInterval(timer);
-    }
-  }, [isVisible, friends.length, count]);
+  //   return () => observer.disconnect();
+  // }, [isVisible]);
+
+  // useEffect(() => {
+  //   if (isVisible && count < friends.length) {
+  //     const timer = setInterval(() => {
+  //       setCount(prev => {
+  //         const next = prev + 1;
+  //         if (next >= friends.length) {
+  //           clearInterval(timer);
+  //         }
+  //         return next;
+  //       });
+  //     }, Math.max(1, Math.floor((count * count) / (friends.length * 10))));
+
+  //     return () => clearInterval(timer);
+  //   }
+  // }, [isVisible, friends.length, count]);
 
   return (
     <Main maxWidth="lg" title={getTitle()} location={location}>
