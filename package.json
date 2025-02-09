@@ -39,7 +39,6 @@
     "gatsby-transformer-sharp": "^5.14.0",
     "hast-util-to-html": "^9.0.4",
     "lodash": "^4.17.21",
-    "memset0-blog": "file:",
     "mdast-util-to-string": "2.0.0",
     "micromark-factory-space": "^2.0.1",
     "micromark-util-character": "^2.1.1",
