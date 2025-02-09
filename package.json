@@ -67,12 +67,10 @@
     "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
   },
   "scripts": {
-    "build": "gatsby build",
-    "dev": "gatsby develop --port 8080",
+    "build": "cross-env NODE_ENV=production gatsby build",
+    "dev": "cross-env NODE_ENV=development gatsby develop --port 8080",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "start": "gatsby develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "serve": "NODE_ENV=production gatsby serve",
+    "clean": "gatsby clean"
   }
 }
