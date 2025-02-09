@@ -1,4 +1,5 @@
 import React from "react";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
@@ -8,7 +9,13 @@ import Search from "../Search";
 import siteMetadata from "../../data/metadata";
 import { checkNegIndent } from "../../utils/frontend";
 
-const AppBarContent = ({ title }) => {
+export const AppBarIconButton = styled(IconButton)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+  width: "2.5rem",
+  height: "2.5rem",
+}));
+
+const AppBarContent = ({ title, isDesktop }) => {
   return (
     <>
       {/* Appbar 标题 */}
@@ -27,14 +34,12 @@ const AppBarContent = ({ title }) => {
       </Typography>
 
       {/* 搜索框 */}
-      <Box sx={{ flexGrow: 1, mx: 2, maxWidth: "600px" }}>
-        <Search />
-      </Box>
+      <Search isDesktop={isDesktop} />
 
-      {/* Appbar 右侧 */}
-      <IconButton href="https://github.com/memset0/gatsby-blog" target="_blank">
-        <ViewSourceIcon sx={{ fill: "white" }} />
-      </IconButton>
+      {/* Github 仓库链接 */}
+      <AppBarIconButton href="https://github.com/memset0/gatsby-blog" target="_blank">
+        <ViewSourceIcon sx={{ fill: "white", fontSize: "1.5rem" }} />
+      </AppBarIconButton>
     </>
   );
 };

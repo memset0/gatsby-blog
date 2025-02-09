@@ -19,8 +19,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { checkNegIndent } from "../utils/frontend";
+import { AppBarIconButton } from "./Layout/AppBarContent";
 
-const Search = () => {
+const Search = ({ isDesktop }) => {
   const [searchIndex, setSearchIndex] = useState(null);
   const [query, setQuery] = useState("");
   const [dialogQuery, setDialogQuery] = useState("");
@@ -188,21 +189,46 @@ const Search = () => {
 
   return (
     <>
-      <TextField
-        fullWidth
-        placeholder="搜索..."
-        value={query}
-        onChange={handleInputChange}
-        onClick={handleInputClick}
-        disabled={isLoading && isDialogOpen}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
+      {isDesktop ? (
+        <Box sx={{ flexGrow: 1, mx: 2, maxWidth: "15rem" }}>
+          <TextField
+            fullWidth
+            placeholder="搜索博文..."
+            variant="standard"
+            value={query}
+            onChange={handleInputChange}
+            onClick={handleInputClick}
+            disabled={isDialogOpen}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon sx={{ fill: "white" ,fontSize: "1.7rem" }} />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              mr: 1,
+              "& input": {
+                color: "white",
+                "-webkit-text-fill-color": "white !important",
+              },
+              "& .MuiInput-root": {
+                paddingBottom: '2px !important',
+              },
+              "& .MuiInput-root:before": {
+                borderBottom: "1px solid rgba(255, 255, 255, 0.42)",
+              },
+              "& .MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before": {
+                borderBottom: "2px solid rgba(255, 255, 255, 0.87)",
+              },
+            }}
+          />
+        </Box>
+      ) : (
+        <AppBarIconButton onClick={handleInputClick} disabled={isDialogOpen}>
+          <SearchIcon sx={{ fill: "white", fontSize: "1.75rem" }} />
+        </AppBarIconButton>
+      )}
 
       <Dialog
         open={isDialogOpen}
@@ -221,7 +247,7 @@ const Search = () => {
             <TextField
               fullWidth
               autoFocus
-              placeholder="搜索文章..."
+              placeholder="搜索博文..."
               value={dialogQuery}
               onChange={handleDialogInputChange}
               disabled={isLoading}
@@ -240,8 +266,9 @@ const Search = () => {
           </Box>
         </DialogTitle>
 
-        <DialogContent dividers sx={{ px: 1, pt: 0 }}>
+        <DialogContent dividers sx={{ px: 0, pt: 0 }}>
           {isLoading ? (
+            // 未loading完成也可以打开搜索dialog，但是要显示转圈动画，让用户知道正在加载
             <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
               <CircularProgress />
             </Box>
@@ -253,6 +280,8 @@ const Search = () => {
                   key={index}
                   onClick={() => handleResultClick(result)}
                   sx={{
+                    px: 3,
+                    py: 0.5,
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.04)",
                     },

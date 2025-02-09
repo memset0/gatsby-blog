@@ -162,7 +162,7 @@ const Layout = ({ children }) => {
                     <ChevronLeftIcon sx={{ display: { xs: "none", md: !open ? "none" : "block" } }} />
                   </IconButton>
 
-                  <AppBarContent title={title} />
+                  <AppBarContent title={title} isDesktop={isDesktop} />
                 </Toolbar>
               </CustomAppBar>
             </div>

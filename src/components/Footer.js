@@ -1,6 +1,6 @@
 import React from "react";
 import { Link as GatsbyLink } from "gatsby";
-import { Box, Typography, Link, Grid, Divider, useTheme, Container } from "@mui/material";
+import { Box, Typography, Link, Grid, Divider, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import metadata from "../data/metadata";
 
