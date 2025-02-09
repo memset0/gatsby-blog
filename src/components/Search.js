@@ -111,14 +111,14 @@ const Search = ({ isDesktop }) => {
                 content: doc.doc.content, // 添加内容字段
                 matchedContent: getMatchedContent(doc.doc.content, value),
               },
-            ])
-          )
-        ).values()
+            ]),
+          ),
+        ).values(),
       );
 
       setResults(uniqueResults);
     },
-    [searchIndex, getMatchedContent]
+    [searchIndex, getMatchedContent],
   );
 
   const initSearchIndex = useCallback(() => {
@@ -199,12 +199,14 @@ const Search = ({ isDesktop }) => {
             onChange={handleInputChange}
             onClick={handleInputClick}
             disabled={isDialogOpen}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon sx={{ fill: "white" ,fontSize: "1.7rem" }} />
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon sx={{ fill: "white", fontSize: "1.7rem" }} />
+                  </InputAdornment>
+                ),
+              },
             }}
             sx={{
               mr: 1,
@@ -213,7 +215,7 @@ const Search = ({ isDesktop }) => {
                 "-webkit-text-fill-color": "white !important",
               },
               "& .MuiInput-root": {
-                paddingBottom: '2px !important',
+                paddingBottom: "2px !important",
               },
               "& .MuiInput-root:before": {
                 borderBottom: "1px solid rgba(255, 255, 255, 0.42)",
