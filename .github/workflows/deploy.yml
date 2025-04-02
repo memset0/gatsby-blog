@@ -58,6 +58,7 @@ jobs:
           repository: memset0/blog-posts
           path: content
           ref: master
+          token: ${{ secrets.PAT_TOKEN }}  # the gh token from mem-ci-bot
 
       - name: Setup Node
         uses: actions/setup-node@v4
