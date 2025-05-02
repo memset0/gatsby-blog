@@ -15,7 +15,7 @@ exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
   // Noto Sans SC
   setHeadComponents([
     <link
-      href="https://static.zeoseven.com/zsft/69/main/result.css"
+      href="https://fontsapi.zeoseven.com/69/main/result.css"
       rel="stylesheet"
       crossOrigin="anonymous"
       key="NotoSansFont"
