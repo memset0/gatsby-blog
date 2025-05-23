@@ -111,7 +111,7 @@ jobs:
           source-directory: ./public
           destination-github-username: memset0
           destination-repository-name: blog-deployment
-          target-branch: main
+          target-branch: master
           user-email: ci@memset0.cn
 
       - name: Push to the static repository (2)
