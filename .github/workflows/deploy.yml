@@ -103,7 +103,18 @@ jobs:
           GATSBY_CPU_COUNT: 1
         run: npm run build
 
-      - name: Push to the static repository
+      - name: Push to the static repository (1)
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
+        with:
+          source-directory: ./public
+          destination-github-username: memset0
+          destination-repository-name: blog-deployment
+          target-branch: main
+          user-email: ci@memset0.cn
+
+      - name: Push to the static repository (2)
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
