@@ -3,9 +3,7 @@
 ## Purpose
 
 Defines the visibility model that decides whether a markdown post appears on the homepage, in category listings, on its own URL, or nowhere. The blog uses a three-state model (published / indexed-only / hidden) computed from frontmatter, so a single source file can be in any of those states without renaming, moving, or deleting it.
-
 ## Requirements
-
 ### Requirement: Publish Eligibility
 A post SHALL be treated as **published** if and only if all of the following hold against its frontmatter:
 
@@ -47,13 +45,6 @@ A post whose frontmatter has `hide: true` SHALL not produce a rendered page at i
 - **WHEN** a post has `hide: true`
 - **THEN** navigating to its slug returns 404
 
-### Requirement: Homepage Lists Published Posts Only
-The homepage at `/` SHALL list only posts that satisfy publish eligibility, sorted by ascending `createTime`, paginated 10 per page.
-
-#### Scenario: Indexed-only post excluded from homepage
-- **WHEN** post A is published and post B is indexed-only
-- **THEN** post A appears on `/` and post B does not
-
 ### Requirement: Category Pages List Indexed Posts
 A category listing page SHALL include every post whose slug is under that category's URI and whose visibility is at least `indexed` (published OR indexed-only).
 
@@ -71,3 +62,15 @@ On a published post's page, the previous/next post links SHALL refer to the near
 #### Scenario: No prev/next on indexed-only post page
 - **WHEN** an indexed-only post's page is rendered (allowed because `hide` is false)
 - **THEN** the page does not compute or render prev/next links, since prev/next is only populated for published posts
+
+### Requirement: Article List Root Lists Published Posts Only
+The article list root at `/posts/` SHALL list only posts that satisfy publish eligibility, sorted by ascending `createTime`, paginated 10 per page. The site root `/` is reserved for a standalone landing page (see `external-homepage`) and does NOT list posts.
+
+#### Scenario: Indexed-only post excluded from article list
+- **WHEN** post A is published and post B is indexed-only
+- **THEN** post A appears on `/posts/` and post B does not
+
+#### Scenario: Site root does not list posts
+- **WHEN** the user navigates to `/`
+- **THEN** they see the standalone homepage (not a list of articles); the article list is available at `/posts/`
+

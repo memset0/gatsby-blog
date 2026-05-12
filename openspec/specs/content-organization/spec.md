@@ -3,9 +3,7 @@
 ## Purpose
 
 Defines how markdown files are mapped to URLs, grouped under a hierarchical category tree, and optionally promoted to "doc mode" (a docs-site presentation with a sidebar). The tree drives both URL structure and the set of generated category pages.
-
 ## Requirements
-
 ### Requirement: Slug Derived From File Path
 The URL slug of a markdown post SHALL be derived from its filesystem path under `content/`, with `index.md` and the `.md` extension stripped. A `content/blog/foo/index.md` file SHALL receive the slug `/blog/foo/`.
 
@@ -47,8 +45,13 @@ For doc-mode posts, the sidebar nav SHALL be assembled from the nearest ancestor
 - **THEN** `/course/foo/intro.md` inherits the sidebar from `/course/foo/index.md`
 
 ### Requirement: Static Folders Copied Verbatim
-The build SHALL copy the contents of `./assets`, `./content/assets`, and `./src/images` into the output site root as-is, so URLs such as `/img.png` resolve regardless of which folder hosted the source file.
+The build SHALL copy the contents of `./assets`, `./content/assets`, `./src/images`, and `./homepage` into the output site root as-is, so URLs such as `/img.png` resolve regardless of which folder hosted the source file.
 
 #### Scenario: Asset reachable by URL after build
 - **WHEN** `content/assets/diagram.png` exists at build time
 - **THEN** `https://<site>/diagram.png` serves that file
+
+#### Scenario: Homepage asset reachable by URL after build
+- **WHEN** `homepage/assets/avatar.png` exists at build time
+- **THEN** `https://<site>/assets/avatar.png` serves that file (path within `homepage/` is preserved)
+
