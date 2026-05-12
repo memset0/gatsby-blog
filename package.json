@@ -5,7 +5,7 @@
   "version": "1.4.0",
   "author": "memset0 <memset0@outlook.com>",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/memset0/gatsby-blog/issues"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -54,14 +54,14 @@
   "devDependencies": {
     "prettier": "^3.8.3"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "homepage": "https://github.com/memset0/gatsby-blog#readme",
   "keywords": [
     "gatsby"
   ],
   "license": "0BSD",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git+https://github.com/memset0/gatsby-blog.git"
   },
   "scripts": {
     "fetch-homepage": "if [ -d homepage/.git ]; then git -C homepage pull --ff-only; else git clone git@github.com:memset0/memset0.github.io.git homepage; fi",

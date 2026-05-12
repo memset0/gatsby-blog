@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-const Commments = props => {
+const Comments = props => {
   let { slug, ...other } = props;
   if (slug.endsWith("/")) {
     slug = slug.slice(0, -1);
@@ -37,4 +37,4 @@ const Commments = props => {
   );
 };
 
-export default Commments;
+export default Comments;

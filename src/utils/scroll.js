@@ -7,7 +7,6 @@ export function useScrollTop() {
   const [scrollTop, setScrollTop] = useState(0);
   useEffect(() => {
     function scrollFn(currentScrollTop) {
-      // console.log("[scroll] scrollFn:", currentScrollTop);
       setScrollTop(currentScrollTop);
     }
     const listenerId = addScrollListener(scrollFn);

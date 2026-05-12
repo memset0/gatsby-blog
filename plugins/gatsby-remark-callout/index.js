@@ -71,11 +71,10 @@ module.exports = ({ markdownAST }) => {
 
   visit(markdownAST, "blockquote", node => {
     if (
-      !(
-        node.children[0].type == "paragraph" &&
-        node.children[0].children[0].type == "text" &&
-        node.children[0].children[0].value.startsWith("[!")
-      )
+      node.children?.[0]?.type !== "paragraph" ||
+      node.children[0].children?.[0]?.type !== "text" ||
+      typeof node.children[0].children[0].value !== "string" ||
+      !node.children[0].children[0].value.startsWith("[!")
     ) {
       return;
     }
@@ -83,8 +82,8 @@ module.exports = ({ markdownAST }) => {
     try {
       transformToCallout(node);
     } catch (error) {
-      console.error("[callout] build failed:", error, JSON.stringify(node, null, 2));
-      throw error;
+      // 解析失败时退化为普通 blockquote，不再让整次 build 崩
+      console.warn("[callout] skipping malformed callout block:", error.message);
     }
   });
 };

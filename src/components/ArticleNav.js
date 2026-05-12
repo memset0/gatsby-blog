@@ -14,7 +14,6 @@ const ArticleNav = ({ navJson, pathname, dense = true, onClick = () => {} }) => 
   }
 
   function generateNav(nav, level, pathname) {
-    // console.log("[nav] generate", { nav, level, pathname });
     return (
       <List component="div" dense={dense} disablePadding>
         {nav.map((el, index) => {
@@ -61,7 +60,6 @@ const ArticleNav = ({ navJson, pathname, dense = true, onClick = () => {} }) => 
   }
 
   const nav = JSON.parse(navJson);
-  // console.log("[nav] reload with ", nav, pathname);
   if (pathname.endsWith("/")) {
     pathname = pathname.slice(0, -1);
   }

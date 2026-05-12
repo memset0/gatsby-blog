@@ -85,7 +85,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // 获取所有分类
   const categoryPages = [];
   const walkCategory = (node, uri, names) => {
-    // console.log("#walk", node, uri, names);
     for (const key in node) {
       names.push(node[key].name);
       categoryPages.push({
@@ -100,8 +99,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   };
   walkCategory(categories, "", []);
 
-  // console.log(posts.map(post => post.frontmatter.title));
-  // console.log(posts.filter(post => post.fields.isPublished).map(post => post.frontmatter.title));
   // 创建文章列表主页（/posts/）；站点根路径 / 由 homepage/ 提供的静态主页占据
   paginate({
     createPage,
@@ -439,22 +436,24 @@ exports.createResolvers = ({ createResolvers, cache, store, actions, createNodeI
           }
 
           // 确保按照原始 source.authors 的顺序返回结果
-          return await source.authors.map(async name => {
-            const friend = friends.find(f => f.name.toLowerCase() === name.toLowerCase());
-            if (!friend) {
-              return { name };
-            }
-            if (!friend.avatar && friend.avatarUrl) {
-              friend.avatar = await createRemoteFileNode({
-                url: friend.avatarUrl,
-                createNode: actions.createNode,
-                createNodeId,
-                cache,
-                store,
-              });
-            }
-            return friend;
-          });
+          return Promise.all(
+            source.authors.map(async name => {
+              const friend = friends.find(f => f.name.toLowerCase() === name.toLowerCase());
+              if (!friend) {
+                return { name };
+              }
+              if (!friend.avatar && friend.avatarUrl) {
+                friend.avatar = await createRemoteFileNode({
+                  url: friend.avatarUrl,
+                  createNode: actions.createNode,
+                  createNodeId,
+                  cache,
+                  store,
+                });
+              }
+              return friend;
+            })
+          );
         },
       },
     },
