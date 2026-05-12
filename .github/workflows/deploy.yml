@@ -112,26 +112,24 @@ jobs:
         run: npm run build
 
       - name: Push to the static repository (1)
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          source-directory: ./public
-          destination-github-username: memset0
-          destination-repository-name: blog-deployment
-          target-branch: master
-          user-email: ci@memset0.cn
+          personal_token: ${{ secrets.GH_TOKEN }}
+          external_repository: memset0/blog-deployment
+          publish_branch: master
+          publish_dir: ./public
+          user_name: mem-ci-bot
+          user_email: ci@memset0.cn
 
       - name: Push to the static repository (2)
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          source-directory: ./public
-          destination-github-username: mem-static
-          destination-repository-name: blog-ng
-          target-branch: main
-          user-email: ci@memset0.cn
+          personal_token: ${{ secrets.GH_TOKEN }}
+          external_repository: mem-static/blog-ng
+          publish_branch: main
+          publish_dir: ./public
+          user_name: mem-ci-bot
+          user_email: ci@memset0.cn
 
       # - name: Deploy on the server
       #   uses: appleboy/ssh-action@v1.0.3
