@@ -112,7 +112,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     context: {
       pathPrefix: "/posts/",
       publishStatus: [true], // 只允许发布的文章出现在内容中（isPublished为真，自然isIndexed也为真）
-      prefixRegex: "^/posts/",
+      prefixRegex: "^/", // 匹配所有文章 slug；列表页本身的 URL 由 pathPrefix 控制
       names: "[]",
       format: "index",
     },

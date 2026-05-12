@@ -7,12 +7,6 @@ import LinkIcon from "@mui/icons-material/Link";
 
 const navigators = [
   {
-    to: "/",
-    text: "首页",
-    icon: <PersonIcon />,
-    rule: pathname => pathname === "/",
-  },
-  {
     to: "/posts/",
     text: "所有文章",
     icon: <HomeIcon />,
@@ -35,6 +29,12 @@ const navigators = [
     text: "友情链接",
     icon: <LinkIcon />,
     rule: pathname => pathname === "/friends/",
+  },
+  {
+    to: "/",
+    text: "首页",
+    icon: <PersonIcon />,
+    rule: pathname => pathname === "/",
   },
 ];
 
