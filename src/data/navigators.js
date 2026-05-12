@@ -32,7 +32,7 @@ const navigators = [
   },
   {
     to: "/",
-    text: "首页",
+    text: "关于博主",
     icon: <PersonIcon />,
     rule: pathname => pathname === "/",
   },
