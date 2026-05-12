@@ -3,11 +3,11 @@
 ## Purpose
 
 Defines the non-standard markdown syntax this blog supports beyond GitHub-Flavored Markdown. Authors write posts in Obsidian; this spec captures which Obsidian-flavored extensions are honored at build time, plus a few blog-specific affordances (image sizing via alt text, disabling links that only work inside the author's editor).
-
 ## Requirements
-
 ### Requirement: Obsidian-Style Callouts
 A blockquote whose first line starts with `[!type]` SHALL render as a callout block of that type. A trailing `-` (e.g. `[!note]-`) SHALL render the callout as collapsed by default; without the dash, it SHALL render expanded. When the line after `[!type]` is empty, the callout title SHALL default to the type name, capitalized.
+
+If a callout-shaped blockquote has a malformed internal structure that the converter cannot interpret (e.g. unexpected child node shapes from upstream remark plugins, or partial markdown that didn't fully tokenize), the plugin SHALL leave the blockquote unchanged rather than crashing the build. The remaining markdown content SHALL render normally.
 
 #### Scenario: Expanded callout with explicit title
 - **WHEN** the source contains
@@ -24,6 +24,10 @@ A blockquote whose first line starts with `[!type]` SHALL render as a callout bl
   > be careful
   ```
 - **THEN** the rendered output is a closed `<details class="callout callout-type-warning">` whose summary text is `Warning`
+
+#### Scenario: Malformed callout does not crash the build
+- **WHEN** the source contains a blockquote that begins with `[!` but has a malformed internal structure (for example, an empty children list or an unexpected child node type produced by an upstream remark transform)
+- **THEN** the build completes successfully, the offending blockquote renders as a plain blockquote (no callout transformation applied), and the remainder of the document renders normally
 
 ### Requirement: Highlight Syntax
 The inline marker `==text==` SHALL render as `<mark class="m-mark">text</mark>`. Whitespace between the markers and the content is allowed and trimmed. The marker MUST NOT span across line endings.
@@ -90,3 +94,4 @@ Each `<h1>`–`<h6>` rendered from markdown SHALL have a stable `id` derived fro
 #### Scenario: Header gets an id
 - **WHEN** the source contains `## My Section`
 - **THEN** the rendered HTML emits `<h2 id="my-section">My Section</h2>` (or equivalent) so `#my-section` scrolls to it
+
