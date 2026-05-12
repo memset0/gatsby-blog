@@ -60,6 +60,14 @@ jobs:
           ref: master
           token: ${{ secrets.PAT_TOKEN }}  # the gh token from mem-ci-bot
 
+      - name: Checkout homepage
+        uses: actions/checkout@v4
+        with:
+          repository: memset0/memset0.github.io
+          path: homepage
+          ref: master
+          token: ${{ secrets.PAT_TOKEN }}
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:

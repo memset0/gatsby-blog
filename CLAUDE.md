@@ -14,14 +14,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 There is no test suite.
 
-## Content lives outside this repo
+## External repos pulled in at build time
 
-The blog source code and the blog **content** are split into separate repos:
+The blog source code, the blog **content**, and the **homepage** are split into three repos:
 
-- This repo holds the Gatsby site (templates, components, plugin glue).
-- `./content/` is a separate git repo containing all markdown posts, friends list, covers, and assets. It is **not** committed here (see `.gitignore`: `/content`, `/content*`).
-- CI checks out the content repo into `./content/` before building — see `.github/workflows/deploy.yml`.
-- For local dev you must clone the content repo into `./content/` yourself. Without it, the build will fail in `gatsby-node.js` (it reads `./content/friends.yml` directly) and in `src/components/Bio.js` (it `StaticImage`-references `../../content/assets/tagcloud-bgwhite.png`).
+- This repo holds the Gatsby site (templates, components, plugin glue) and serves `/posts/...`, `/oi/...`, `/friends/...`, etc.
+- `./content/` is a separate git repo containing all markdown posts, friends list, covers, and assets. Required at build time. Not committed here (`.gitignore`: `/content`).
+- `./homepage/` is a separate git repo containing a standalone static landing page that is published at the site root `/`. Required at build time. Not committed here (`.gitignore`: `/homepage`). `npm run dev` and `npm run build` auto-clone-or-pull it via the `fetch-homepage` script (a `predev` / `prebuild` hook).
+- CI checks out both `content` and `homepage` before building — see `.github/workflows/deploy.yml`.
+
+The homepage is intentionally not integrated with the Gatsby MUI shell — it ships its own CSS and uses Babel Standalone in the browser to load four `.jsx` files (no build step). It does NOT see the blog's top navigation, and the blog's `首页` link is a hard navigation to `/` that exits Gatsby. The two navs are independent by design ("两个独立的导航").
 
 If you ever need to scaffold without the real content, you need at minimum: `content/friends.yml` (can be `[]`), `content/cover/`, `content/assets/tagcloud-bgwhite.png` (a real PNG, not a stub), and at least one markdown file whose frontmatter declares the fields queried by GraphQL (`hide`, `cover`, `description`) — see "Schema gotcha" below.
 

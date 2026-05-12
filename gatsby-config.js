@@ -15,7 +15,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-static-folders",
       options: {
-        folders: ["./assets", "./content/assets", "./src/images"],
+        folders: ["./assets", "./content/assets", "./src/images", "./homepage"],
       },
     },
     `gatsby-plugin-less`,

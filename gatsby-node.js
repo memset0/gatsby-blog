@@ -102,17 +102,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // console.log(posts.map(post => post.frontmatter.title));
   // console.log(posts.filter(post => post.fields.isPublished).map(post => post.frontmatter.title));
-  // 创建主页
+  // 创建文章列表主页（/posts/）；站点根路径 / 由 homepage/ 提供的静态主页占据
   paginate({
     createPage,
     items: posts.filter(post => post.fields.isPublished),
     itemsPerPage: POSTS_PER_PAGE,
-    pathPrefix: "/",
+    pathPrefix: "/posts",
     component: postListTemplate,
     context: {
-      pathPrefix: "/",
+      pathPrefix: "/posts/",
       publishStatus: [true], // 只允许发布的文章出现在内容中（isPublished为真，自然isIndexed也为真）
-      prefixRegex: "^/",
+      prefixRegex: "^/posts/",
       names: "[]",
       format: "index",
     },

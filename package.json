@@ -64,6 +64,9 @@
     "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
   },
   "scripts": {
+    "fetch-homepage": "if [ -d homepage/.git ]; then git -C homepage pull --ff-only; else git clone git@github.com:memset0/memset0.github.io.git homepage; fi",
+    "predev": "npm run fetch-homepage",
+    "prebuild": "npm run fetch-homepage",
     "build": "cross-env NODE_ENV=production gatsby build",
     "dev": "cross-env NODE_ENV=development gatsby develop --port 8080",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",

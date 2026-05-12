@@ -8,9 +8,15 @@ import LinkIcon from "@mui/icons-material/Link";
 const navigators = [
   {
     to: "/",
+    text: "首页",
+    icon: <PersonIcon />,
+    rule: pathname => pathname === "/",
+  },
+  {
+    to: "/posts/",
     text: "所有文章",
     icon: <HomeIcon />,
-    rule: pathname => pathname === "/",
+    rule: pathname => pathname === "/posts/" || pathname.startsWith("/posts/"),
   },
   {
     to: "/oi/",
@@ -29,12 +35,6 @@ const navigators = [
     text: "友情链接",
     icon: <LinkIcon />,
     rule: pathname => pathname === "/friends/",
-  },
-  {
-    to: "/about/",
-    text: "关于博主",
-    icon: <PersonIcon />,
-    rule: pathname => pathname === "/about/",
   },
 ];
 
